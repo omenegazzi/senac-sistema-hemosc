@@ -7,6 +7,7 @@ package View;
 
 import Controller_DAO.UsuariosDao;
 import Model.Usuarios;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,6 +20,24 @@ public class UsuariosView extends javax.swing.JFrame {
      */
     public UsuariosView() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        CarregarTabela();
+    }
+
+    public void CarregarTabela() {
+
+        DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();
+        UsuariosDao Dao = new UsuariosDao();
+        tabela.setNumRows(0);
+
+        for (Usuarios u : Dao.listar()) {
+            tabela.addRow(new Object[]{
+               u.getCodigo(),
+               u.getNome(),
+               u.getEmail(),
+               u.getSenha()
+            });
+        }
     }
 
     /**
@@ -33,7 +52,7 @@ public class UsuariosView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         tfPesquisar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tUsuarios = new javax.swing.JTable();
         bPesquisar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -54,15 +73,28 @@ public class UsuariosView extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Nome", "E-mail"
+                "Código", "Nome", "E-mail", "Senha"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tUsuariosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tUsuarios);
 
         bPesquisar.setText("Pesquisar");
 
@@ -118,12 +150,27 @@ public class UsuariosView extends javax.swing.JFrame {
         });
 
         bAlterar.setText("Alterar");
+        bAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bAlterarActionPerformed(evt);
+            }
+        });
 
         bExcluir.setText("Excluir");
 
         bLimpar.setText("Limpar");
+        bLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLimparActionPerformed(evt);
+            }
+        });
 
         bFechar.setText("Fechar");
+        bFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -215,18 +262,55 @@ public class UsuariosView extends javax.swing.JFrame {
     private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
         Usuarios u = new Usuarios();
         UsuariosDao Dao = new UsuariosDao();
-        
+
         u.setNome(tfNome.getText());
         u.setEmail(tfEmail.getText());
         u.setSenha(pfSenha.getPassword().toString());
 
         Dao.cadastrar(u);
-        
+
         tfNome.setText("");
         tfEmail.setText("");
         pfSenha.setText("");
-        
+
     }//GEN-LAST:event_bCadastrarActionPerformed
+
+    private void tUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tUsuariosMouseClicked
+        tfCodigo.setText(tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 0).toString());
+        tfNome.setText(tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 1).toString());
+        tfEmail.setText(tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 2).toString());
+        pfSenha.setText(tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 3).toString());
+    }//GEN-LAST:event_tUsuariosMouseClicked
+
+    private void bLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimparActionPerformed
+        tfCodigo.setText("");
+        tfNome.setText("");
+        tfEmail.setText("");
+        pfSenha.setText("");
+    }//GEN-LAST:event_bLimparActionPerformed
+
+    private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
+        UsuariosView.this.dispose();
+    }//GEN-LAST:event_bFecharActionPerformed
+
+    private void bAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAlterarActionPerformed
+        Usuarios u = new Usuarios();
+        UsuariosDao Dao = new UsuariosDao();
+
+        u.setCodigo(Integer.parseInt(tfCodigo.getText()));
+        u.setNome(tfNome.getText());
+        u.setEmail(tfEmail.getText());
+        u.setSenha(pfSenha.getPassword().toString());
+        
+        Dao.alterar(u);
+        CarregarTabela();
+        
+        tfCodigo.setText("");
+        tfNome.setText("");
+        tfEmail.setText("");
+        pfSenha.setText("");
+
+    }//GEN-LAST:event_bAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,8 +362,8 @@ public class UsuariosView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPasswordField pfSenha;
+    private javax.swing.JTable tUsuarios;
     private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfNome;
