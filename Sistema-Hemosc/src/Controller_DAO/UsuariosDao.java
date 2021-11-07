@@ -82,10 +82,9 @@ public class UsuariosDao {
 
         PreparedStatement stmt = null;
 
-        
         try {
             stmt = conn.prepareStatement("UPDATE usuarios set nome = ?, email = ?, senha = ? where codigo = ?");
-             stmt.setString(1, u.getNome());
+            stmt.setString(1, u.getNome());
             stmt.setString(2, u.getEmail());
             stmt.setString(3, u.getSenha());
             stmt.setInt(4, u.getCodigo());
@@ -93,10 +92,29 @@ public class UsuariosDao {
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Usuário alterado com Sucesso!");
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(UsuariosDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void excluir(Usuarios u) {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conn.prepareStatement("DELETE FROM usuarios WHERE codigo = ?");
+            stmt.setInt(1, u.getCodigo());
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Usuário excluído com Sucesso!");
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuariosDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
