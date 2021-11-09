@@ -182,11 +182,11 @@ CREATE TABLE IF NOT EXISTS `db_hemosc`.`saida_sangue` (
 ENGINE = InnoDB;
 
 create table usuarios(
-id_usuario int not null auto_increment,
+codigo int not null auto_increment,
 nome varchar(100),
 email varchar(100),
 senha varchar(45),
-primary key(id_usuario));
+primary key(codigo));
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
