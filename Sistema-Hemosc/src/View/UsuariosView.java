@@ -24,6 +24,13 @@ public class UsuariosView extends javax.swing.JFrame {
         CarregarTabela();
     }
 
+    public void LimparCampos() {
+        tfCodigo.setText("");
+        tfNome.setText("");
+        tfEmail.setText("");
+        pfSenha.setText("");
+    }
+
     public void CarregarTabela() {
 
         DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();
@@ -32,10 +39,10 @@ public class UsuariosView extends javax.swing.JFrame {
 
         for (Usuarios u : Dao.listar()) {
             tabela.addRow(new Object[]{
-               u.getCodigo(),
-               u.getNome(),
-               u.getEmail(),
-               u.getSenha()
+                u.getCodigo(),
+                u.getNome(),
+                u.getEmail(),
+                u.getSenha()
             });
         }
     }
@@ -121,7 +128,7 @@ public class UsuariosView extends javax.swing.JFrame {
                     .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -132,15 +139,9 @@ public class UsuariosView extends javax.swing.JFrame {
 
         jLabel2.setText("Nome:");
 
-        tfNome.setLocation(new java.awt.Point(-32675, -32716));
-
         jLabel3.setText("E-mail:");
 
-        tfEmail.setLocation(new java.awt.Point(-32675, -32716));
-
         jLabel4.setText("Senha:");
-
-        pfSenha.setActionCommand("<Não Definido>");
 
         bCadastrar.setText("Cadastrar");
         bCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -157,6 +158,11 @@ public class UsuariosView extends javax.swing.JFrame {
         });
 
         bExcluir.setText("Excluir");
+        bExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bExcluirActionPerformed(evt);
+            }
+        });
 
         bLimpar.setText("Limpar");
         bLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -195,7 +201,7 @@ public class UsuariosView extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(bCadastrar)
+                .addComponent(bCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,10 +274,8 @@ public class UsuariosView extends javax.swing.JFrame {
         u.setSenha(pfSenha.getPassword().toString());
 
         Dao.cadastrar(u);
-
-        tfNome.setText("");
-        tfEmail.setText("");
-        pfSenha.setText("");
+        CarregarTabela();
+        LimparCampos();
 
     }//GEN-LAST:event_bCadastrarActionPerformed
 
@@ -283,10 +287,7 @@ public class UsuariosView extends javax.swing.JFrame {
     }//GEN-LAST:event_tUsuariosMouseClicked
 
     private void bLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimparActionPerformed
-        tfCodigo.setText("");
-        tfNome.setText("");
-        tfEmail.setText("");
-        pfSenha.setText("");
+        LimparCampos();
     }//GEN-LAST:event_bLimparActionPerformed
 
     private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
@@ -301,16 +302,23 @@ public class UsuariosView extends javax.swing.JFrame {
         u.setNome(tfNome.getText());
         u.setEmail(tfEmail.getText());
         u.setSenha(pfSenha.getPassword().toString());
-        
+
         Dao.alterar(u);
         CarregarTabela();
-        
-        tfCodigo.setText("");
-        tfNome.setText("");
-        tfEmail.setText("");
-        pfSenha.setText("");
+        LimparCampos();
 
     }//GEN-LAST:event_bAlterarActionPerformed
+
+    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
+        Usuarios u = new Usuarios();
+        UsuariosDao Dao = new UsuariosDao();
+
+        u.setCodigo(Integer.parseInt(tfCodigo.getText()));
+
+        Dao.excluir(u);
+        CarregarTabela();
+        LimparCampos();
+    }//GEN-LAST:event_bExcluirActionPerformed
 
     /**
      * @param args the command line arguments
