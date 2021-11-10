@@ -14,8 +14,8 @@ import java.sql.Date;
 public class Doadores {
 
     private int id_doador;
-    private int id_cidade;
-    private int id_tipo_sanguineo;
+    private Cidades id_cidade;
+    private TipoSanguineo id_tipo_sanguineo;
     private String nome;
     private String endereco;
     private Date data_nascimento;
@@ -31,19 +31,19 @@ public class Doadores {
         this.id_doador = id_doador;
     }
 
-    public int getId_cidade() {
+    public Cidades getId_cidade() {
         return id_cidade;
     }
 
-    public void setId_cidade(int id_cidade) {
+    public void setId_cidade(Cidades id_cidade) {
         this.id_cidade = id_cidade;
     }
 
-    public int getId_tipo_sanguineo() {
+    public TipoSanguineo getId_tipo_sanguineo() {
         return id_tipo_sanguineo;
     }
 
-    public void setId_tipo_sanguineo(int id_tipo_sanguineo) {
+    public void setId_tipo_sanguineo(TipoSanguineo id_tipo_sanguineo) {
         this.id_tipo_sanguineo = id_tipo_sanguineo;
     }
 
