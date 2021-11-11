@@ -5,6 +5,15 @@
  */
 package View;
 
+import Controller_DAO.DoadoresDao;
+import Controller_DAO.UsuariosDao;
+import Model.Doadores;
+import Model.Usuarios;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author gabriel.ferrandin
@@ -14,8 +23,17 @@ public class DoadoresView extends javax.swing.JFrame {
     /**
      * Creates new form DoadoresView
      */
-    public DoadoresView() {
+        public DoadoresView() throws SQLException {
         initComponents();
+
+        DoadoresDao dao = new DoadoresDao();
+        DoadoresDao dao2 = new DoadoresDao();
+        for (Doadores d : dao.listar()) {
+            cbCidade.addItem(d);
+        }
+        for (Doadores d : dao2.listar()) {
+            cbSangue.addItem(d);
+        }
     }
 
     /**
@@ -59,8 +77,6 @@ public class DoadoresView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         jLabel1.setText("ID Doador:");
 
         jLabel4.setText("Nome:");
@@ -85,13 +101,14 @@ public class DoadoresView extends javax.swing.JFrame {
             }
         });
 
-        cbCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbSangue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel9.setText("Endereço:");
 
         jbCadastrar.setText("Cadastrar");
+        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCadastrarActionPerformed(evt);
+            }
+        });
 
         jbAlterar.setText("Alterar");
 
@@ -134,7 +151,7 @@ public class DoadoresView extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(cbSangue, 0, 136, Short.MAX_VALUE))
+                            .addComponent(cbSangue, 0, 139, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1)
@@ -182,9 +199,9 @@ public class DoadoresView extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(cbCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(cbSangue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbSangue, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -220,8 +237,6 @@ public class DoadoresView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         jbPesquisar.setText("Pesquisar");
 
         tDoadores.setModel(new javax.swing.table.DefaultTableModel(
@@ -244,7 +259,7 @@ public class DoadoresView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -261,7 +276,7 @@ public class DoadoresView extends javax.swing.JFrame {
                     .addComponent(jbPesquisar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -288,13 +303,27 @@ public class DoadoresView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfnomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfnomeActionPerformed
-
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
+        Doadores d = new Doadores();
+        DoadoresDao Dao = new DoadoresDao();
+
+        d.setNome(tfnome.getText());
+        d.setEndereco(tfEndereco.getText());
+        d.setData_nascimento(Integer.parseInt(tfNascimento.getText()));
+        d.setTelefone(Integer.parseInt(tfTelefone.getText()));
+        d.setEmail(tfEmail.getText());
+        d.setCpf(tfCpf.getText()); 
+
+        Dao.cadastrar(d);
+    }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void tfnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfnomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfnomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,14 +355,18 @@ public class DoadoresView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DoadoresView().setVisible(true);
+                try {
+                    new DoadoresView().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(DoadoresView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbCidade;
-    private javax.swing.JComboBox<String> cbSangue;
+    private javax.swing.JComboBox<Object> cbCidade;
+    private javax.swing.JComboBox<Object> cbSangue;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
