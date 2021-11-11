@@ -12,7 +12,10 @@ package Model;
 public class Colaboradores {
 
 private int id_colaborador;
-private Cidades id_cidade;
+private Cidades Cidade;
+private String nome;
+private String endereco;
+private String funcao;
 
     public int getId_colaborador() {
         return id_colaborador;
@@ -22,12 +25,12 @@ private Cidades id_cidade;
         this.id_colaborador = id_colaborador;
     }
 
-    public Cidades getId_cidade() {
-        return id_cidade;
+    public Cidades getCidade() {
+        return Cidade;
     }
 
-    public void setId_cidade(Cidades id_cidade) {
-        this.id_cidade = id_cidade;
+    public void setCidade(Cidades id_cidade) {
+        this.Cidade = id_cidade;
     }
 
     public String getNome() {
@@ -53,10 +56,12 @@ private Cidades id_cidade;
     public void setFuncao(String funcao) {
         this.funcao = funcao;
     }
-private String nome;
-private String endereco;
-private String funcao;
 
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }
 

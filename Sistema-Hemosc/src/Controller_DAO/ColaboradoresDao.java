@@ -33,7 +33,7 @@ public class ColaboradoresDao {
 
         try {
             stmt = conn.prepareStatement("INSERT INTO colaborador (id_cidade,nome,endereco,funcao) VALUES (?,?,?,?)");
-            stmt.setInt(1, c.getId_cidade().getId_cidade());
+            stmt.setInt(1, c.getCidade().getId_cidade());
             stmt.setString(2, c.getNome());
             stmt.setString(3, c.getEndereco());
             stmt.setString(4, c.getFuncao());
@@ -67,7 +67,7 @@ public class ColaboradoresDao {
                 
                 Cidades ci = new Cidades();
                 ci.setId_cidade(rs.getInt("id_cidade"));
-                c.setId_cidade(ci);
+                c.setCidade(ci);
 
                 Colaboradores.add(c);
 
@@ -103,7 +103,7 @@ public class ColaboradoresDao {
                 
                 Cidades ci = new Cidades();
                 ci.setId_cidade(rs.getInt("id_cidade"));
-                c.setId_cidade(ci);
+                c.setCidade(ci);
                 
                
                 Colaboradores.add(c);
