@@ -34,6 +34,7 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuColaboradores = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
@@ -81,6 +82,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        jMenuColaboradores.setText("Colaboradores");
+        jMenuColaboradores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuColaboradoresActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuColaboradores);
+
         jMenuBar1.add(jMenu1);
 
         jMenu3.setText("Relatórios");
@@ -115,6 +124,11 @@ public class Principal extends javax.swing.JFrame {
         UsuariosView usuarios = new UsuariosView();
         usuarios.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuColaboradoresActionPerformed
+        ColaboradoresView c = new ColaboradoresView();
+        c.setVisible(true);
+    }//GEN-LAST:event_jMenuColaboradoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,6 +170,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuColaboradores;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
