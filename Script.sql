@@ -21,7 +21,7 @@ USE `db_hemosc` ;
 -- Table `db_hemosc`.`cidades`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`cidades` (
-  `id_cidade` INT NOT NULL,
+  `id_cidade` INT NOT NULL auto_increment,
   `codigo_ibge` INT NULL,
   `descricao` VARCHAR(100) NULL,
   `uf` CHAR(2) NULL,
@@ -33,7 +33,7 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`tipos_sanguineos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`tipos_sanguineos` (
-  `id_tipo_sanguineo` INT NOT NULL,
+  `id_tipo_sanguineo` INT NOT NULL auto_increment,
   `descricao` VARCHAR(45) NULL,
   `fator_rh` VARCHAR(45) NULL,
   `estoque` INT NULL,
@@ -48,7 +48,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`doadores` (
   `id_doador` INT NOT NULL,
   `id_cidade` INT NOT NULL,
-  `id_tipo_sanguineo` INT NOT NULL,
+  `id_tipo_sanguineo` INT NOT NULL auto_increment,
   `nome` VARCHAR(100) NULL,
   `endereco` VARCHAR(100) NULL,
   `data_nascimento` DATE NULL,
@@ -75,7 +75,7 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`colaboradores`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`colaboradores` (
-  `id_colaborador` INT NOT NULL,
+  `id_colaborador` INT NOT NULL auto_increment,
   `id_cidade` INT NOT NULL,
   `nome` VARCHAR(100) NULL,
   `endereco` VARCHAR(100) NULL,
@@ -94,7 +94,7 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`doacoes`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`doacoes` (
-  `id_doacao` INT NOT NULL,
+  `id_doacao` INT NOT NULL auto_increment,
   `data` DATE NULL,
   `id_doador` INT NOT NULL,
   `id_tipo_sanguineo` INT NOT NULL,
@@ -125,7 +125,7 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`entidades`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`entidades` (
-  `id_entidade` INT NOT NULL,
+  `id_entidade` INT NOT NULL auto_increment,
   `id_cidade` INT NOT NULL,
   `nome` VARCHAR(100) NULL,
   `endereco` VARCHAR(100) NULL,
@@ -143,7 +143,7 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`agendamento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`agendamento` (
-  `id_agendamento` INT NOT NULL,
+  `id_agendamento` INT NOT NULL auto_increment,
   `data` DATE NULL,
   `hora` TIME NULL,
   `id_doador` INT NOT NULL,
@@ -161,7 +161,7 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`saida_sangue`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`saida_sangue` (
-  `id_saida_sangue` INT NOT NULL,
+  `id_saida_sangue` INT NOT NULL auto_increment,
   `id_entidade` INT NOT NULL,
   `id_tipo_sanguineo` INT NOT NULL,
   `data` DATETIME NULL,
@@ -180,6 +180,13 @@ CREATE TABLE IF NOT EXISTS `db_hemosc`.`saida_sangue` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+create table usuarios(
+codigo int not null auto_increment,
+nome varchar(100),
+email varchar(100),
+senha varchar(45),
+primary key(codigo));
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -7,9 +7,10 @@ package Model;
 
 /**
  *
- * @author guest01
+ * @author gabriel
  */
 public class Cidades {
+ 
     private int id_cidade;
     private int codigo_ibge;
     private String descricao;
@@ -46,4 +47,7 @@ public class Cidades {
     public void setUf(String uf) {
         this.uf = uf;
     }
-}
+    
+    
+    }
+
