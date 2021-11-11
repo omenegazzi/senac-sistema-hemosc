@@ -26,6 +26,7 @@ public class TipoSanguineoView extends javax.swing.JFrame {
         DefaultTableModel tabela = (DefaultTableModel) tTipoSanguineo.getModel(); 
        
         TipoSanguineoDAO dao = new TipoSanguienoDAO();
+        
         tabela.setNumRows(0);
         
         for(TipoSanguineo ts : dao.pesquisar(tfPesquisar.getText())){
