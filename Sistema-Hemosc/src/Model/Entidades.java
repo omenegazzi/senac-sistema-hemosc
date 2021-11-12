@@ -7,30 +7,28 @@ package Model;
 
 /**
  *
- * @author gabriel
+ * @author marcelo.nascimento1
  */
-public class Colaboradores {
+public class Entidades {
+    private int id_entidade;
+    private Cidades cidades;
+    private String nome;
+    private String endereco;
 
-private int id_colaborador;
-private Cidades Cidade;
-private String nome;
-private String endereco;
-private String funcao;
-
-    public int getId_colaborador() {
-        return id_colaborador;
+    public int getId_entidade() {
+        return id_entidade;
     }
 
-    public void setId_colaborador(int id_colaborador) {
-        this.id_colaborador = id_colaborador;
+    public void setId_entidade(int id_entidade) {
+        this.id_entidade = id_entidade;
     }
 
-    public Cidades getCidade() {
-        return Cidade;
+    public Cidades getCidades() {
+        return cidades;
     }
 
-    public void setCidade(Cidades id_cidade) {
-        this.Cidade = id_cidade;
+    public void setCidades(Cidades cidades) {
+        this.cidades = cidades;
     }
 
     public String getNome() {
@@ -49,20 +47,9 @@ private String funcao;
         this.endereco = endereco;
     }
 
-    public String getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
-    }
-
     @Override
     public String toString() {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
     
-    
 }
-
-
