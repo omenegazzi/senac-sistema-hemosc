@@ -16,7 +16,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH); 
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -35,6 +35,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuColaboradores = new javax.swing.JMenuItem();
+        Doadores = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
@@ -90,6 +91,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuColaboradores);
 
+        Doadores.setText("Doadores");
+        Doadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoadoresActionPerformed(evt);
+            }
+        });
+        jMenu1.add(Doadores);
+
         jMenuBar1.add(jMenu1);
 
         jMenu3.setText("Relatórios");
@@ -130,6 +139,12 @@ public class Principal extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_jMenuColaboradoresActionPerformed
 
+    private void DoadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoadoresActionPerformed
+        // TODO add your handling code here:
+        DoadoresView c = new DoadoresView();
+        c.setVisible(true);
+    }//GEN-LAST:event_DoadoresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -166,6 +181,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Doadores;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
