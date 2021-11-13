@@ -274,8 +274,8 @@ public class UsuariosView extends javax.swing.JFrame {
         u.setSenha(pfSenha.getPassword().toString());
 
         Dao.cadastrar(u);
-        CarregarTabela();
-        LimparCampos();
+//        CarregarTabela();
+ //       LimparCampos();
 
     }//GEN-LAST:event_bCadastrarActionPerformed
 
