@@ -5,6 +5,9 @@
  */
 package View;
 
+import Controller_DAO.DoadoresDao;
+import Model.Doadores;
+
 /**
  *
  * @author gabriel.ferrandin
@@ -16,7 +19,18 @@ public class DoadoresView extends javax.swing.JFrame {
      */
     public DoadoresView() {
         initComponents();
+        
+        DoadoresDao dao = new DoadoresDao();
+        DoadoresDao dao2 = new DoadoresDao();
+        for (Doadores d : dao.listar()) {
+            cbCidade.addItem(d);
+        }
+        for (Doadores d : dao2.listar()) {
+            cbSangue.addItem(d);
+        }
     }
+    
+       
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -88,6 +102,11 @@ public class DoadoresView extends javax.swing.JFrame {
         jLabel9.setText("Endereço:");
 
         jbCadastrar.setText("Cadastrar");
+        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCadastrarActionPerformed(evt);
+            }
+        });
 
         jbAlterar.setText("Alterar");
 
@@ -291,6 +310,20 @@ public class DoadoresView extends javax.swing.JFrame {
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
+        Doadores d = new Doadores();
+        DoadoresDao Dao = new DoadoresDao();
+
+        d.setNome(tfnome.getText());
+        d.setEndereco(tfEndereco.getText());
+        //d.setData_nascimento(Integer.parseInt(tfNascimento.getText()));
+        d.setTelefone(Integer.parseInt(tfTelefone.getText()));
+        d.setEmail(tfEmail.getText());
+        d.setCpf(tfCpf.getText()); 
+
+        Dao.cadastrar(d);
+    }//GEN-LAST:event_jbCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
