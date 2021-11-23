@@ -46,9 +46,9 @@ ENGINE = InnoDB;
 -- Table `db_hemosc`.`doadores`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_hemosc`.`doadores` (
-  `id_doador` INT NOT NULL,
+  `id_doador` INT NOT NULL auto_increment,
   `id_cidade` INT NOT NULL,
-  `id_tipo_sanguineo` INT NOT NULL auto_increment,
+  `id_tipo_sanguineo` INT NOT NULL,
   `nome` VARCHAR(100) NULL,
   `endereco` VARCHAR(100) NULL,
   `data_nascimento` DATE NULL,
