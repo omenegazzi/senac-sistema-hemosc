@@ -116,5 +116,32 @@ public class DoadoresDao {
         } catch (SQLException ex) {
 
         }
+
+    }
+
+    public void alterar(Doadores e) {
+        Connection conn = ConexaoBanco.conectaBanco();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            stmt = conn.prepareStatement("UPDATE livros set doadores = ?,  id_cidade = ?, id_tipo_sanguineo = ?, nome = ?, endereco = ?,data_nascimento, telefone = ?, email = ?, cpf = ? ,  where id_doador = ? ");
+            stmt.setInt(1, e.getId_cidade().getId_cidade());
+            stmt.setInt(2, e.getId_tipo_sanguineo().getId_TipoSanguineo());
+
+            stmt.setString(3, e.getNome());
+            stmt.setString(4, e.getEndereco());
+            stmt.setDate(5, e.getData_nascimento());
+            stmt.setInt(6, e.getTelefone());
+            stmt.setString(7, e.getEmail());
+            stmt.setString(8, e.getCpf());
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Alteração Realizada com sucesso");
+
+        } catch (SQLException ex) {
+        }
     }
 }

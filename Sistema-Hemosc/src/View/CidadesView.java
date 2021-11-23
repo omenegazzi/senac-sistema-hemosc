@@ -27,7 +27,9 @@ public class CidadesView extends javax.swing.JFrame {
         
         DefaultTableModel tabela = (DefaultTableModel) tCidades.getModel(); 
        
+
         CidadesDao dao = new CidadesDao();
+
         
         tabela.setNumRows(0);
         

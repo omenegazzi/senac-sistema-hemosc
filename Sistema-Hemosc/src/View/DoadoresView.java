@@ -6,7 +6,9 @@
 package View;
 
 import Controller_DAO.DoadoresDao;
+import Model.Cidades;
 import Model.Doadores;
+import Model.TipoSanguineo;
 
 /**
  *
@@ -113,6 +115,11 @@ public class DoadoresView extends javax.swing.JFrame {
         });
 
         jbAlterar.setText("Alterar");
+        jbAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAlterarActionPerformed(evt);
+            }
+        });
 
         jbExcluir.setText("Excluir");
         jbExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -328,6 +335,27 @@ public class DoadoresView extends javax.swing.JFrame {
 
         Dao.cadastrar(d);
     }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
+        Doadores d = new Doadores();
+        DoadoresDao dao = new DoadoresDao();
+
+        Cidades cidade = (Cidades) cbCidade.getSelectedItem();
+        TipoSanguineo sangue = (TipoSanguineo) cbSangue.getSelectedItem();
+
+        d.setId_doador(Integer.parseInt(tfDoador.getText()));
+        d.setNome(tfnome.getText());
+        d.setEndereco(tfDoador.getText());
+        // d.setData_nascimento(tfNascimento.getText());
+        d.setTelefone(Integer.parseInt(tfTelefone.getText()));
+        d.setEmail(tfEmail.getText());
+        d.setCpf(tfCpf.getText());
+
+        d.setId_cidade(cidade);
+        d.setId_tipo_sanguineo(sangue);
+
+        dao.alterar(d);
+    }//GEN-LAST:event_jbAlterarActionPerformed
 
     /**
      * @param args the command line arguments
