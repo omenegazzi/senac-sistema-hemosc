@@ -50,5 +50,9 @@ public class Agendamentos {
     public void setDoador(Doadores Doador) {
         this.Doador = Doador;
     }
-    
+
+    @Override
+    public String toString() {
+        return getDoador().getNome();
+    }
 }
