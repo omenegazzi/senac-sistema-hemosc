@@ -4,10 +4,7 @@ import Database.ConexaoBanco;
 import Model.Cidades;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -40,6 +37,7 @@ public class CidadesDao {
         }
 
     }
+<<<<<<< HEAD
 
     public List<Cidades> listar() {
         Connection conn = ConexaoBanco.conectaBanco();
@@ -70,6 +68,11 @@ public class CidadesDao {
 
         return cidades;
     }
+=======
+    
+}
+    
+>>>>>>> parent of d87471a... Merge #29-Criado_método_de_Listar_Cidades into develop
 
     public List<Cidades> pesquisar(String texto) {
 
