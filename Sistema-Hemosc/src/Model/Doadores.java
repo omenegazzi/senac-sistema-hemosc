@@ -94,5 +94,9 @@ public class Doadores {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
+    
+    @Override
+    public String toString() {
+        return getNome();
+    }
 }
