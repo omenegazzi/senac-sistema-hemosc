@@ -155,8 +155,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_DoadoresActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       TipoSanguineoView t = new TipoSanguineoView();
-       t.setVisible(true);
+       //TipoSanguineoView t = new TipoSanguineoView();
+       //t.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
