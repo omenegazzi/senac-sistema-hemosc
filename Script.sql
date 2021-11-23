@@ -188,6 +188,14 @@ email varchar(100),
 senha varchar(45),
 primary key(codigo));
 
+Create table funcoes(
+id_funcao int not null auto_increment,
+funcao varchar(200),
+descricao varchar(500),
+salario double,
+primary key (id_funcao)
+);
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
