@@ -20,6 +20,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
      */
     public ColaboradoresView() {
         initComponents();
+        carregaDados();
     }
 
     public void carregaDados(){
@@ -38,6 +39,25 @@ public class ColaboradoresView extends javax.swing.JFrame {
             });
         }
     }
+    
+    
+    public void pesquisaDados() {
+        DefaultTableModel tabela = (DefaultTableModel) TabelaColaboradores.getModel();
+        ColaboradoresDao dao = new ColaboradoresDao();
+        tabela.setNumRows(0);
+
+        for (Colaboradores c : dao.pesquisar(tfpesquisar.getText())) {
+            tabela.addRow(new Object[]{
+                c.getId_colaborador(),
+                c.getCidade(),
+                c.getNome(),
+                c.getEndereco(),
+                c.getFuncao()
+            });
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,7 +87,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaColaboradores = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
+        tfpesquisar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -85,6 +105,12 @@ public class ColaboradoresView extends javax.swing.JFrame {
 
         CampoId.setEditable(false);
 
+        CampoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CampoNomeActionPerformed(evt);
+            }
+        });
+
         CampoEndereco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CampoEnderecoActionPerformed(evt);
@@ -92,6 +118,11 @@ public class ColaboradoresView extends javax.swing.JFrame {
         });
 
         jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Alterar");
 
@@ -202,6 +233,11 @@ public class ColaboradoresView extends javax.swing.JFrame {
         );
 
         jButton6.setText("Pesquisar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -215,7 +251,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jTextField5)
+                                .addComponent(tfpesquisar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton6)))
                         .addContainerGap())))
@@ -228,7 +264,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfpesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -259,6 +295,27 @@ public class ColaboradoresView extends javax.swing.JFrame {
             }
         }     
     }//GEN-LAST:event_TabelaColaboradoresMouseClicked
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    pesquisaDados(); 
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+        Colaboradores c = new Colaboradores();
+        ColaboradoresDao DAO = new ColaboradoresDao();
+
+        
+        c.setNome(CampoNome.getText());
+        c.setEndereco(CampoEndereco.getText());
+        DAO.cadastrar(c);
+        carregaDados();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void CampoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CampoNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,6 +373,6 @@ public class ColaboradoresView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField tfpesquisar;
     // End of variables declaration//GEN-END:variables
 }
