@@ -21,27 +21,24 @@ public class CidadesView extends javax.swing.JFrame {
     public CidadesView() {
         initComponents();
     }
-    
-    
+
     public void pesquisaDados() {
-        
-        DefaultTableModel tabela = (DefaultTableModel) tCidades.getModel(); 
-       
+
+        DefaultTableModel tabela = (DefaultTableModel) tCidades.getModel();
 
         CidadesDao dao = new CidadesDao();
 
-        
         tabela.setNumRows(0);
-        
-        for(Cidades cd : dao.pesquisar(tfPesquisar.getText())){
+
+        for (Cidades cd : dao.pesquisar(tfPesquisar.getText())) {
             tabela.addRow(new Object[]{
-               cd.getId_cidade(),
-               cd.getCodigo_ibge(),
-               cd.getDescricao(),
-               cd.getUf()
+                cd.getId_cidade(),
+                cd.getCodigo_ibge(),
+                cd.getDescricao(),
+                cd.getUf()
             });
         }
-        
+
     }
 
     /**
@@ -56,7 +53,7 @@ public class CidadesView extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -82,10 +79,10 @@ public class CidadesView extends javax.swing.JFrame {
 
         jLabel1.setText("Código:");
 
-        jTextField1.setEnabled(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tfCodigo.setEnabled(false);
+        tfCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tfCodigoActionPerformed(evt);
             }
         });
 
@@ -102,6 +99,11 @@ public class CidadesView extends javax.swing.JFrame {
         jButton1.setText("Cadastrar");
 
         jButton3.setText("Excluir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Limpar");
 
@@ -131,7 +133,7 @@ public class CidadesView extends javax.swing.JFrame {
                     .addComponent(jTextField2)
                     .addComponent(jTextField3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -155,7 +157,7 @@ public class CidadesView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -252,9 +254,9 @@ public class CidadesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void tfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tfCodigoActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
@@ -264,6 +266,17 @@ public class CidadesView extends javax.swing.JFrame {
         // TODO add your handling code here:
         pesquisaDados();
     }//GEN-LAST:event_bPesquisarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Cidades c = new Cidades();
+        CidadesDao Dao = new CidadesDao();
+
+        c.setId_cidade(Integer.parseInt(tfCodigo.getText()));
+
+        //Dao.excluir(c);
+        //CarregarTabela();
+        //LimparCampos();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,12 +327,12 @@ public class CidadesView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tCidades;
+    private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfPesquisar;
     // End of variables declaration//GEN-END:variables
 }
