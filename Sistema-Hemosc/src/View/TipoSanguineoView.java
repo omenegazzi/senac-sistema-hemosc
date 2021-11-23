@@ -6,7 +6,7 @@
 package View;
 
 
-import Controller_DAO.TiposanguineoDao;
+import Controller_DAO.TipoSanguineoDao;
 import Model.TipoSanguineo;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +26,7 @@ public class TipoSanguineoView extends javax.swing.JFrame {
      public void carregaDados(){
 
         DefaultTableModel tabela = (DefaultTableModel) tTipoSanguineo.getModel();      
-        TiposanguineoDao dao = new TiposanguineoDao();
+        TipoSanguineoDao dao = new TipoSanguineoDao();
         tabela.setNumRows(0);
 
         for (TipoSanguineo ts: dao.listar()){
@@ -44,7 +44,7 @@ public class TipoSanguineoView extends javax.swing.JFrame {
         
         DefaultTableModel tabela = (DefaultTableModel) tTipoSanguineo.getModel(); 
        
-        TiposanguineoDao dao = new TiposanguineoDao();
+        TipoSanguineoDao dao = new TipoSanguineoDao();
         
         tabela.setNumRows(0);
         
