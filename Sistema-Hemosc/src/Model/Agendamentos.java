@@ -17,7 +17,7 @@ public class Agendamentos {
     private int id_agendamento;
     private Date data;
     private Time hora;
-    private Doadores id_doador;
+    private Doadores Doador;
 
     public int getId_agendamento() {
         return id_agendamento;
@@ -43,12 +43,12 @@ public class Agendamentos {
         this.hora = hora;
     }
 
-    public Doadores getId_doador() {
-        return id_doador;
+    public Doadores getDoador() {
+        return Doador;
     }
 
-    public void setId_doador(Doadores id_doador) {
-        this.id_doador = id_doador;
+    public void setDoador(Doadores Doador) {
+        this.Doador = Doador;
     }
     
 }
