@@ -5,10 +5,6 @@
  */
 package View;
 
-import Controller_DAO.AgendamentosDao;
-import Model.Agendamentos;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author gianderson.girardi
@@ -20,23 +16,6 @@ public class AgendamentoView extends javax.swing.JFrame {
      */
     public AgendamentoView() {
         initComponents();
-        carregaDados();
-    }
-    
-    public void carregaDados(){
-        
-        DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();      
-        AgendamentosDao dao = new AgendamentosDao();
-        tabela.setNumRows(0);
-                
-        for (Agendamentos A : dao.listar()){
-            tabela.addRow(new Object[]{
-                A.getId_agendamento(),
-                A.getData(),
-                A.getHora(),
-                A.getDoador() 
-            });
-        }
     }
 
     /**
@@ -65,7 +44,7 @@ public class AgendamentoView extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jTextField5 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableAgendamentos = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
@@ -119,7 +98,7 @@ public class AgendamentoView extends javax.swing.JFrame {
             }
         });
 
-        jTableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -129,7 +108,7 @@ public class AgendamentoView extends javax.swing.JFrame {
                 "Codigo", "Hora", "Data", "Doador"
             }
         ));
-        jScrollPane1.setViewportView(jTableAgendamentos);
+        jScrollPane1.setViewportView(jTable1);
 
         jButton6.setText("Limpar");
 
@@ -293,7 +272,7 @@ public class AgendamentoView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableAgendamentos;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
