@@ -19,6 +19,30 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AgendamentosDao {
+    public void cadastrar(Agendamentos a) {
+        Connection conn = ConexaoBanco.conectaBanco();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("INSERT INTO agendamento (id_agendamento,data,hora,id_doador) VALUES (?,?,?,?)");
+            stmt.setInt(1, a.getId_agendamento());
+            stmt.setDate(2, a.getData());
+            stmt.setTime(3, a.getHora());
+            stmt.setInt(4, a.getDoador().getId_doador());
+            
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, " Agendamento cadastrado com sucesso!");
+
+        } catch (SQLException ex) {
+
+        }
+
+    } 
+    
+    
     public List<Agendamentos> listar() {
 
         Connection conn = ConexaoBanco.conectaBanco();
