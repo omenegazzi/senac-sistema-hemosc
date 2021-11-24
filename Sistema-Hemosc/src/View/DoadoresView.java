@@ -105,6 +105,12 @@ public class DoadoresView extends javax.swing.JFrame {
             }
         });
 
+        cbCidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCidadeActionPerformed(evt);
+            }
+        });
+
         jLabel9.setText("Endereço:");
 
         jbCadastrar.setText("Cadastrar");
@@ -346,7 +352,7 @@ public class DoadoresView extends javax.swing.JFrame {
         d.setId_doador(Integer.parseInt(tfDoador.getText()));
         d.setNome(tfnome.getText());
         d.setEndereco(tfDoador.getText());
-        // d.setData_nascimento(tfNascimento.getText());
+        //d.setData_nascimento(tfNascimento.getText());//
         d.setTelefone(Integer.parseInt(tfTelefone.getText()));
         d.setEmail(tfEmail.getText());
         d.setCpf(tfCpf.getText());
@@ -356,6 +362,11 @@ public class DoadoresView extends javax.swing.JFrame {
 
         dao.alterar(d);
     }//GEN-LAST:event_jbAlterarActionPerformed
+
+    private void cbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeActionPerformed
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbCidadeActionPerformed
 
     /**
      * @param args the command line arguments
