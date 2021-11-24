@@ -72,6 +72,11 @@ public class EntidadesView extends javax.swing.JFrame {
         tfexcluir.setText("Excluir");
 
         tfalterar.setText("Alterar");
+        tfalterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfalterarActionPerformed(evt);
+            }
+        });
 
         tflimpar.setText("Limpar");
         tflimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +217,21 @@ public class EntidadesView extends javax.swing.JFrame {
         
         Dao.cadastrar(e);
     }//GEN-LAST:event_tfcadastrarActionPerformed
+
+    private void tfalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfalterarActionPerformed
+        Entidades ent = new Entidades();
+        EntidadesDao DAO = new EntidadesDao();
+        
+        Cidades cid = (Cidades) cbcidade.getSelectedItem();
+            
+        ent.setId_entidade(Integer.parseInt(tfcodigo.getText()));
+        ent.setNome(tfnome.getText());
+        ent.setEndereco(tfendereco.getText());
+        ent.setCidades(cid);
+        
+        DAO.alterar(ent);
+        
+    }//GEN-LAST:event_tfalterarActionPerformed
 
     /**
      * @param args the command line arguments
