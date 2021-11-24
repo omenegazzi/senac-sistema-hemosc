@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -39,7 +40,31 @@ public class DoadoresView extends javax.swing.JFrame {
             cbSangue.addItem(d);
         }
     }
-
+    
+    public void pesquisaDados() {
+        
+        DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();    
+        
+        DoadoresDao dao = new DoadoresDao();
+        
+        tabela.setNumRows(0);
+        
+        for (Doadores d : dao.pesquisar(tfPesquisar.getText())) {
+            tabela.addRow(new Object[]{
+                d.getId_doador(),
+                d.getId_cidade(),
+                d.getId_tipo_sanguineo(),
+                d.getNome(),
+                d.getEndereco(),
+                d.getData_nascimento(),
+                d.getTelefone(),
+                d.getEmail(),
+                d.getCpf()
+            });
+        }
+      
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +89,6 @@ public class DoadoresView extends javax.swing.JFrame {
         tfTelefone = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
         tfCpf = new javax.swing.JTextField();
-        cbCidade = new javax.swing.JComboBox<>();
         cbSangue = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         tfEndereco = new javax.swing.JTextField();
@@ -78,6 +102,7 @@ public class DoadoresView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tDoadores = new javax.swing.JTable();
+        cbCidade = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -107,12 +132,6 @@ public class DoadoresView extends javax.swing.JFrame {
             }
         });
 
-        cbCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCidadeActionPerformed(evt);
-            }
-        });
-
         jLabel9.setText("Endereço:");
 
         jbCadastrar.setText("Cadastrar");
@@ -138,7 +157,18 @@ public class DoadoresView extends javax.swing.JFrame {
 
         jbFechar.setText("Fechar");
 
+        tfPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPesquisarActionPerformed(evt);
+            }
+        });
+
         jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -235,8 +265,8 @@ public class DoadoresView extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfDoador)))
+                            .addComponent(tfDoador)
+                            .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -364,7 +394,7 @@ public class DoadoresView extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(DoadoresView.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+    
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
@@ -388,10 +418,15 @@ public class DoadoresView extends javax.swing.JFrame {
         dao.alterar(d);
     }//GEN-LAST:event_jbAlterarActionPerformed
 
-    private void cbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeActionPerformed
-
+    private void tfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbCidadeActionPerformed
+      
+    }//GEN-LAST:event_tfPesquisarActionPerformed
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        // TODO add your handling code here:
+        pesquisaDados();
+    }//GEN-LAST:event_jbPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
