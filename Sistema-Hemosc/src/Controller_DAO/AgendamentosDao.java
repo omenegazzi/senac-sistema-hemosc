@@ -17,8 +17,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class AgendamentosDao {
+
     public void cadastrar(Agendamentos a) {
         Connection conn = ConexaoBanco.conectaBanco();
         PreparedStatement stmt = null;
@@ -30,7 +32,6 @@ public class AgendamentosDao {
             stmt.setDate(2, a.getData());
             stmt.setTime(3, a.getHora());
             stmt.setInt(4, a.getDoador().getId_doador());
-            
 
             stmt.executeUpdate();
 
@@ -40,9 +41,8 @@ public class AgendamentosDao {
 
         }
 
-    } 
-    
-    
+    }
+
     public List<Agendamentos> listar() {
 
         Connection conn = ConexaoBanco.conectaBanco();
@@ -74,26 +74,55 @@ public class AgendamentosDao {
 
         }
         return Agendamentos;
-    }  
-  
-    
-    public void excluir(Agendamentos agenda){
-        
+    }
+
+    public void excluir(Agendamentos agenda) {
+
         Connection conn = ConexaoBanco.conectaBanco();
-        
+
         PreparedStatement stmt = null;
-        
-        try{
-            stmt = conn.prepareStatement("DELETE FROM agendamento where id_agendamento = ? ");          
+
+        try {
+            stmt = conn.prepareStatement("DELETE FROM agendamento where id_agendamento = ? ");
             stmt.setInt(1, agenda.getId_agendamento());
-            
+
             stmt.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Agendamento Excluido com Sucesso!");
-                    
-        }catch (SQLException ex){
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Excluir! Tente novamente mais tarde!");
             Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public List<Agendamentos> pesquisar(String texto) {
+        
+        Connection conn = ConexaoBanco.conectaBanco();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Agendamentos> agendamentos = new ArrayList<>();
+        try {
+            stmt = conn.prepareStatement("SELECT agendamento.id_agendamento, agendamento.hora, agendamento.data, doadores.nome\n" 
+                    + "inner join doadores on (doadores.id_doador = agendamento.id_doador) where id_agendamento like ?\n");
+            stmt.setString(1, "%" + texto + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Agendamentos a = new Agendamentos();
+
+                a.setId_agendamento(rs.getInt("id_agendamento"));
+                a.setData(rs.getDate("data"));
+                a.setHora(rs.getTime("hora"));
+
+                Doadores d = new Doadores();
+                d.setNome(rs.getString("nome"));
+                a.setDoador(d);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return agendamentos;
     }
 }

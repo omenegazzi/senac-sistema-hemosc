@@ -29,9 +29,9 @@ public class AgendamentoView extends javax.swing.JFrame {
         initComponents();
     }
     
-     public void carregaDados(){
+    public void carregaDados(){
 
-        DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();      
+        DefaultTableModel tabela = (DefaultTableModel) TB_Agendamentos.getModel();      
         AgendamentosDao dao = new AgendamentosDao();
         tabela.setNumRows(0);
 
@@ -45,6 +45,21 @@ public class AgendamentoView extends javax.swing.JFrame {
         }
     }
 
+    public void pesquisaAgendamentos(){
+                DefaultTableModel tabela = (DefaultTableModel) TB_Agendamentos.getModel();
+        AgendamentosDao dao = new AgendamentosDao();
+        tabela.setNumRows(0);
+
+        for (Agendamentos a : dao.pesquisar(TF_Pesquisar_agendamento.getText())) {
+            tabela.addRow(new Object[]{
+                a.getId_agendamento(),
+                a.getHora(),
+                a.getData(),
+                a.getDoador()
+            });
+        }
+    }
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -67,10 +82,10 @@ public class AgendamentoView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         BotãoExcluir = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
+        BT_Pesquisar = new javax.swing.JButton();
+        TF_Pesquisar_agendamento = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableAgendamentos = new javax.swing.JTable();
+        TB_Agendamentos = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         SelecionarDoador = new javax.swing.JComboBox<>();
 
@@ -122,15 +137,20 @@ public class AgendamentoView extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setText("Pesquisar");
-
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        BT_Pesquisar.setText("Pesquisar");
+        BT_Pesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                BT_PesquisarActionPerformed(evt);
             }
         });
 
-        jTableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
+        TF_Pesquisar_agendamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TF_Pesquisar_agendamentoActionPerformed(evt);
+            }
+        });
+
+        TB_Agendamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -138,7 +158,7 @@ public class AgendamentoView extends javax.swing.JFrame {
                 "Codigo", "Hora", "Data", "Doador"
             }
         ));
-        jScrollPane1.setViewportView(jTableAgendamentos);
+        jScrollPane1.setViewportView(TB_Agendamentos);
 
         jButton6.setText("Limpar");
 
@@ -146,7 +166,6 @@ public class AgendamentoView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,26 +183,28 @@ public class AgendamentoView extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(CampoData))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(SelecionarDoador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jButton1)
-                                    .addGap(28, 28, 28)
-                                    .addComponent(jButton2)
-                                    .addGap(36, 36, 36)
-                                    .addComponent(BotãoExcluir)
-                                    .addGap(27, 27, 27)
-                                    .addComponent(jButton6)
-                                    .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SelecionarDoador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(28, 28, 28)
+                                .addComponent(jButton2)
+                                .addGap(36, 36, 36)
+                                .addComponent(BotãoExcluir)
+                                .addGap(27, 27, 27)
+                                .addComponent(jButton6)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TF_Pesquisar_agendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)
+                        .addComponent(BT_Pesquisar)
                         .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,11 +233,10 @@ public class AgendamentoView extends javax.swing.JFrame {
                     .addComponent(jButton6))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(TF_Pesquisar_agendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BT_Pesquisar))
                 .addGap(69, 69, 69)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -226,7 +246,7 @@ public class AgendamentoView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,9 +267,9 @@ public class AgendamentoView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoDataActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void TF_Pesquisar_agendamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TF_Pesquisar_agendamentoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_TF_Pesquisar_agendamentoActionPerformed
 
     private void BotãoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoExcluirActionPerformed
         try {
@@ -276,6 +296,13 @@ public class AgendamentoView extends javax.swing.JFrame {
             Logger.getLogger(AgendamentoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BotãoExcluirActionPerformed
+
+    private void BT_PesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BT_PesquisarActionPerformed
+        
+        
+        
+        
+    }//GEN-LAST:event_BT_PesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,14 +343,16 @@ public class AgendamentoView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BT_Pesquisar;
     private javax.swing.JButton BotãoExcluir;
     private javax.swing.JTextField CampoData;
     private javax.swing.JTextField CampoHora;
     private javax.swing.JTextField CampoId;
     private javax.swing.JComboBox<Object> SelecionarDoador;
+    private javax.swing.JTable TB_Agendamentos;
+    private javax.swing.JTextField TF_Pesquisar_agendamento;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
@@ -333,7 +362,5 @@ public class AgendamentoView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableAgendamentos;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }
