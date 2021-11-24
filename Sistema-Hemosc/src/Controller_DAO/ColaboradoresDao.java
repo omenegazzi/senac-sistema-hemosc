@@ -116,7 +116,28 @@ public class ColaboradoresDao {
         }
         return Colaboradores;
     }
+public void excluir(Colaboradores c) {
+        Connection conn = ConexaoBanco.conectaBanco();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
+        try {
+            stmt = conn.prepareStatement("DELETE FROM colaboradores where id_colaborador= ?,id_cidade = ?, nome = ?,endereco = ?,funcao = ?");
+            stmt.setInt(1, c.getId_colaborador());
+            stmt.setInt(2, c.getCidade().getId_cidade());
+            stmt.setString(3, c.getNome());
+            stmt.setString(4, c.getEndereco());
+            stmt.setString(5, c.getFuncao());
+            
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Colaborador excluido com sucesso!");
+
+        } catch (SQLException ex) {
+
+        }
+    }
 }
     
     

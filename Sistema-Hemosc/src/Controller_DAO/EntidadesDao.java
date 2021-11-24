@@ -19,6 +19,31 @@ import javax.swing.JOptionPane;
  * @author marcelo.nascimento1
  */
 public class EntidadesDao {
+    public void cadastrar(Entidades e) {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conn.prepareStatement("INSERT INTO entidades (id_entidade,id_cidade,nome,endereco) VALUES (?,?,?,?)");
+            
+            stmt.setInt(1, e.getId_entidade());
+            stmt.setInt(2, e.getCidades().getId_cidade());
+            stmt.setString(3, e.getNome());
+            stmt.setString(4, e.getEndereco());
+    
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado com Sucesso!");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar o Usuário! Por favor, tente mais tarde.");
+            Logger.getLogger(UsuariosDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
     
     public void alterar(Entidades ent){
         
