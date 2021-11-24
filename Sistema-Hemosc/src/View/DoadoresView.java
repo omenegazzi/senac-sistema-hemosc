@@ -21,7 +21,7 @@ public class DoadoresView extends javax.swing.JFrame {
      */
     public DoadoresView() {
         initComponents();
-        
+
         DoadoresDao dao = new DoadoresDao();
         DoadoresDao dao2 = new DoadoresDao();
         for (Doadores d : dao.listar()) {
@@ -31,12 +31,6 @@ public class DoadoresView extends javax.swing.JFrame {
             cbSangue.addItem(d);
         }
     }
-    
-    
-
-    
-    
-       
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -325,6 +319,12 @@ public class DoadoresView extends javax.swing.JFrame {
     }//GEN-LAST:event_tfnomeActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        Doadores d = new Doadores();
+        DoadoresDao DAO3 = new DoadoresDao();
+
+        d.setId_doador(Integer.parseInt(tfDoador.getText()));
+
+        DAO3.excluir(d);
         // TODO add your handling code here:
     }//GEN-LAST:event_jbExcluirActionPerformed
 
@@ -337,7 +337,7 @@ public class DoadoresView extends javax.swing.JFrame {
         //d.setData_nascimento(Integer.parseInt(tfNascimento.getText()));
         d.setTelefone(Integer.parseInt(tfTelefone.getText()));
         d.setEmail(tfEmail.getText());
-        d.setCpf(tfCpf.getText()); 
+        d.setCpf(tfCpf.getText());
 
         Dao.cadastrar(d);
     }//GEN-LAST:event_jbCadastrarActionPerformed
