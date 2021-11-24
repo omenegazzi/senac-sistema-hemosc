@@ -18,13 +18,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
  *
  * @author lethicia.favretto
  */
-public class saidas_de_sangue {
+public class SaidadeSangueDao {
+    
+    public void cadastrar (SaidadeSangue s){
+        
+        Connection conn = ConexaoBanco.conectaBanco();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            stmt = conn.prepareStatement("INSERT INTO saida_sangue (id_entidade, id_tipo_sanguineo, data, quantidade) VALUES (?, ?, ?, ?)");
+            stmt.setInt(1, s.getId_entidade().getId_entidade());
+            stmt.setInt(2, s.getId_tipo_sanguineo().getId_TipoSanguineo());
+            stmt.setTimestamp(3, new java.sql.Timestamp(s.getData().getTime()));
+            stmt.setInt(4, s.getQuantidade());
+            
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Saída de Sangue Cadastrada com Sucesso", "Sucesso ao Cadastrar", 1);
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar ao Banco de Dados", "Erro de Cadastro", 2);
+            Logger.getLogger(SaidadeSangue.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public List <SaidadeSangue> Listar() {
         Connection conn = ConexaoBanco.conectaBanco();
         PreparedStatement stmt = null;
@@ -60,7 +85,7 @@ public class saidas_de_sangue {
                 SaidadeSangue.add(s);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(saidas_de_sangue.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaidadeSangueDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return SaidadeSangue;
         }
