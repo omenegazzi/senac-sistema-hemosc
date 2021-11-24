@@ -5,7 +5,9 @@
  */
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
+
+
 
 /**
  *
@@ -71,6 +73,7 @@ public class Doadores {
         this.data_nascimento = data_nascimento;
     }
 
+
     public int getTelefone() {
         return telefone;
     }
@@ -99,4 +102,7 @@ public class Doadores {
     public String toString() {
         return getNome();
     }
-}
+
+  
+    }
+

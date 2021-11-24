@@ -11,6 +11,7 @@ import Model.Doadores;
 import Model.TipoSanguineo;
 import Model.Usuarios;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,7 +39,7 @@ public class DoadoresDao {
             stmt.setInt(2, d.getId_tipo_sanguineo().getId_TipoSanguineo());
             stmt.setString(3, d.getNome());
             stmt.setString(4, d.getEndereco());
-            stmt.setDate(5, d.getData_nascimento());
+            stmt.setTimestamp(5, new java.sql.Timestamp(d.getData_nascimento().getTime()));
             stmt.setInt(6, d.getTelefone());
             stmt.setString(7, d.getEmail());
             stmt.setString(8, d.getCpf());
@@ -105,7 +106,7 @@ public class DoadoresDao {
             stmt.setInt(3, d.getId_tipo_sanguineo().getId_TipoSanguineo());
             stmt.setString(4, d.getNome());
             stmt.setString(4, d.getEndereco());
-            stmt.setDate(6, d.getData_nascimento());
+            stmt.setDate(6, (Date) d.getData_nascimento());
             stmt.setInt(7, d.getTelefone());
             stmt.setString(8, d.getEmail());
             stmt.setString(9, d.getCpf());
@@ -132,7 +133,7 @@ public class DoadoresDao {
 
             stmt.setString(3, e.getNome());
             stmt.setString(4, e.getEndereco());
-            stmt.setDate(5, e.getData_nascimento());
+            stmt.setDate(5, (Date) e.getData_nascimento());
             stmt.setInt(6, e.getTelefone());
             stmt.setString(7, e.getEmail());
             stmt.setString(8, e.getCpf());
