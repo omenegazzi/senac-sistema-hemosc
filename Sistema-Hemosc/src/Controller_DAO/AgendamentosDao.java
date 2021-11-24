@@ -16,8 +16,33 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AgendamentosDao {
+    public void cadastrar(Agendamentos a) {
+        Connection conn = ConexaoBanco.conectaBanco();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("INSERT INTO agendamento (id_agendamento,data,hora,id_doador) VALUES (?,?,?,?)");
+            stmt.setInt(1, a.getId_agendamento());
+            stmt.setDate(2, a.getData());
+            stmt.setTime(3, a.getHora());
+            stmt.setInt(4, a.getDoador().getId_doador());
+            
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, " Agendamento cadastrado com sucesso!");
+
+        } catch (SQLException ex) {
+
+        }
+
+    } 
+    
+    
     public List<Agendamentos> listar() {
 
         Connection conn = ConexaoBanco.conectaBanco();
@@ -49,5 +74,26 @@ public class AgendamentosDao {
 
         }
         return Agendamentos;
+    }  
+  
+    
+    public void excluir(Agendamentos agenda){
+        
+        Connection conn = ConexaoBanco.conectaBanco();
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = conn.prepareStatement("DELETE FROM agendamento where id_agendamento = ? ");          
+            stmt.setInt(1, agenda.getId_agendamento());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Agendamento Excluido com Sucesso!");
+                    
+        }catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir! Tente novamente mais tarde!");
+            Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
