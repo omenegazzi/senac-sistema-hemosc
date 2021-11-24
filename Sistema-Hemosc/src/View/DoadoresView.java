@@ -5,10 +5,17 @@
  */
 package View;
 
+import Controller_DAO.CidadesDao;
 import Controller_DAO.DoadoresDao;
+import Controller_DAO.TipoSanguineoDao;
 import Model.Cidades;
 import Model.Doadores;
 import Model.TipoSanguineo;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,12 +29,13 @@ public class DoadoresView extends javax.swing.JFrame {
     public DoadoresView() {
         initComponents();
 
-        DoadoresDao dao = new DoadoresDao();
-        DoadoresDao dao2 = new DoadoresDao();
-        for (Doadores d : dao.listar()) {
+        CidadesDao dao = new CidadesDao();
+        TipoSanguineoDao dao1 = new TipoSanguineoDao();
+
+        for (Cidades d : dao.listar()) {
             cbCidade.addItem(d);
         }
-        for (Doadores d : dao2.listar()) {
+        for (TipoSanguineo d : dao1.listar()) {
             cbSangue.addItem(d);
         }
     }
@@ -329,17 +337,34 @@ public class DoadoresView extends javax.swing.JFrame {
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-        Doadores d = new Doadores();
-        DoadoresDao Dao = new DoadoresDao();
 
-        d.setNome(tfnome.getText());
-        d.setEndereco(tfEndereco.getText());
-        //d.setData_nascimento(Integer.parseInt(tfNascimento.getText()));
-        d.setTelefone(Integer.parseInt(tfTelefone.getText()));
-        d.setEmail(tfEmail.getText());
-        d.setCpf(tfCpf.getText());
+        try {
 
-        Dao.cadastrar(d);
+            Doadores d = new Doadores();
+            DoadoresDao Dao = new DoadoresDao();
+
+            Cidades cidade = (Cidades) cbCidade.getSelectedItem();
+            TipoSanguineo tiposanguineo = (TipoSanguineo) cbSangue.getSelectedItem();
+
+            SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = (Date) dataString.parse(tfNascimento.getText());
+            d.setData_nascimento(date);
+
+            d.setId_tipo_sanguineo(tiposanguineo);
+            d.setId_cidade(cidade);
+
+            d.setNome(tfnome.getText());
+            d.setEndereco(tfEndereco.getText());
+
+            d.setTelefone(Integer.parseInt(tfTelefone.getText()));
+            d.setEmail(tfEmail.getText());
+            d.setCpf(tfCpf.getText());
+
+            Dao.cadastrar(d);
+        } catch (ParseException ex) {
+            Logger.getLogger(DoadoresView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed

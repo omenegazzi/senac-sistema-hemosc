@@ -55,6 +55,11 @@ public class TipoSanguineo {
     public void setEstoque_minimo(int estoque_minimo) {
         this.estoque_minimo = estoque_minimo;
     }
+
+    @Override
+    public String toString() {
+        return getDescricao();
+    }
     
     
     
