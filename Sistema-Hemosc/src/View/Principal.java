@@ -32,11 +32,12 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuDeFunções = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuColaboradores = new javax.swing.JMenuItem();
         Doadores = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        MenuFunções = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
@@ -74,7 +75,12 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Cadastros");
+        jMenuDeFunções.setText("Cadastros");
+        jMenuDeFunções.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuDeFunçõesActionPerformed(evt);
+            }
+        });
 
         jMenuItem1.setText("Usuários");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -82,7 +88,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenuDeFunções.add(jMenuItem1);
 
         jMenuColaboradores.setText("Colaboradores");
         jMenuColaboradores.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +96,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuColaboradoresActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuColaboradores);
+        jMenuDeFunções.add(jMenuColaboradores);
 
         Doadores.setText("Doadores");
         Doadores.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +104,7 @@ public class Principal extends javax.swing.JFrame {
                 DoadoresActionPerformed(evt);
             }
         });
-        jMenu1.add(Doadores);
+        jMenuDeFunções.add(Doadores);
 
         jMenuItem2.setText("Tipo Sanguíneo");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -106,9 +112,17 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenuDeFunções.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        MenuFunções.setText("Funções");
+        MenuFunções.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuFunçõesActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(MenuFunções);
+
+        jMenuBar1.add(jMenuDeFunções);
 
         jMenu3.setText("Relatórios");
         jMenuBar1.add(jMenu3);
@@ -155,9 +169,18 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_DoadoresActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       //TipoSanguineoView t = new TipoSanguineoView();
-       //t.setVisible(true);
+       TipoSanguineoView t = new TipoSanguineoView();
+       t.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuDeFunçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDeFunçõesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuDeFunçõesActionPerformed
+
+    private void MenuFunçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuFunçõesActionPerformed
+        FuncoesView f = new FuncoesView();
+        f.setVisible(true);
+    }//GEN-LAST:event_MenuFunçõesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,11 +219,12 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Doadores;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem MenuFunções;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuColaboradores;
+    private javax.swing.JMenu jMenuDeFunções;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;

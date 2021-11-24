@@ -5,22 +5,22 @@
  */
 package View;
 
-import Controller_DAO.EntidadesDao;
-import Model.Cidades;
-import Model.Entidades;
+import Model.TipoSanguineo;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author david.castagnaro
  */
-public class EntidadesView extends javax.swing.JFrame {
+public class Entidades extends javax.swing.JFrame {
 
     /**
      * Creates new form Entidades
      */
-    public EntidadesView() {
+    public Entidades() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,13 +32,13 @@ public class EntidadesView extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        id_Codigo = new javax.swing.JLabel();
         tfcodigo = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        id_Nome = new javax.swing.JLabel();
         tfnome = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        tfendereco = new javax.swing.JTextField();
+        id_Endereco = new javax.swing.JLabel();
+        id_Cidade = new javax.swing.JLabel();
+        tfendereço = new javax.swing.JTextField();
         cbcidade = new javax.swing.JComboBox<>();
         tfcadastrar = new javax.swing.JButton();
         tfexcluir = new javax.swing.JButton();
@@ -54,29 +54,19 @@ public class EntidadesView extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Entidades"));
 
-        jLabel1.setText("Código:");
+        id_Codigo.setText("Código:");
 
-        jLabel2.setText("Nome:");
+        id_Nome.setText("Nome:");
 
-        jLabel3.setText("Endereço:");
+        id_Endereco.setText("Endereço:");
 
-        jLabel4.setText("Cidade:");
+        id_Cidade.setText("Cidade:");
 
         tfcadastrar.setText("Cadastrar");
-        tfcadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfcadastrarActionPerformed(evt);
-            }
-        });
 
         tfexcluir.setText("Excluir");
 
         tfalterar.setText("Alterar");
-        tfalterar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfalterarActionPerformed(evt);
-            }
-        });
 
         tflimpar.setText("Limpar");
         tflimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +77,18 @@ public class EntidadesView extends javax.swing.JFrame {
 
         tffechar.setText("Fechar");
 
+        tfpesquisacampo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfpesquisacampoActionPerformed(evt);
+            }
+        });
+
         tfpesquisar.setText("Pesquisar");
+        tfpesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfpesquisarActionPerformed(evt);
+            }
+        });
 
         tTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,14 +112,14 @@ public class EntidadesView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
+                            .addComponent(id_Codigo)
+                            .addComponent(id_Nome)
+                            .addComponent(id_Endereco)
+                            .addComponent(id_Cidade))
                         .addGap(5, 5, 5)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfnome)
-                            .addComponent(tfendereco)
+                            .addComponent(tfendereço)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(tfpesquisar))
@@ -127,7 +128,7 @@ public class EntidadesView extends javax.swing.JFrame {
                                     .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(tfpesquisacampo, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -150,19 +151,19 @@ public class EntidadesView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(id_Codigo)
                     .addComponent(tfcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(id_Nome)
                     .addComponent(tfnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(tfendereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id_Endereco)
+                    .addComponent(tfendereço, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(id_Cidade)
                     .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -177,7 +178,7 @@ public class EntidadesView extends javax.swing.JFrame {
                     .addComponent(tfpesquisar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,34 +205,14 @@ public class EntidadesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tflimparActionPerformed
 
-    private void tfcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcadastrarActionPerformed
-        // TODO add your handling code here:
-        Entidades e = new Entidades();
-        EntidadesDao Dao = new EntidadesDao();
+    private void tfpesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfpesquisarActionPerformed
+       
         
-        Cidades cidade = (Cidades) cbcidade.getSelectedItem();
-        e.setCidades(cidade);
-        
-        e.setNome(tfnome.getText());
-        e.setEndereco(tfendereco.getText());
-        
-        Dao.cadastrar(e);
-    }//GEN-LAST:event_tfcadastrarActionPerformed
+    }//GEN-LAST:event_tfpesquisarActionPerformed
 
-    private void tfalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfalterarActionPerformed
-        Entidades ent = new Entidades();
-        EntidadesDao DAO = new EntidadesDao();
-        
-        Cidades cid = (Cidades) cbcidade.getSelectedItem();
-            
-        ent.setId_entidade(Integer.parseInt(tfcodigo.getText()));
-        ent.setNome(tfnome.getText());
-        ent.setEndereco(tfendereco.getText());
-        ent.setCidades(cid);
-        
-        DAO.alterar(ent);
-        
-    }//GEN-LAST:event_tfalterarActionPerformed
+    private void tfpesquisacampoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfpesquisacampoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfpesquisacampoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -250,38 +231,37 @@ public class EntidadesView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Entidades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EntidadesView().setVisible(true);
+                new Entidades().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cbcidade;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel id_Cidade;
+    private javax.swing.JLabel id_Codigo;
+    private javax.swing.JLabel id_Endereco;
+    private javax.swing.JLabel id_Nome;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tTabela;
     private javax.swing.JButton tfalterar;
     private javax.swing.JButton tfcadastrar;
     private javax.swing.JTextField tfcodigo;
-    private javax.swing.JTextField tfendereco;
+    private javax.swing.JTextField tfendereço;
     private javax.swing.JButton tfexcluir;
     private javax.swing.JButton tffechar;
     private javax.swing.JButton tflimpar;

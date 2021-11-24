@@ -5,10 +5,18 @@
  */
 package View;
 
+import Controller_DAO.CidadesDao;
 import Controller_DAO.DoadoresDao;
+import Controller_DAO.TipoSanguineoDao;
 import Model.Cidades;
 import Model.Doadores;
 import Model.TipoSanguineo;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,23 +29,42 @@ public class DoadoresView extends javax.swing.JFrame {
      */
     public DoadoresView() {
         initComponents();
-        
-        DoadoresDao dao = new DoadoresDao();
-        DoadoresDao dao2 = new DoadoresDao();
-        for (Doadores d : dao.listar()) {
+
+        CidadesDao dao = new CidadesDao();
+        TipoSanguineoDao dao1 = new TipoSanguineoDao();
+
+        for (Cidades d : dao.listar()) {
             cbCidade.addItem(d);
         }
-        for (Doadores d : dao2.listar()) {
+        for (TipoSanguineo d : dao1.listar()) {
             cbSangue.addItem(d);
         }
     }
     
+    public void pesquisaDados() {
+        
+        DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();    
+        
+        DoadoresDao dao = new DoadoresDao();
+        
+        tabela.setNumRows(0);
+        
+        for (Doadores d : dao.pesquisar(tfPesquisar.getText())) {
+            tabela.addRow(new Object[]{
+                d.getId_doador(),
+                d.getId_cidade(),
+                d.getId_tipo_sanguineo(),
+                d.getNome(),
+                d.getEndereco(),
+                d.getData_nascimento(),
+                d.getTelefone(),
+                d.getEmail(),
+                d.getCpf()
+            });
+        }
+      
+    }
     
-
-    
-    
-       
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,7 +89,6 @@ public class DoadoresView extends javax.swing.JFrame {
         tfTelefone = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
         tfCpf = new javax.swing.JTextField();
-        cbCidade = new javax.swing.JComboBox<>();
         cbSangue = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         tfEndereco = new javax.swing.JTextField();
@@ -76,6 +102,7 @@ public class DoadoresView extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tDoadores = new javax.swing.JTable();
+        cbCidade = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -105,12 +132,6 @@ public class DoadoresView extends javax.swing.JFrame {
             }
         });
 
-        cbCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbCidadeActionPerformed(evt);
-            }
-        });
-
         jLabel9.setText("Endereço:");
 
         jbCadastrar.setText("Cadastrar");
@@ -136,7 +157,18 @@ public class DoadoresView extends javax.swing.JFrame {
 
         jbFechar.setText("Fechar");
 
+        tfPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPesquisarActionPerformed(evt);
+            }
+        });
+
         jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -233,8 +265,8 @@ public class DoadoresView extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfDoador)))
+                            .addComponent(tfDoador)
+                            .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -325,21 +357,44 @@ public class DoadoresView extends javax.swing.JFrame {
     }//GEN-LAST:event_tfnomeActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        Doadores d = new Doadores();
+        DoadoresDao DAO3 = new DoadoresDao();
+
+        d.setId_doador(Integer.parseInt(tfDoador.getText()));
+
+        DAO3.excluir(d);
         // TODO add your handling code here:
     }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
-        Doadores d = new Doadores();
-        DoadoresDao Dao = new DoadoresDao();
 
-        d.setNome(tfnome.getText());
-        d.setEndereco(tfEndereco.getText());
-        //d.setData_nascimento(Integer.parseInt(tfNascimento.getText()));
-        d.setTelefone(Integer.parseInt(tfTelefone.getText()));
-        d.setEmail(tfEmail.getText());
-        d.setCpf(tfCpf.getText()); 
+        try {
 
-        Dao.cadastrar(d);
+            Doadores d = new Doadores();
+            DoadoresDao Dao = new DoadoresDao();
+
+            Cidades cidade = (Cidades) cbCidade.getSelectedItem();
+            TipoSanguineo tiposanguineo = (TipoSanguineo) cbSangue.getSelectedItem();
+
+            SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = (Date) dataString.parse(tfNascimento.getText());
+            d.setData_nascimento(date);
+
+            d.setId_tipo_sanguineo(tiposanguineo);
+            d.setId_cidade(cidade);
+
+            d.setNome(tfnome.getText());
+            d.setEndereco(tfEndereco.getText());
+
+            d.setTelefone(Integer.parseInt(tfTelefone.getText()));
+            d.setEmail(tfEmail.getText());
+            d.setCpf(tfCpf.getText());
+
+            Dao.cadastrar(d);
+        } catch (ParseException ex) {
+            Logger.getLogger(DoadoresView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
@@ -363,10 +418,15 @@ public class DoadoresView extends javax.swing.JFrame {
         dao.alterar(d);
     }//GEN-LAST:event_jbAlterarActionPerformed
 
-    private void cbCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCidadeActionPerformed
-
+    private void tfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbCidadeActionPerformed
+      
+    }//GEN-LAST:event_tfPesquisarActionPerformed
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        // TODO add your handling code here:
+        pesquisaDados();
+    }//GEN-LAST:event_jbPesquisarActionPerformed
 
     /**
      * @param args the command line arguments

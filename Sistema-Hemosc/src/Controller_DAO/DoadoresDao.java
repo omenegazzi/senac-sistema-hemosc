@@ -11,6 +11,7 @@ import Model.Doadores;
 import Model.TipoSanguineo;
 import Model.Usuarios;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,7 +39,7 @@ public class DoadoresDao {
             stmt.setInt(2, d.getId_tipo_sanguineo().getId_TipoSanguineo());
             stmt.setString(3, d.getNome());
             stmt.setString(4, d.getEndereco());
-            stmt.setDate(5, d.getData_nascimento());
+            stmt.setTimestamp(5, new java.sql.Timestamp(d.getData_nascimento().getTime()));
             stmt.setInt(6, d.getTelefone());
             stmt.setString(7, d.getEmail());
             stmt.setString(8, d.getCpf());
@@ -105,7 +106,7 @@ public class DoadoresDao {
             stmt.setInt(3, d.getId_tipo_sanguineo().getId_TipoSanguineo());
             stmt.setString(4, d.getNome());
             stmt.setString(4, d.getEndereco());
-            stmt.setDate(6, d.getData_nascimento());
+            stmt.setDate(6, (Date) d.getData_nascimento());
             stmt.setInt(7, d.getTelefone());
             stmt.setString(8, d.getEmail());
             stmt.setString(9, d.getCpf());
@@ -132,7 +133,7 @@ public class DoadoresDao {
 
             stmt.setString(3, e.getNome());
             stmt.setString(4, e.getEndereco());
-            stmt.setDate(5, e.getData_nascimento());
+            stmt.setDate(5, (Date) e.getData_nascimento());
             stmt.setInt(6, e.getTelefone());
             stmt.setString(7, e.getEmail());
             stmt.setString(8, e.getCpf());
@@ -144,4 +145,52 @@ public class DoadoresDao {
         } catch (SQLException ex) {
         }
     }
+    
+    public List<Doadores> pesquisar(String texto) {
+        
+        Connection conn = ConexaoBanco.conectaBanco();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        List<Doadores> Doadores = new ArrayList<>();
+        
+        try{
+            stmt = conn.prepareStatement("SELECT * FROM doadores where nome like ?");
+            stmt.setString(1, "%"+ texto+"%");
+            rs = stmt.executeQuery();
+            
+            
+            while(rs.next()) {
+                
+                Doadores d = new Doadores();
+                d.setId_doador(rs.getInt("Id_doador"));
+                
+                Cidades c = new Cidades();
+                c.setId_cidade(rs.getInt("Id_Cidade"));
+                
+                d.setId_cidade(c);
+                
+                TipoSanguineo ts = new TipoSanguineo();
+                ts.setId_TipoSanguineo(rs.getInt("Id_tipo_sanguineo"));
+                
+                d.setId_tipo_sanguineo(ts);
+                
+                
+                d.setNome(rs.getString("Nome"));
+                d.setEndereco(rs.getString("Endereco"));
+                d.setData_nascimento(rs.getDate("Data_Nascimento"));
+                d.setTelefone(rs.getInt("Telefone"));
+                d.setEmail(rs.getString("Email"));
+                d.setCpf(rs.getString("Cpf"));
+                
+                Doadores.add(d);
+            }
+            
+        } catch (SQLException ex){
+            Logger.getLogger(DoadoresDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Doadores;
+    }
+    
 }
