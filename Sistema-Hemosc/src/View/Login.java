@@ -5,6 +5,16 @@
  */
 package View;
 
+import Database.ConexaoBanco;
+import static Database.ConexaoBanco.conectaBanco;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rhuan.spander
@@ -98,7 +108,40 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoEntrarActionPerformed
+        Connection conn = ConexaoBanco.conectaBanco();
+        PreparedStatement st;
+        ResultSet rs;
 
+        String username = tfUsuario.getText();
+        String password = String.valueOf(jPasswordField1.getPassword());
+
+        String query = "SELECT * FROM `usuarios` WHERE `nome` = ? AND `senha` = ?";
+
+        try {
+            st = conn.prepareStatement(query);
+
+            st.setString(1, username);
+            st.setString(2, password);
+
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                // SHOW A NEW FORM
+                Principal form = new Principal();
+                form.setVisible(true);
+                form.pack();
+                form.setLocationRelativeTo(null);
+
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos", "Login Error", 2);
+
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BotaoEntrarActionPerformed
 
     /**
