@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class AgendamentosDao {
     public List<Agendamentos> listar() {
@@ -49,5 +50,26 @@ public class AgendamentosDao {
 
         }
         return Agendamentos;
+    }  
+  
+    
+    public void excluir(Agendamentos agenda){
+        
+        Connection conn = ConexaoBanco.conectaBanco();
+        
+        PreparedStatement stmt = null;
+        
+        try{
+            stmt = conn.prepareStatement("DELETE FROM agendamento where id_agendamento = ? ");          
+            stmt.setInt(1, agenda.getId_agendamento());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Agendamento Excluido com Sucesso!");
+                    
+        }catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao Excluir! Tente novamente mais tarde!");
+            Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
