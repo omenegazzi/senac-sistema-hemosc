@@ -9,6 +9,7 @@ import Controller_DAO.DoadoresDao;
 import Model.Cidades;
 import Model.Doadores;
 import Model.TipoSanguineo;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -32,12 +33,30 @@ public class DoadoresView extends javax.swing.JFrame {
         }
     }
     
+    public void pesquisaDados() {
+        
+        DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();    
+        
+        DoadoresDao dao = new DoadoresDao();
+        
+        tabela.setNumRows(0);
+        
+        for (Doadores d : dao.pesquisar(tfPesquisar.getText())) {
+            tabela.addRow(new Object[]{
+                d.getId_doador(),
+                d.getId_cidade(),
+                d.getId_tipo_sanguineo(),
+                d.getNome(),
+                d.getEndereco(),
+                d.getData_nascimento(),
+                d.getTelefone(),
+                d.getEmail(),
+                d.getCpf()
+            });
+        }
+      
+    }
     
-
-    
-    
-       
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,7 +149,18 @@ public class DoadoresView extends javax.swing.JFrame {
 
         jbFechar.setText("Fechar");
 
+        tfPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPesquisarActionPerformed(evt);
+            }
+        });
+
         jbPesquisar.setText("Pesquisar");
+        jbPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbPesquisarActionPerformed(evt);
+            }
+        });
 
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -356,6 +386,16 @@ public class DoadoresView extends javax.swing.JFrame {
 
         dao.alterar(d);
     }//GEN-LAST:event_jbAlterarActionPerformed
+
+    private void tfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisarActionPerformed
+        // TODO add your handling code here:
+      
+    }//GEN-LAST:event_tfPesquisarActionPerformed
+
+    private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
+        // TODO add your handling code here:
+        pesquisaDados();
+    }//GEN-LAST:event_jbPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
