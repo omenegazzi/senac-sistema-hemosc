@@ -6,12 +6,15 @@
 package Controller_DAO;
 
 import Database.ConexaoBanco;
+import Model.Cidades;
 import Model.Doadores;
 import Model.Entidades;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -46,6 +49,36 @@ public class EntidadesDao {
             Logger.getLogger(UsuariosDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    public List<Entidades> listar() {
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Entidades> entidade = new ArrayList<>();
+        try {
+            stmt = conn.prepareStatement("select cidades.descricao as cidade, id_entidade,nome,endereco from entidades\n" +
+"     inner join cidades on (cidades.id_cidade = entidades.id_cidade);");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Entidades l = new Entidades();
+
+                l.setId_entidade(rs.getInt("id_entidade"));
+                l.setNome(rs.getString("nome"));
+                l.setEndereco(rs.getString("endereco"));
+
+                Cidades c = new Cidades();
+                c.setDescricao(rs.getString("cidade"));
+                l.setCidades(c);
+              
+                entidade.add(l);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EntidadesDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return entidade;
     }
     
     public void alterar(Entidades ent){

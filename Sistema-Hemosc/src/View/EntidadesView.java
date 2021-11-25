@@ -8,6 +8,7 @@ package View;
 import Controller_DAO.EntidadesDao;
 import Model.Cidades;
 import Model.Entidades;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +21,27 @@ public class EntidadesView extends javax.swing.JFrame {
      */
     public EntidadesView() {
         initComponents();
+        carregaDados();
+        
+        EntidadesDAO dao = new EntidadesDAO();
+
+        for (Editoras e : dao.listar()) {
+            cbBusca.addItem(e);
+        }
+    }
+
+    public void carregaDados() {
+        DefaultTableModel tabela = (DefaultTableModel) tTabela.getModel();
+        EntidadesDao dao = new EntidadesDao();
+        tabela.setNumRows(0);
+
+        dao.listar().forEach((Entidades e) -> {
+            tabela.addRow(new Object[]{
+                e.getId_entidade(),
+                e.getCidades().getDescricao(),
+                e.getNome(),
+                e.getEndereco(),});
+        });
     }
 
     /**
@@ -208,29 +230,29 @@ public class EntidadesView extends javax.swing.JFrame {
         // TODO add your handling code here:
         Entidades e = new Entidades();
         EntidadesDao Dao = new EntidadesDao();
-        
+
         Cidades cidade = (Cidades) cbcidade.getSelectedItem();
         e.setCidades(cidade);
-        
+
         e.setNome(tfnome.getText());
         e.setEndereco(tfendereco.getText());
-        
+
         Dao.cadastrar(e);
     }//GEN-LAST:event_tfcadastrarActionPerformed
 
     private void tfalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfalterarActionPerformed
         Entidades ent = new Entidades();
         EntidadesDao DAO = new EntidadesDao();
-        
+
         Cidades cid = (Cidades) cbcidade.getSelectedItem();
-            
+
         ent.setId_entidade(Integer.parseInt(tfcodigo.getText()));
         ent.setNome(tfnome.getText());
         ent.setEndereco(tfendereco.getText());
         ent.setCidades(cid);
-        
+
         DAO.alterar(ent);
-        
+
     }//GEN-LAST:event_tfalterarActionPerformed
 
     /**
