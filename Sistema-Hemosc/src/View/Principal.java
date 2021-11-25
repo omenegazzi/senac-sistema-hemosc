@@ -28,17 +28,33 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuColaboradores = new javax.swing.JMenuItem();
-        Doadores = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        IMN_Agendamentos = new javax.swing.JMenu();
+        MI_Agendamentos = new javax.swing.JMenuItem();
+        MI_Cidades = new javax.swing.JMenuItem();
+        MI_Colaboradores = new javax.swing.JMenuItem();
+        MI_Doadores = new javax.swing.JMenuItem();
+        MI_Entidades = new javax.swing.JMenuItem();
+        MI_Saída_sangue = new javax.swing.JMenuItem();
+        MI_Tipo_sanguineo = new javax.swing.JMenuItem();
+        MI_Usuários = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+
+        jMenuItem3.setText("jMenuItem3");
+
+        jMenuItem4.setText("jMenuItem4");
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,41 +90,73 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Cadastros");
+        IMN_Agendamentos.setText("Cadastros");
 
-        jMenuItem1.setText("Usuários");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        MI_Agendamentos.setText("Agendamentos");
+        MI_Agendamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                MI_AgendamentosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        IMN_Agendamentos.add(MI_Agendamentos);
 
-        jMenuColaboradores.setText("Colaboradores");
-        jMenuColaboradores.addActionListener(new java.awt.event.ActionListener() {
+        MI_Cidades.setText("Cidades");
+        MI_Cidades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuColaboradoresActionPerformed(evt);
+                MI_CidadesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuColaboradores);
+        IMN_Agendamentos.add(MI_Cidades);
 
-        Doadores.setText("Doadores");
-        Doadores.addActionListener(new java.awt.event.ActionListener() {
+        MI_Colaboradores.setText("Colaboradores");
+        MI_Colaboradores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DoadoresActionPerformed(evt);
+                MI_ColaboradoresActionPerformed(evt);
             }
         });
-        jMenu1.add(Doadores);
+        IMN_Agendamentos.add(MI_Colaboradores);
 
-        jMenuItem2.setText("Tipo Sanguíneo");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        MI_Doadores.setText("Doadores");
+        MI_Doadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                MI_DoadoresActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        IMN_Agendamentos.add(MI_Doadores);
 
-        jMenuBar1.add(jMenu1);
+        MI_Entidades.setText("Entidades");
+        MI_Entidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MI_EntidadesActionPerformed(evt);
+            }
+        });
+        IMN_Agendamentos.add(MI_Entidades);
+
+        MI_Saída_sangue.setText("Saída de estoque");
+        MI_Saída_sangue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MI_Saída_sangueActionPerformed(evt);
+            }
+        });
+        IMN_Agendamentos.add(MI_Saída_sangue);
+
+        MI_Tipo_sanguineo.setText("Tipo Sanguíneo");
+        MI_Tipo_sanguineo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MI_Tipo_sanguineoActionPerformed(evt);
+            }
+        });
+        IMN_Agendamentos.add(MI_Tipo_sanguineo);
+
+        MI_Usuários.setText("Usuários");
+        MI_Usuários.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MI_UsuáriosActionPerformed(evt);
+            }
+        });
+        IMN_Agendamentos.add(MI_Usuários);
+
+        jMenuBar1.add(IMN_Agendamentos);
 
         jMenu3.setText("Relatórios");
         jMenuBar1.add(jMenu3);
@@ -138,26 +186,45 @@ public class Principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void MI_UsuáriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_UsuáriosActionPerformed
         UsuariosView usuarios = new UsuariosView();
         usuarios.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_MI_UsuáriosActionPerformed
 
-    private void jMenuColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuColaboradoresActionPerformed
+    private void MI_ColaboradoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_ColaboradoresActionPerformed
         ColaboradoresView c = new ColaboradoresView();
         c.setVisible(true);
-    }//GEN-LAST:event_jMenuColaboradoresActionPerformed
+    }//GEN-LAST:event_MI_ColaboradoresActionPerformed
 
-    private void DoadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoadoresActionPerformed
-        // TODO add your handling code here:
+    private void MI_DoadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_DoadoresActionPerformed
         DoadoresView c = new DoadoresView();
         c.setVisible(true);
-    }//GEN-LAST:event_DoadoresActionPerformed
+    }//GEN-LAST:event_MI_DoadoresActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       //TipoSanguineoView t = new TipoSanguineoView();
-       //t.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    private void MI_Tipo_sanguineoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_Tipo_sanguineoActionPerformed
+        TipoSanguineoView ts = new TipoSanguineoView();
+        ts.setVisible(true);
+    }//GEN-LAST:event_MI_Tipo_sanguineoActionPerformed
+
+    private void MI_AgendamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_AgendamentosActionPerformed
+        AgendamentoView ag = new AgendamentoView();
+        ag.setVisible(true);
+    }//GEN-LAST:event_MI_AgendamentosActionPerformed
+
+    private void MI_CidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_CidadesActionPerformed
+        CidadesView cid = new CidadesView();
+        cid.setVisible(true);
+    }//GEN-LAST:event_MI_CidadesActionPerformed
+
+    private void MI_EntidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_EntidadesActionPerformed
+        EntidadesView enti = new EntidadesView();
+        enti.setVisible(true);
+    }//GEN-LAST:event_MI_EntidadesActionPerformed
+
+    private void MI_Saída_sangueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MI_Saída_sangueActionPerformed
+        SaidaSangueView saida = new SaidaSangueView();
+        saida.setVisible(true);
+    }//GEN-LAST:event_MI_Saída_sangueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,14 +262,22 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Doadores;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu IMN_Agendamentos;
+    private javax.swing.JMenuItem MI_Agendamentos;
+    private javax.swing.JMenuItem MI_Cidades;
+    private javax.swing.JMenuItem MI_Colaboradores;
+    private javax.swing.JMenuItem MI_Doadores;
+    private javax.swing.JMenuItem MI_Entidades;
+    private javax.swing.JMenuItem MI_Saída_sangue;
+    private javax.swing.JMenuItem MI_Tipo_sanguineo;
+    private javax.swing.JMenuItem MI_Usuários;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuColaboradores;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
