@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema db_hemosc
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_hemosc` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `db_hemosc2` DEFAULT CHARACTER SET utf8 ;
 USE `db_hemosc` ;
 
 -- -----------------------------------------------------
@@ -181,14 +181,14 @@ CREATE TABLE IF NOT EXISTS `db_hemosc`.`saida_sangue` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-create table usuarios(
+CREATE TABLE IF NOT EXISTS `db_hemosc`.`usuarios`(
 codigo int not null auto_increment,
 nome varchar(100),
 email varchar(100),
 senha varchar(45),
 primary key(codigo));
 
-Create table funcoes(
+CREATE TABLE IF NOT EXISTS `db_hemosc`.`funcoes`(
 id_funcao int not null auto_increment,
 funcao varchar(200),
 descricao varchar(500),
