@@ -17,6 +17,14 @@ private String nome;
 private String endereco;
 private String funcao;
 
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
+
     public int getId_colaborador() {
         return id_colaborador;
     }
@@ -49,18 +57,15 @@ private String funcao;
         this.endereco = endereco;
     }
 
-    public String getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(String funcao) {
-        this.funcao = funcao;
-    }
-
+    
+    
     @Override
     public String toString() {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
+
+
+   
     
     
 }

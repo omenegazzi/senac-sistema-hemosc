@@ -19,7 +19,7 @@ public class ConexaoBanco {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             return DriverManager.getConnection("jdbc:mysql://localhost/db_hemosc?"
-                            + "user=root&password=root");     
+                            + "user=root&password=2643");     
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex) {
             throw new RuntimeException("Erro ao conectar no banco de dados", ex);
             

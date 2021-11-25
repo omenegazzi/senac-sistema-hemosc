@@ -32,7 +32,7 @@ public class ColaboradoresDao {
         ResultSet rs = null;
 
         try {
-            stmt = conn.prepareStatement("INSERT INTO colaborador (id_cidade,nome,endereco,funcao) VALUES (?,?,?,?)");
+            stmt = conn.prepareStatement("INSERT INTO colaboradores (id_cidade,nome,endereco,funcao) VALUES (?,?,?,?)");
             stmt.setInt(1, c.getCidade().getId_cidade());
             stmt.setString(2, c.getNome());
             stmt.setString(3, c.getEndereco());
@@ -55,7 +55,8 @@ public class ColaboradoresDao {
         List<Colaboradores> Colaboradores = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM colaboradores");
+            stmt = conn.prepareStatement("select colaboradores.id_colaborador, cidades.descricao as cidade_nome, colaboradores.nome, colaboradores.endereco, colaboradores.funcao from colaboradores\n" +
+"inner join cidades on (cidades.id_cidade = colaboradores.id_cidade)");
 
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -66,7 +67,7 @@ public class ColaboradoresDao {
                 c.setFuncao(rs.getString("funcao"));
                 
                 Cidades ci = new Cidades();
-                ci.setId_cidade(rs.getInt("id_cidade"));
+                ci.setDescricao(rs.getString("cidade_nome"));
                 c.setCidade(ci);
 
                 Colaboradores.add(c);
@@ -90,7 +91,8 @@ public class ColaboradoresDao {
         List<Colaboradores> Colaboradores = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM colaboradores where nome like ? ");
+            stmt = conn.prepareStatement("select colaboradores.id_colaborador, cidades.descricao as cidade_nome, colaboradores.nome, colaboradores.endereco, colaboradores.funcao from colaboradores\n" +
+"inner join cidades on (cidades.id_cidade = colaboradores.id_cidade) where nome like ? ");
             stmt.setString(1, "%" + texto + "%");
             rs = stmt.executeQuery();
 
@@ -102,7 +104,7 @@ public class ColaboradoresDao {
                 c.setFuncao(rs.getString("funcao"));
                 
                 Cidades ci = new Cidades();
-                ci.setId_cidade(rs.getInt("id_cidade"));
+                ci.setDescricao(rs.getString("cidade_nome"));
                 c.setCidade(ci);
                 
                

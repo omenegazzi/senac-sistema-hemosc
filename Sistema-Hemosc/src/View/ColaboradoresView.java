@@ -322,11 +322,17 @@ public class ColaboradoresView extends javax.swing.JFrame {
         Colaboradores c = new Colaboradores();
         ColaboradoresDao DAO = new ColaboradoresDao();
 
-        Cidades cidade = (Cidades) SelecionarCidade.getSelectedItem();
-        c.setNome(CampoNome.getText());
-        c.setEndereco(CampoEndereco.getText());
+        
+        Cidades cidades = (Cidades) SelecionarCidade.getSelectedItem();
         Funcoes funcao = (Funcoes) SelecionarFuncao.getSelectedItem();
         
+        c.setNome(CampoNome.getText());
+        c.setEndereco(CampoEndereco.getText());
+        
+        c.setCidade(cidades);
+        
+        
+       
         DAO.cadastrar(c);
         carregaDados();
         
