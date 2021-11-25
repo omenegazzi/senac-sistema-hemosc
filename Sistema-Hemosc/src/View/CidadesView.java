@@ -20,6 +20,7 @@ public class CidadesView extends javax.swing.JFrame {
      */
     public CidadesView() {
         initComponents();
+        this.setLocationRelativeTo(null);
         carregaDados();
     }
     
@@ -30,7 +31,7 @@ public class CidadesView extends javax.swing.JFrame {
        
         for (Cidades a : dao.listar()){
             tabela.addRow(new Object[]{
-                a.getId_cidade(),
+               a.getId_cidade(),
                a.getDescricao(),
                a.getCodigo_ibge(),
                a.getUf()
@@ -48,10 +49,10 @@ public class CidadesView extends javax.swing.JFrame {
 
         for (Cidades cd : dao.pesquisar(tfPesquisar.getText())) {
             tabela.addRow(new Object[]{
-                cd.getId_cidade(),
-                cd.getCodigo_ibge(),
-                cd.getDescricao(),
-                cd.getUf()
+               cd.getId_cidade(),
+               cd.getDescricao(),
+               cd.getCodigo_ibge(),
+               cd.getUf()
             });
         }
 
@@ -69,7 +70,6 @@ public class CidadesView extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tfCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         tfdescriçao = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -81,6 +81,7 @@ public class CidadesView extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         tfibge = new javax.swing.JTextField();
+        tfCodigo = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         tfPesquisar = new javax.swing.JTextField();
         bPesquisar = new javax.swing.JButton();
@@ -94,13 +95,6 @@ public class CidadesView extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabel1.setText("Código:");
-
-        tfCodigo.setEnabled(false);
-        tfCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfCodigoActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Descrição:");
 
@@ -139,6 +133,8 @@ public class CidadesView extends javax.swing.JFrame {
 
         jLabel4.setText("IBGE:");
 
+        tfCodigo.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,7 +150,7 @@ public class CidadesView extends javax.swing.JFrame {
                     .addComponent(tfdescriçao)
                     .addComponent(tfuf)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -178,9 +174,9 @@ public class CidadesView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfibge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfdescriçao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -280,10 +276,6 @@ public class CidadesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void tfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfCodigoActionPerformed
-
     private void tfdescriçaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfdescriçaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfdescriçaoActionPerformed
@@ -299,8 +291,8 @@ public class CidadesView extends javax.swing.JFrame {
 
         c.setId_cidade(Integer.parseInt(tfCodigo.getText()));
 
-        //Dao.excluir(c);
-        //CarregarTabela();
+        Dao.excluir(c);
+        carregaDados();
         //LimparCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -317,6 +309,7 @@ public class CidadesView extends javax.swing.JFrame {
     }//GEN-LAST:event_tfcadastrarActionPerformed
 
     private void tCidadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tCidadesMouseClicked
+        tfCodigo.setText(tCidades.getValueAt(tCidades.getSelectedRow(), 0).toString());
         tfibge.setText(tCidades.getValueAt(tCidades.getSelectedRow(), 2).toString());
         tfdescriçao.setText(tCidades.getValueAt(tCidades.getSelectedRow(), 1).toString());
         tfuf.setText(tCidades.getValueAt(tCidades.getSelectedRow(), 3).toString());

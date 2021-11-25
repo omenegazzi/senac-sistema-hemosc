@@ -104,11 +104,14 @@ public class CidadesDao {
         return Cidades;
     }
 
-    public void excluir(Cidades c) throws SQLException {
+    public void excluir(Cidades c) {
+        
         Connection conn = ConexaoBanco.conectaBanco();
 
         PreparedStatement stmt = null;
 
+        ResultSet rs = null;
+        
         try {
             stmt = conn.prepareStatement("DELETE FROM cidades WHERE id_cidade = ?");
             stmt.setInt(1, c.getId_cidade());
