@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AgendamentosDao {
+
     public void cadastrar(Agendamentos a) {
         Connection conn = ConexaoBanco.conectaBanco();
         PreparedStatement stmt = null;
@@ -30,7 +31,6 @@ public class AgendamentosDao {
             stmt.setDate(2, a.getData());
             stmt.setTime(3, a.getHora());
             stmt.setInt(4, a.getDoador().getId_doador());
-            
 
             stmt.executeUpdate();
 
@@ -40,9 +40,8 @@ public class AgendamentosDao {
 
         }
 
-    } 
-    
-    
+    }
+
     public List<Agendamentos> listar() {
 
         Connection conn = ConexaoBanco.conectaBanco();
@@ -74,24 +73,43 @@ public class AgendamentosDao {
 
         }
         return Agendamentos;
-    }  
-  
-    
-    public void excluir(Agendamentos agenda){
-        
+    }
+
+    public void alterar(Agendamentos a) {
         Connection conn = ConexaoBanco.conectaBanco();
-        
         PreparedStatement stmt = null;
-        
-        try{
-            stmt = conn.prepareStatement("DELETE FROM agendamento where id_agendamento = ? ");          
-            stmt.setInt(1, agenda.getId_agendamento());
-            
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("UPDATE agendamentos set id_agendamento = ?, data = ?, hora = ?, doador = ?  where id_agendamentos = ? ");
+            stmt.setInt(1, a.getId_agendamento());
+            stmt.setDate(2, a.getData());
+            stmt.setTime(3, a.getHora());
+            stmt.setInt(4, a.getDoador().getId_doador());
+
             stmt.executeUpdate();
-            
+            JOptionPane.showMessageDialog(null, "Agendamentos alterado com sucesso!");
+        } catch (SQLException ex) {
+            Logger.getLogger(Agendamentos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void excluir(Agendamentos agenda) {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conn.prepareStatement("DELETE FROM agendamento where id_agendamento = ? ");
+            stmt.setInt(1, agenda.getId_agendamento());
+
+            stmt.executeUpdate();
+
             JOptionPane.showMessageDialog(null, "Agendamento Excluido com Sucesso!");
-                    
-        }catch (SQLException ex){
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao Excluir! Tente novamente mais tarde!");
             Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
         }
