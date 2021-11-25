@@ -5,8 +5,12 @@
  */
 package View;
 
+import Controller_DAO.CidadesDao;
 import Controller_DAO.ColaboradoresDao;
+import Controller_DAO.FuncoesDao;
+import Model.Cidades;
 import Model.Colaboradores;
+import Model.Funcoes;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,6 +25,19 @@ public class ColaboradoresView extends javax.swing.JFrame {
     public ColaboradoresView() {
         initComponents();
         carregaDados();
+        
+        CidadesDao ccc = new CidadesDao();
+
+        for (Cidades ci : ccc.listar()) {
+            SelecionarCidade.addItem(ci);
+        }
+        
+        FuncoesDao fff = new FuncoesDao();
+
+        for (Funcoes fu : fff.listar()) {
+            SelecionarFuncao.addItem(fu);
+        }    
+        
     }
 
     public void carregaDados(){
@@ -305,9 +322,11 @@ public class ColaboradoresView extends javax.swing.JFrame {
         Colaboradores c = new Colaboradores();
         ColaboradoresDao DAO = new ColaboradoresDao();
 
-        
+        Cidades cidade = (Cidades) SelecionarCidade.getSelectedItem();
         c.setNome(CampoNome.getText());
         c.setEndereco(CampoEndereco.getText());
+        Funcoes funcao = (Funcoes) SelecionarFuncao.getSelectedItem();
+        
         DAO.cadastrar(c);
         carregaDados();
         
