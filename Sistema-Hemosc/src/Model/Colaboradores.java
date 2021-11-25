@@ -15,7 +15,7 @@ private int id_colaborador;
 private Cidades Cidade;
 private String nome;
 private String endereco;
-private String funcao;
+private Funcoes funcao;
 
     public int getId_colaborador() {
         return id_colaborador;
@@ -49,11 +49,11 @@ private String funcao;
         this.endereco = endereco;
     }
 
-    public String getFuncao() {
+    public Funcoes getFuncao() {
         return funcao;
     }
 
-    public void setFuncao(String funcao) {
+    public void setFuncao(Funcoes funcao) {
         this.funcao = funcao;
     }
 
