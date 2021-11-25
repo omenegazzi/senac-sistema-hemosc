@@ -5,6 +5,10 @@
  */
 package View;
 
+import Controller_DAO.AgendamentosDao;
+import Model.Agendamentos;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diegomenegazzi
@@ -16,7 +20,23 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
+        carregaDados();
+    }
+    
+     public void carregaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();
+        AgendamentosDao dao = new AgendamentosDao();
+        tabela.setNumRows(0);
+
+        for (Agendamentos a : dao.listarDia()) {
+            tabela.addRow(new Object[]{
+                a.getId_agendamento(),
+                a.getData(),
+                a.getHora(),
+                a.getDoador() 
+            });
+        }
     }
 
     /**
@@ -30,7 +50,7 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAgendamentos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuDeFunções = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -45,7 +65,7 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agendamentos do dia"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -53,10 +73,18 @@ public class Principal extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Data", "Hora", "Doador"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableAgendamentos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -229,6 +257,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableAgendamentos;
     // End of variables declaration//GEN-END:variables
 }

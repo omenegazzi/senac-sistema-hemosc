@@ -96,4 +96,37 @@ public class AgendamentosDao {
             Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+     public List<Agendamentos> listarDia() {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Agendamentos> Agendamentos = new ArrayList<>();
+
+        try {
+            stmt = conn.prepareStatement("select A.id_agendamento, A.data, A.hora, D.nome from agendamento A\n" +
+"inner join doadores D on (D.id_doador = A.id_doador) WHERE A.data = CURDATE()");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Agendamentos a = new Agendamentos();
+                a.setId_agendamento(rs.getInt("id_agendamento"));
+                a.setData(rs.getDate("data"));
+                a.setHora(rs.getTime("hora"));
+
+                Doadores d = new Doadores();
+                d.setNome(rs.getString("nome"));
+                a.setDoador(d);
+
+                Agendamentos.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AgendamentosDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return Agendamentos;
+    }
 }
