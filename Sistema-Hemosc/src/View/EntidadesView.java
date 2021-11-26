@@ -5,9 +5,13 @@
  */
 package View;
 
+
+import Controller_DAO.CidadesDao;
 import Controller_DAO.EntidadesDao;
+import Controller_DAO.TipoSanguineoDao;
 import Model.Cidades;
 import Model.Entidades;
+import Model.TipoSanguineo;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,11 +27,13 @@ public class EntidadesView extends javax.swing.JFrame {
         initComponents();
         carregaDados();
         
-        EntidadesDAO dao = new EntidadesDAO();
+    CidadesDao dao = new CidadesDao();
+        
 
-        for (Editoras e : dao.listar()) {
-            cbBusca.addItem(e);
+        for (Cidades d : dao.listar()) {
+            cbcidade.addItem(d);
         }
+     
     }
 
     public void carregaDados() {
@@ -77,6 +83,8 @@ public class EntidadesView extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Entidades"));
 
         jLabel1.setText("Código:");
+
+        tfcodigo.setEnabled(false);
 
         jLabel2.setText("Nome:");
 
@@ -238,6 +246,7 @@ public class EntidadesView extends javax.swing.JFrame {
         e.setEndereco(tfendereco.getText());
 
         Dao.cadastrar(e);
+        carregaDados();
     }//GEN-LAST:event_tfcadastrarActionPerformed
 
     private void tfalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfalterarActionPerformed
@@ -292,7 +301,7 @@ public class EntidadesView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbcidade;
+    private javax.swing.JComboBox<Object> cbcidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
