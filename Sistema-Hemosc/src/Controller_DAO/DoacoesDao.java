@@ -75,7 +75,7 @@ public class DoacoesDao {
         List<Doacoes> doacoes = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("select id_doacao, doadores.nome, tipos_sanguineos.descricao, colaboradores.nome from doacoes\n"
+            stmt = conn.prepareStatement("select id_doacao, doadores.nome as nome_doador, tipos_sanguineos.descricao as descricao_ts, colaboradores.nome as nome_desc from doacoes\n"
                     + "inner join doadores on (doadores.id_doador = doacoes.id_doador)\n"
                     + "inner join tipos_sanguineos on (tipos_sanguineos.id_tipo_sanguineo = doacoes.id_tipo_sanguineo)\n"
                     + "inner join colaboradores on (colaboradores.id_colaborador = doacoes.id_colaborador)");
@@ -84,18 +84,21 @@ public class DoacoesDao {
             while (rs.next()) {
                 Doacoes d = new Doacoes();
                 d.setId_doacao(rs.getInt("id_doacao"));
-                d.setData(rs.getDate("data"));
+               
+                Doadores d1 = new Doadores();
+                d1.setNome(rs.getString("nome_doador"));
+                d.setId_doador(d1);
 
-                Doadores doa = new Doadores();
-                doa.setId_doador(rs.getInt("id_doador"));
-                d.setId_doador(doa);
+               /* Doadores doa = new Doadores();
+                doa.setId_doador(rs.getString("nome"));
+                d.setId_doador(doa);*/
 
                 TipoSanguineo Ts = new TipoSanguineo();
-                Ts.setId_TipoSanguineo(rs.getInt("id_tipo_sanguineo"));
+                Ts.setDescricao(rs.getString("descricao_ts"));
                 d.setId_tipo_sanguineo(Ts);
 
                 Colaboradores Col = new Colaboradores();
-                Col.setId_colaborador(rs.getInt("id_colaborador"));
+                Col.setNome(rs.getString("nome_desc"));
                 d.setId_colaborador(Col);
 
                 doacoes.add(d);

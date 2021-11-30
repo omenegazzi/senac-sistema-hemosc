@@ -20,22 +20,41 @@ public class DoacoesView extends javax.swing.JFrame {
      */
     public DoacoesView() {
         initComponents();
+        carregarDados();
     }
-    public void pesquisaDados(){
-        
-        DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();      
+
+    public void pesquisaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();
         DoacoesDao dao = new DoacoesDao();
         tabela.setNumRows(0);
-                
-        for (Doacoes d : dao.pesquisar(jPesquisa.getText())){
+
+        for (Doacoes d : dao.pesquisar(jPesquisa.getText())) {
             tabela.addRow(new Object[]{
                 d.getId_doacao(),
                 d.getData(),
                 d.getId_doador().getNome(),
                 d.getId_tipo_sanguineo().getDescricao(),
-                d.getId_colaborador().getNome(),
+                d.getId_colaborador().getNome(),});
+        }
+    }
+
+    public void carregarDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();
+        DoacoesDao dao = new DoacoesDao();
+        tabela.setNumRows(0);
+
+        for (Doacoes d : dao.listar()) {
+            tabela.addRow(new Object[]{
+                d.getId_doacao(),
+                d.getId_doador(),
+                d.getId_tipo_sanguineo(),
+                d.getId_colaborador(),
             });
-        }        
+
+        }
+
     }
 
     /**
@@ -303,27 +322,27 @@ public class DoacoesView extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
-       
+
     }//GEN-LAST:event_bCadastrarActionPerformed
 
     private void bAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAlterarActionPerformed
-        
+
     }//GEN-LAST:event_bAlterarActionPerformed
 
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
-       
+
     }//GEN-LAST:event_bExcluirActionPerformed
 
     private void bLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimparActionPerformed
-      
+
     }//GEN-LAST:event_bLimparActionPerformed
 
     private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
-        
+
     }//GEN-LAST:event_bFecharActionPerformed
 
     private void tUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tUsuariosMouseClicked
-        
+
     }//GEN-LAST:event_tUsuariosMouseClicked
 
     private void jPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPesquisaActionPerformed
