@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema db_hemosc
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_hemosc2` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `db_hemosc` DEFAULT CHARACTER SET utf8 ;
 USE `db_hemosc` ;
 
 -- -----------------------------------------------------
