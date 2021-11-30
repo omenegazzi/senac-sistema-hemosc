@@ -8,6 +8,7 @@ package Controller_DAO;
 import Database.ConexaoBanco;
 import Model.Cidades;
 import Model.Colaboradores;
+import Model.Funcoes;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +24,7 @@ import javax.swing.JOptionPane;
  * @author gabriel
  */
 public class ColaboradoresDao {
-    
+
     public void cadastrar(Colaboradores c) {
 
         Connection conn = ConexaoBanco.conectaBanco();
@@ -32,20 +33,19 @@ public class ColaboradoresDao {
         ResultSet rs = null;
 
         try {
-            stmt = conn.prepareStatement("INSERT INTO colaborador (id_cidade,nome,endereco,funcao) VALUES (?,?,?,?)");
+            stmt = conn.prepareStatement("INSERT INTO colaboradores (id_cidade,nome,endereco,funcao) VALUES (?,?,?,?)");
             stmt.setInt(1, c.getCidade().getId_cidade());
             stmt.setString(2, c.getNome());
             stmt.setString(3, c.getEndereco());
-            stmt.setString(4, c.getFuncao());
+            stmt.setString(4, c.getFuncao().getFuncao());
 
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Colaborador cadastrado com sucesso!");
 
         } catch (SQLException ex) {
-
+            Logger.getLogger(ColaboradoresDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public List<Colaboradores> listar() {
@@ -55,7 +55,8 @@ public class ColaboradoresDao {
         List<Colaboradores> Colaboradores = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM colaboradores");
+            stmt = conn.prepareStatement("SELECT id_colaborador, cidades.descricao, colaboradores.nome, colaboradores.endereco, colaboradores.funcao FROM colaboradores \n"
+                    + "INNER JOIN cidades ON (cidades.id_cidade = colaboradores.id_cidade)");
 
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -63,14 +64,16 @@ public class ColaboradoresDao {
                 c.setId_colaborador(rs.getInt("id_colaborador"));
                 c.setNome(rs.getString("nome"));
                 c.setEndereco(rs.getString("endereco"));
-                c.setFuncao(rs.getString("funcao"));
-                
+
                 Cidades ci = new Cidades();
-                ci.setId_cidade(rs.getInt("id_cidade"));
+                ci.setDescricao(rs.getString("descricao"));
                 c.setCidade(ci);
 
-                Colaboradores.add(c);
+                Funcoes F = new Funcoes();
+                F.setFuncao(rs.getString("funcao"));
+                c.setFuncao(F);
 
+                Colaboradores.add(c);
             }
 
         } catch (SQLException ex) {
@@ -90,7 +93,9 @@ public class ColaboradoresDao {
         List<Colaboradores> Colaboradores = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM colaboradores where nome like ? ");
+            stmt = conn.prepareStatement("SELECT id_colaborador, cidades.descricao, colaboradores.nome, colaboradores.endereco, colaboradores.funcao FROM colaboradores \n"
+                    + "INNER JOIN cidades ON (cidades.id_cidade = colaboradores.id_cidade) \n"
+                    + "WHERE nome like ? ");
             stmt.setString(1, "%" + texto + "%");
             rs = stmt.executeQuery();
 
@@ -99,13 +104,15 @@ public class ColaboradoresDao {
                 c.setId_colaborador(rs.getInt("id_colaborador"));
                 c.setNome(rs.getString("nome"));
                 c.setEndereco(rs.getString("endereco"));
-                c.setFuncao(rs.getString("funcao"));
-                
+
                 Cidades ci = new Cidades();
-                ci.setId_cidade(rs.getInt("id_cidade"));
+                ci.setDescricao(rs.getString("descricao"));
                 c.setCidade(ci);
-                
-               
+
+                Funcoes F = new Funcoes();
+                F.setFuncao(rs.getString("funcao"));
+                c.setFuncao(F);
+
                 Colaboradores.add(c);
 
             }
@@ -116,7 +123,8 @@ public class ColaboradoresDao {
         }
         return Colaboradores;
     }
-public void excluir(Colaboradores c) {
+
+    public void excluir(Colaboradores c) {
         Connection conn = ConexaoBanco.conectaBanco();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -127,8 +135,7 @@ public void excluir(Colaboradores c) {
             stmt.setInt(2, c.getCidade().getId_cidade());
             stmt.setString(3, c.getNome());
             stmt.setString(4, c.getEndereco());
-            stmt.setString(5, c.getFuncao());
-            
+            stmt.setString(5, c.getFuncao().getFuncao());
 
             stmt.executeUpdate();
 
@@ -139,6 +146,3 @@ public void excluir(Colaboradores c) {
         }
     }
 }
-    
-    
-

@@ -5,9 +5,16 @@
  */
 package View;
 
+import Controller_DAO.CidadesDao;
 import Controller_DAO.EntidadesDao;
+import Controller_DAO.TipoSanguineoDao;
 import Model.Cidades;
 import Model.Entidades;
+import Model.TipoSanguineo;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +27,44 @@ public class EntidadesView extends javax.swing.JFrame {
      */
     public EntidadesView() {
         initComponents();
+        carregaDados();
+
+        CidadesDao dao = new CidadesDao();
+
+        for (Cidades d : dao.listar()) {
+            cbcidade.addItem(d);
+        }
+
+    }
+
+    public void carregaDados() {
+        DefaultTableModel tabela = (DefaultTableModel) tTabela.getModel();
+        EntidadesDao dao = new EntidadesDao();
+        tabela.setNumRows(0);
+
+        dao.listar().forEach((Entidades e) -> {
+            tabela.addRow(new Object[]{
+                e.getId_entidade(),
+                e.getCidades().getDescricao(),
+                e.getNome(),
+                e.getEndereco(),});
+        });
+    }
+
+    public void pesquisaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) tTabela.getModel();
+
+        EntidadesDao dao = new EntidadesDao();
+
+        tabela.setNumRows(0);
+
+        for (Entidades e : dao.pesquisar(tfpesquisar.getText())) {
+            tabela.addRow(new Object[]{
+                e.getNome()
+            });
+        }
+
     }
 
     /**
@@ -56,6 +101,8 @@ public class EntidadesView extends javax.swing.JFrame {
 
         jLabel1.setText("Código:");
 
+        tfcodigo.setEnabled(false);
+
         jLabel2.setText("Nome:");
 
         jLabel3.setText("Endereço:");
@@ -70,6 +117,11 @@ public class EntidadesView extends javax.swing.JFrame {
         });
 
         tfexcluir.setText("Excluir");
+        tfexcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfexcluirActionPerformed(evt);
+            }
+        });
 
         tfalterar.setText("Alterar");
         tfalterar.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +152,11 @@ public class EntidadesView extends javax.swing.JFrame {
                 "Código", "Nome", "Endereço", "Cidade"
             }
         ));
+        tTabela.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tTabelaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tTabela);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -127,7 +184,7 @@ public class EntidadesView extends javax.swing.JFrame {
                                     .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(tfpesquisacampo, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -208,30 +265,59 @@ public class EntidadesView extends javax.swing.JFrame {
         // TODO add your handling code here:
         Entidades e = new Entidades();
         EntidadesDao Dao = new EntidadesDao();
-        
+
         Cidades cidade = (Cidades) cbcidade.getSelectedItem();
         e.setCidades(cidade);
-        
+
         e.setNome(tfnome.getText());
         e.setEndereco(tfendereco.getText());
-        
+
         Dao.cadastrar(e);
+        carregaDados();
     }//GEN-LAST:event_tfcadastrarActionPerformed
 
     private void tfalterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfalterarActionPerformed
         Entidades ent = new Entidades();
         EntidadesDao DAO = new EntidadesDao();
-        
+
         Cidades cid = (Cidades) cbcidade.getSelectedItem();
-            
+
         ent.setId_entidade(Integer.parseInt(tfcodigo.getText()));
         ent.setNome(tfnome.getText());
         ent.setEndereco(tfendereco.getText());
         ent.setCidades(cid);
-        
+
         DAO.alterar(ent);
-        
+
     }//GEN-LAST:event_tfalterarActionPerformed
+
+    private void tTabelaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tTabelaMouseClicked
+        String comboEntidades = tTabela.getValueAt(tTabela.getSelectedRow(), 3).toString();
+        for (int i = 0; i < cbcidade.getItemCount(); i++) {
+            if (cbcidade.getItemAt(i).toString().equalsIgnoreCase(comboEntidades)) {
+                cbcidade.setSelectedIndex(i);
+            }
+        }
+
+        tfcodigo.setText(tTabela.getValueAt(tTabela.getSelectedRow(), 0).toString());
+        tfnome.setText(tTabela.getValueAt(tTabela.getSelectedRow(), 1).toString());
+        tfendereco.setText(tTabela.getValueAt(tTabela.getSelectedRow(), 2).toString());
+    }//GEN-LAST:event_tTabelaMouseClicked
+
+    private void tfexcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfexcluirActionPerformed
+        try {
+            // TODO add your handling code here:
+            Entidades ent = new Entidades();
+            EntidadesDao dao = new EntidadesDao();
+
+            ent.setId_entidade(Integer.parseInt(tfcodigo.getText()));
+
+            dao.excluir(ent);
+            carregaDados();
+        } catch (SQLException ex) {
+            Logger.getLogger(EntidadesView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tfexcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,7 +356,7 @@ public class EntidadesView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbcidade;
+    private javax.swing.JComboBox<Object> cbcidade;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

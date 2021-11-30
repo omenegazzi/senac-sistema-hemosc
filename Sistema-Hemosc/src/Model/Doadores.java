@@ -7,8 +7,6 @@ package Model;
 
 import java.util.Date;
 
-
-
 /**
  *
  * @author gabriel.ferrandin
@@ -24,6 +22,7 @@ public class Doadores {
     private int telefone;
     private String email;
     private String cpf;
+   
 
     public int getId_doador() {
         return id_doador;
@@ -73,7 +72,6 @@ public class Doadores {
         this.data_nascimento = data_nascimento;
     }
 
-
     public int getTelefone() {
         return telefone;
     }
@@ -97,12 +95,14 @@ public class Doadores {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
+
     @Override
     public String toString() {
         return getNome();
     }
 
-  
+    public void setCidades(Cidades e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+}

@@ -64,5 +64,50 @@ public class saidas_de_sangue {
         }
         return SaidadeSangue;
         }
+    
+    public List<SaidadeSangue> pesquisar(String texto){
+        
+            Connection conn = ConexaoBanco.conectaBanco();
+
+            PreparedStatement stmt = null;
+            ResultSet rs = null;
+
+            List<SaidadeSangue> SaidadeSangue = new ArrayList<>();
+
+            try{
+                stmt = conn.prepareStatement("SELECT * FROM saida_sangue where quantidade like ?");
+                stmt.setString(1, "%"+ texto+"%");
+                rs = stmt.executeQuery();
+
+
+                while(rs.next()) {
+
+                    SaidadeSangue ss = new SaidadeSangue();
+                    ss.setId_saida_sangue(rs.getInt("Id_saida_sangue"));
+
+                    Entidades e = new Entidades();
+                    e.setId_entidade(rs.getInt("Id_Entidade"));
+
+                    ss.setId_entidade(e);
+
+                    TipoSanguineo ts = new TipoSanguineo();
+                    ts.setId_TipoSanguineo(rs.getInt("Id_Tipo_Sanguineo"));
+
+                    ss.setId_tipo_sanguineo(ts);
+
+                    ss.setData(rs.getDate("Data"));
+                    ss.setQuantidade(rs.getInt("Quantidade"));
+                   
+                    SaidadeSangue.add(ss);
+                }
+
+            } catch (SQLException ex){
+                Logger.getLogger(saidas_de_sangue.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return SaidadeSangue;
     }
+
+        
+   
+}
 

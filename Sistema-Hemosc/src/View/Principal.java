@@ -22,8 +22,8 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         carregaDados();
     }
-    
-     public void carregaDados() {
+
+    public void carregaDados() {
 
         DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();
         AgendamentosDao dao = new AgendamentosDao();
@@ -34,7 +34,7 @@ public class Principal extends javax.swing.JFrame {
                 a.getId_agendamento(),
                 a.getData(),
                 a.getHora(),
-                a.getDoador() 
+                a.getDoador()
             });
         }
     }
@@ -53,12 +53,17 @@ public class Principal extends javax.swing.JFrame {
         jTableAgendamentos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuDeFunções = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuColaboradores = new javax.swing.JMenuItem();
         Doadores = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         MenuFunções = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        Jmenu = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
@@ -111,14 +116,6 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setText("Usuários");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenuDeFunções.add(jMenuItem1);
-
         jMenuColaboradores.setText("Colaboradores");
         jMenuColaboradores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,6 +148,14 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenuDeFunções.add(MenuFunções);
 
+        jMenuItem1.setText("Usuários");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem1);
+
         jMenuItem3.setText("Cidades");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,6 +163,39 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenuDeFunções.add(jMenuItem3);
+
+        jMenuItem4.setText("Agendamentos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem4);
+
+        Jmenu.setText("Entidades");
+        Jmenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JmenuActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(Jmenu);
+        jMenuDeFunções.add(jSeparator1);
+
+        jMenuItem9.setText("Doações");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem9);
+
+        jMenuItem10.setText("Saída de Sangue");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem10);
 
         jMenuBar1.add(jMenuDeFunções);
 
@@ -206,8 +244,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_DoadoresActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       TipoSanguineoView t = new TipoSanguineoView();
-       t.setVisible(true);
+        TipoSanguineoView t = new TipoSanguineoView();
+        t.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuDeFunçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDeFunçõesActionPerformed
@@ -223,6 +261,26 @@ public class Principal extends javax.swing.JFrame {
         CidadesView f = new CidadesView();
         f.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        SaidaSangueView s = new SaidaSangueView();
+        s.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        AgendamentoView a = new AgendamentoView();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void JmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JmenuActionPerformed
+        EntidadesView e = new EntidadesView();
+        e.setVisible(true);
+    }//GEN-LAST:event_JmenuActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        DoacoesView d = new DoacoesView();
+        d.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,6 +319,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Doadores;
+    private javax.swing.JMenuItem Jmenu;
     private javax.swing.JMenuItem MenuFunções;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -268,10 +327,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuColaboradores;
     private javax.swing.JMenu jMenuDeFunções;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTable jTableAgendamentos;
     // End of variables declaration//GEN-END:variables
 }
