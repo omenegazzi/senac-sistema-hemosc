@@ -103,16 +103,8 @@ public class DoadoresDao {
         ResultSet rs = null;
 
         try {
-            stmt = conn.prepareStatement("DELETE FROM doadores WHERE id_doador = ?; id_cidade = ?,id_tipo_sanguineo = ?,nome = ?,endereco = ?,data_nascimento = ?,telefone = ?,email = ?,cpf =?");
+            stmt = conn.prepareStatement("DELETE FROM doadores WHERE id_doador = ?;");
             stmt.setInt(1, d.getId_doador());
-            stmt.setInt(2, d.getId_cidade().getId_cidade());
-            stmt.setInt(3, d.getId_tipo_sanguineo().getId_TipoSanguineo());
-            stmt.setString(4, d.getNome());
-            stmt.setString(4, d.getEndereco());
-            stmt.setDate(6, (java.sql.Date) (Date) d.getData_nascimento());
-            stmt.setInt(7, d.getTelefone());
-            stmt.setString(8, d.getEmail());
-            stmt.setString(9, d.getCpf());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Editora excluída com sucesso!");

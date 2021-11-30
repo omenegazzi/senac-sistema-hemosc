@@ -63,6 +63,18 @@ public final class DoadoresView extends javax.swing.JFrame {
         });
     }
 
+    public void LimparCampos() {
+        tfDoador.setText("");
+        /*cbCidade.setText("");
+        cbSangue.setText("");*/
+        tfnome.setText("");
+        tfEndereco.setText("");
+        tfNascimento.setText("");
+        tfTelefone.setText("");
+        tfEmail.setText("");
+        tfCpf.setText("");
+    }
+
     public void pesquisaDados() {
 
         DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();
@@ -125,6 +137,7 @@ public final class DoadoresView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tDoadores = new javax.swing.JTable();
         cbCidade = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -238,7 +251,7 @@ public final class DoadoresView extends javax.swing.JFrame {
                         .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jbPesquisar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 259, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -252,6 +265,13 @@ public final class DoadoresView extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Limpar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -260,49 +280,53 @@ public final class DoadoresView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(10, 10, 10)
-                        .addComponent(tfNascimento))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(10, 10, 10)
+                                .addComponent(tfNascimento))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfEndereco))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(tfnome))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbSangue, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfDoador)
+                                    .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfTelefone)
+                                    .addComponent(tfEmail)
+                                    .addComponent(tfCpf))))
+                        .addGap(270, 270, 270))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jbCadastrar)
                         .addGap(18, 18, 18)
                         .addComponent(jbAlterar)
                         .addGap(18, 18, 18)
                         .addComponent(jbExcluir)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbFechar)
-                        .addGap(0, 56, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfEndereco))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tfnome))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbSangue, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfDoador)
-                            .addComponent(cbCidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfTelefone)
-                            .addComponent(tfEmail)
-                            .addComponent(tfCpf))))
-                .addGap(270, 270, 270))
+                        .addGap(0, 246, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -351,6 +375,7 @@ public final class DoadoresView extends javax.swing.JFrame {
                     .addComponent(jbCadastrar)
                     .addComponent(jbAlterar)
                     .addComponent(jbExcluir)
+                    .addComponent(jButton1)
                     .addComponent(jbFechar))
                 .addGap(14, 14, 14)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -427,26 +452,25 @@ public final class DoadoresView extends javax.swing.JFrame {
         try {
             Doadores d = new Doadores();
             DoadoresDao dao = new DoadoresDao();
-            
+
             Cidades cidade = (Cidades) cbCidade.getSelectedItem();
             TipoSanguineo sangue = (TipoSanguineo) cbSangue.getSelectedItem();
-            
+
             d.setId_doador(Integer.parseInt(tfDoador.getText()));
             d.setNome(tfnome.getText());
             d.setEndereco(tfEndereco.getText());
-            
-            
+
             SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
             Date date = (Date) dataString.parse(tfNascimento.getText());
             d.setData_nascimento(date);
-            
+
             d.setTelefone(Integer.parseInt(tfTelefone.getText()));
             d.setEmail(tfEmail.getText());
             d.setCpf(tfCpf.getText());
-            
+
             d.setId_cidade(cidade);
             d.setId_tipo_sanguineo(sangue);
-            
+
             dao.alterar(d);
             carregaDados();
         } catch (ParseException ex) {
@@ -490,6 +514,11 @@ public final class DoadoresView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tDoadoresMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        LimparCampos();
+        carregaDados();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -528,6 +557,7 @@ public final class DoadoresView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<Object> cbCidade;
     private javax.swing.JComboBox<Object> cbSangue;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
