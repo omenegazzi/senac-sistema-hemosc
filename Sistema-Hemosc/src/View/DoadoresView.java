@@ -22,13 +22,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabriel.ferrandin
  */
-public class DoadoresView extends javax.swing.JFrame {
+public final class DoadoresView extends javax.swing.JFrame {
 
     /**
      * Creates new form DoadoresView
      */
     public DoadoresView() {
         initComponents();
+        carregaDados();
 
         CidadesDao dao = new CidadesDao();
         TipoSanguineoDao dao1 = new TipoSanguineoDao();
@@ -40,15 +41,36 @@ public class DoadoresView extends javax.swing.JFrame {
             cbSangue.addItem(d);
         }
     }
-    
-    public void pesquisaDados() {
-        
-        DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();    
-        
+
+    public void carregaDados() {
+        DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();
         DoadoresDao dao = new DoadoresDao();
-        
         tabela.setNumRows(0);
-        
+
+        dao.listar().forEach((Doadores d) -> {
+            tabela.addRow(new Object[]{
+                d.getId_doador(),
+                d.getId_cidade().getDescricao(),
+                d.getId_tipo_sanguineo().getDescricao(),
+                d.getNome(),
+                d.getEndereco(),
+                d.getData_nascimento(),
+                d.getTelefone(),
+                d.getEmail(),
+                d.getCpf()
+
+            });
+        });
+    }
+
+    public void pesquisaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) tDoadores.getModel();
+
+        DoadoresDao dao = new DoadoresDao();
+
+        tabela.setNumRows(0);
+
         for (Doadores d : dao.pesquisar(tfPesquisar.getText())) {
             tabela.addRow(new Object[]{
                 d.getId_doador(),
@@ -62,9 +84,9 @@ public class DoadoresView extends javax.swing.JFrame {
                 d.getCpf()
             });
         }
-      
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,6 +205,11 @@ public class DoadoresView extends javax.swing.JFrame {
                 "ID Doador", "Cidade", "Tipo Sanguineo", "Nome", "Endereço", "Data Nascimento", "Telefone", "Email", "CPF"
             }
         ));
+        tDoadores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tDoadoresMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tDoadores);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -391,42 +418,79 @@ public class DoadoresView extends javax.swing.JFrame {
             d.setCpf(tfCpf.getText());
 
             Dao.cadastrar(d);
+            carregaDados();
         } catch (ParseException ex) {
             Logger.getLogger(DoadoresView.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
-        Doadores d = new Doadores();
-        DoadoresDao dao = new DoadoresDao();
-
-        Cidades cidade = (Cidades) cbCidade.getSelectedItem();
-        TipoSanguineo sangue = (TipoSanguineo) cbSangue.getSelectedItem();
-
-        d.setId_doador(Integer.parseInt(tfDoador.getText()));
-        d.setNome(tfnome.getText());
-        d.setEndereco(tfDoador.getText());
-        //d.setData_nascimento(tfNascimento.getText());//
-        d.setTelefone(Integer.parseInt(tfTelefone.getText()));
-        d.setEmail(tfEmail.getText());
-        d.setCpf(tfCpf.getText());
-
-        d.setId_cidade(cidade);
-        d.setId_tipo_sanguineo(sangue);
-
-        dao.alterar(d);
+        try {
+            Doadores d = new Doadores();
+            DoadoresDao dao = new DoadoresDao();
+            
+            Cidades cidade = (Cidades) cbCidade.getSelectedItem();
+            TipoSanguineo sangue = (TipoSanguineo) cbSangue.getSelectedItem();
+            
+            d.setId_doador(Integer.parseInt(tfDoador.getText()));
+            d.setNome(tfnome.getText());
+            d.setEndereco(tfEndereco.getText());
+            
+            
+            SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = (Date) dataString.parse(tfNascimento.getText());
+            d.setData_nascimento(date);
+            
+            d.setTelefone(Integer.parseInt(tfTelefone.getText()));
+            d.setEmail(tfEmail.getText());
+            d.setCpf(tfCpf.getText());
+            
+            d.setId_cidade(cidade);
+            d.setId_tipo_sanguineo(sangue);
+            
+            dao.alterar(d);
+            carregaDados();
+        } catch (ParseException ex) {
+            Logger.getLogger(DoadoresView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbAlterarActionPerformed
 
     private void tfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisarActionPerformed
         // TODO add your handling code here:
-      
+
     }//GEN-LAST:event_tfPesquisarActionPerformed
 
     private void jbPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPesquisarActionPerformed
         // TODO add your handling code here:
         pesquisaDados();
     }//GEN-LAST:event_jbPesquisarActionPerformed
+
+    private void tDoadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tDoadoresMouseClicked
+        // TODO add your handling code here:
+        String comboCidades = tDoadores.getValueAt(tDoadores.getSelectedRow(), 1).toString();
+        for (int i = 0; i < cbCidade.getItemCount(); i++) {
+            if (cbCidade.getItemAt(i).toString().equalsIgnoreCase(comboCidades)) {
+                cbCidade.setSelectedIndex(i);
+            }
+        }
+        String comboTipoSanguineo = tDoadores.getValueAt(tDoadores.getSelectedRow(), 2).toString();
+        for (int i = 0; i < cbSangue.getItemCount(); i++) {
+            if (cbSangue.getItemAt(i).toString().equalsIgnoreCase(comboTipoSanguineo)) {
+                cbSangue.setSelectedIndex(i);
+            }
+        }
+
+        tfDoador.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 0).toString());
+        tfnome.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 3).toString());
+        tfEndereco.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 4).toString());
+        tfNascimento.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 5).toString());
+        tfTelefone.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 6).toString());
+        tfEmail.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 7).toString());
+        tfCpf.setText(tDoadores.getValueAt(tDoadores.getSelectedRow(), 8).toString());
+
+
+    }//GEN-LAST:event_tDoadoresMouseClicked
 
     /**
      * @param args the command line arguments
