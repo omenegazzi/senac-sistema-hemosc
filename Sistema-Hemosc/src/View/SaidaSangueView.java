@@ -72,7 +72,7 @@ public class SaidaSangueView extends javax.swing.JFrame {
         bPesquisar = new javax.swing.JButton();
         tfPesquisar = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Código De Saída :");
 

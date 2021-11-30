@@ -90,7 +90,7 @@ public class CidadesView extends javax.swing.JFrame {
 
         jToolBar1.setRollover(true);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
