@@ -7,7 +7,6 @@ package Controller_DAO;
 
 import Database.ConexaoBanco;
 import Model.Cidades;
-import Model.Doadores;
 import Model.Entidades;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,7 +58,7 @@ public class EntidadesDao {
         List<Entidades> entidade = new ArrayList<>();
         try {
             stmt = conn.prepareStatement("select cidades.descricao as cidade, id_entidade,nome,endereco from entidades\n"
-                    + "     inner join cidades on (cidades.id_cidade = entidades.id_cidade);");
+                    + "     inner join cidades  on (cidades.id_cidade = entidades.id_cidade);");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -135,16 +134,25 @@ public class EntidadesDao {
         List<Entidades> Entidades = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM entidades where nome like ?");
+            stmt = conn.prepareStatement("select cidades.descricao as cidade, id_entidade,nome,endereco from entidades\n"
+                    + "     inner join cidades  on (cidades.id_cidade = entidades.id_cidade)\n"
+                    + "     where nome like ?");
             stmt.setString(1, "%" + texto + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
-                Entidades e = new Entidades();
-                e.setId_entidade(0);
+                Entidades l = new Entidades();
 
-                Entidades.add(e);
+                l.setId_entidade(rs.getInt("id_entidade"));
+                l.setNome(rs.getString("nome"));
+                l.setEndereco(rs.getString("endereco"));
+
+                Cidades c = new Cidades();
+                c.setDescricao(rs.getString("cidade"));
+                l.setCidades(c);
+
+                Entidades.add(l);
             }
 
         } catch (SQLException ex) {

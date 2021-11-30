@@ -86,8 +86,8 @@ public final class DoadoresView extends javax.swing.JFrame {
         for (Doadores d : dao.pesquisar(tfPesquisar.getText())) {
             tabela.addRow(new Object[]{
                 d.getId_doador(),
-                d.getId_cidade(),
-                d.getId_tipo_sanguineo(),
+                d.getId_cidade().getDescricao(),
+                d.getId_tipo_sanguineo().getDescricao(),
                 d.getNome(),
                 d.getEndereco(),
                 d.getData_nascimento(),
@@ -141,6 +141,8 @@ public final class DoadoresView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Doadores"));
+
         jLabel1.setText("ID Doador:");
 
         jLabel4.setText("Nome:");
@@ -189,6 +191,11 @@ public final class DoadoresView extends javax.swing.JFrame {
         });
 
         jbFechar.setText("Fechar");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
 
         tfPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,7 +258,7 @@ public final class DoadoresView extends javax.swing.JFrame {
                         .addComponent(tfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jbPesquisar)
-                        .addGap(0, 259, Short.MAX_VALUE)))
+                        .addGap(0, 249, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -326,7 +333,7 @@ public final class DoadoresView extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbFechar)
-                        .addGap(0, 246, Short.MAX_VALUE))))
+                        .addGap(0, 328, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -413,6 +420,7 @@ public final class DoadoresView extends javax.swing.JFrame {
         d.setId_doador(Integer.parseInt(tfDoador.getText()));
 
         DAO3.excluir(d);
+        carregaDados();
         // TODO add your handling code here:
     }//GEN-LAST:event_jbExcluirActionPerformed
 
@@ -518,6 +526,11 @@ public final class DoadoresView extends javax.swing.JFrame {
         LimparCampos();
         carregaDados();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        // TODO add your handling code here:
+        DoadoresView.this.dispose();
+    }//GEN-LAST:event_jbFecharActionPerformed
 
     /**
      * @param args the command line arguments

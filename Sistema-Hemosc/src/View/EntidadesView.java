@@ -7,10 +7,8 @@ package View;
 
 import Controller_DAO.CidadesDao;
 import Controller_DAO.EntidadesDao;
-import Controller_DAO.TipoSanguineoDao;
 import Model.Cidades;
 import Model.Entidades;
-import Model.TipoSanguineo;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author david.castagnaro
  */
-public class EntidadesView extends javax.swing.JFrame {
+public final class EntidadesView extends javax.swing.JFrame {
 
     /**
      * Creates new form Entidades
@@ -45,25 +43,36 @@ public class EntidadesView extends javax.swing.JFrame {
         dao.listar().forEach((Entidades e) -> {
             tabela.addRow(new Object[]{
                 e.getId_entidade(),
-                e.getCidades().getDescricao(),
                 e.getNome(),
-                e.getEndereco(),});
-        });
+                e.getEndereco(),
+                e.getCidades().getDescricao()
+            });
+        }
+        );
     }
 
     public void pesquisaDados() {
 
         DefaultTableModel tabela = (DefaultTableModel) tTabela.getModel();
 
-        EntidadesDao dao = new EntidadesDao();
+       EntidadesDao dao = new EntidadesDao();
 
         tabela.setNumRows(0);
 
-        for (Entidades e : dao.pesquisar(tfpesquisar.getText())) {
+        for (Entidades e : dao.pesquisar(tfpesquisacampo.getText())) {
             tabela.addRow(new Object[]{
-                e.getNome()
+                e.getId_entidade(),
+                e.getNome(),
+                e.getEndereco(),
+                e.getCidades().getDescricao()
             });
         }
+
+    }
+
+    public void LimparCampos() {
+        tfnome.setText("");
+        tfendereco.setText("");
 
     }
 
@@ -138,8 +147,18 @@ public class EntidadesView extends javax.swing.JFrame {
         });
 
         tffechar.setText("Fechar");
+        tffechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tffecharActionPerformed(evt);
+            }
+        });
 
         tfpesquisar.setText("Pesquisar");
+        tfpesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfpesquisarActionPerformed(evt);
+            }
+        });
 
         tTabela.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -177,17 +196,15 @@ public class EntidadesView extends javax.swing.JFrame {
                             .addComponent(tfnome)
                             .addComponent(tfendereco)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(tfpesquisar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbcidade, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tfcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(tfpesquisacampo, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(tfpesquisacampo)
+                        .addGap(8, 8, 8)
+                        .addComponent(tfpesquisar)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
@@ -259,6 +276,7 @@ public class EntidadesView extends javax.swing.JFrame {
 
     private void tflimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tflimparActionPerformed
         // TODO add your handling code here:
+        LimparCampos();
     }//GEN-LAST:event_tflimparActionPerformed
 
     private void tfcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcadastrarActionPerformed
@@ -288,6 +306,7 @@ public class EntidadesView extends javax.swing.JFrame {
         ent.setCidades(cid);
 
         DAO.alterar(ent);
+        carregaDados();
 
     }//GEN-LAST:event_tfalterarActionPerformed
 
@@ -314,10 +333,24 @@ public class EntidadesView extends javax.swing.JFrame {
 
             dao.excluir(ent);
             carregaDados();
+
         } catch (SQLException ex) {
-            Logger.getLogger(EntidadesView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EntidadesView.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tfexcluirActionPerformed
+
+    private void tffecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tffecharActionPerformed
+        // TODO add your handling code here:
+        EntidadesView.this.dispose();
+
+    }//GEN-LAST:event_tffecharActionPerformed
+
+    private void tfpesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfpesquisarActionPerformed
+        // TODO add your handling code here:
+        pesquisaDados();
+       
+    }//GEN-LAST:event_tfpesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,16 +366,24 @@ public class EntidadesView extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntidadesView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntidadesView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntidadesView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EntidadesView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EntidadesView.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

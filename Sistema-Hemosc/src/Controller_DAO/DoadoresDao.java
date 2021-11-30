@@ -153,31 +153,32 @@ public class DoadoresDao {
         List<Doadores> Doadores = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM doadores where nome like ?");
+            stmt = conn.prepareStatement("select cidades.descricao as cidade,id_doador,nome,endereco,data_nascimento,telefone,email,cpf,tipos_sanguineos.descricao as tipos_sanguineo from doadores\n" +
+"                                inner join cidades on (cidades.id_cidade = doadores.id_cidade ) \n" +
+"                                inner join tipos_sanguineos on (tipos_sanguineos.id_tipo_sanguineo= doadores.id_tipo_sanguineo)\n" +
+"                              WHERE nome like ?");
             stmt.setString(1, "%" + texto + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
 
                 Doadores d = new Doadores();
-                d.setId_doador(rs.getInt("Id_doador"));
+                d.setId_doador(rs.getInt("id_doador"));
 
-                Cidades c = new Cidades();
-                c.setId_cidade(rs.getInt("Id_Cidade"));
+                d.setNome(rs.getString("nome"));
+                d.setEndereco(rs.getString("endereco"));
+                d.setData_nascimento(rs.getDate("data_nascimento"));
+                d.setTelefone(rs.getInt("telefone"));
+                d.setEmail(rs.getString("email"));
+                d.setCpf(rs.getString("cpf"));
 
-                d.setId_cidade(c);
+                Cidades cid = new Cidades();
+                cid.setDescricao(rs.getString("cidade"));
+                d.setId_cidade(cid);
 
-                TipoSanguineo ts = new TipoSanguineo();
-                ts.setId_TipoSanguineo(rs.getInt("Id_tipo_sanguineo"));
-
-                d.setId_tipo_sanguineo(ts);
-
-                d.setNome(rs.getString("Nome"));
-                d.setEndereco(rs.getString("Endereco"));
-                d.setData_nascimento(rs.getDate("Data_Nascimento"));
-                d.setTelefone(rs.getInt("Telefone"));
-                d.setEmail(rs.getString("Email"));
-                d.setCpf(rs.getString("Cpf"));
+                TipoSanguineo Ts = new TipoSanguineo();
+                Ts.setDescricao(rs.getString("tipos_sanguineo"));
+                d.setId_tipo_sanguineo(Ts);
 
                 Doadores.add(d);
             }
