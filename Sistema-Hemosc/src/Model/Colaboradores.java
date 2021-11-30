@@ -15,13 +15,13 @@ private int id_colaborador;
 private Cidades Cidade;
 private String nome;
 private String endereco;
-private String funcao;
+private Funcoes funcao;
 
-    public String getFuncao() {
+    public Funcoes getFuncao() {
         return funcao;
     }
 
-    public void setFuncao(String funcao) {
+    public void setFuncao(Funcoes funcao) {
         this.funcao = funcao;
     }
 
@@ -57,16 +57,10 @@ private String funcao;
         this.endereco = endereco;
     }
 
-    
-    
     @Override
     public String toString() {
         return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
-
-
-   
-    
     
 }
 

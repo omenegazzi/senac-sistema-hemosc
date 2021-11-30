@@ -26,20 +26,19 @@ public class ColaboradoresView extends javax.swing.JFrame {
         initComponents();
         carregaDados();
         
-        CidadesDao ccc = new CidadesDao();
-
-        for (Cidades ci : ccc.listar()) {
-            SelecionarCidade.addItem(ci);
-        }
-        
-        FuncoesDao fff = new FuncoesDao();
-
-        for (Funcoes fu : fff.listar()) {
-            SelecionarFuncao.addItem(fu);
-        }    
-        
+       CidadesDao Dao = new CidadesDao();
+       
+       for (Cidades c: Dao.listar()){
+           SelecionarCidade.addItem(c);
+       }
+       
+       FuncoesDao dao = new FuncoesDao();
+       
+       for (Funcoes f: dao.listar()){
+           SelecionarFuncao.addItem(f);
+       }
     }
-
+    
     public void carregaDados(){
         
         DefaultTableModel tabela = (DefaultTableModel) TabelaColaboradores.getModel();      
@@ -52,7 +51,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
                 C.getCidade().getDescricao(),
                 C.getNome(),
                 C.getEndereco(),
-                C.getFuncao()
+                C.getFuncao().getFuncao()
             });
         }
     }
@@ -66,14 +65,21 @@ public class ColaboradoresView extends javax.swing.JFrame {
         for (Colaboradores c : dao.pesquisar(tfpesquisar.getText())) {
             tabela.addRow(new Object[]{
                 c.getId_colaborador(),
-                c.getCidade(),
+                c.getCidade().getDescricao(),
                 c.getNome(),
                 c.getEndereco(),
-                c.getFuncao()
+                c.getFuncao().getFuncao()
             });
         }
     }
     
+    public void LimparCampos() {
+        CampoId.setText("");
+        CampoNome.setText("");
+        CampoEndereco.setText("");
+        tfpesquisar.setText("");
+
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,16 +100,16 @@ public class ColaboradoresView extends javax.swing.JFrame {
         CampoNome = new javax.swing.JTextField();
         CampoEndereco = new javax.swing.JTextField();
         SelecionarFuncao = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        BotãoCadastrar = new javax.swing.JButton();
+        BotãoAlterar = new javax.swing.JButton();
+        BotãoExcluir = new javax.swing.JButton();
+        BotãoLimpar = new javax.swing.JButton();
+        BotãoFechar = new javax.swing.JButton();
         SelecionarCidade = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelaColaboradores = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
+        BotãoPesquisar = new javax.swing.JButton();
         tfpesquisar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -134,20 +140,30 @@ public class ColaboradoresView extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Cadastrar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BotãoCadastrar.setText("Cadastrar");
+        BotãoCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BotãoCadastrarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Alterar");
+        BotãoAlterar.setText("Alterar");
 
-        jButton3.setText("Excluir");
+        BotãoExcluir.setText("Excluir");
 
-        jButton4.setText("Limpar");
+        BotãoLimpar.setText("Limpar");
+        BotãoLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotãoLimparActionPerformed(evt);
+            }
+        });
 
-        jButton5.setText("Fechar");
+        BotãoFechar.setText("Fechar");
+        BotãoFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotãoFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,15 +191,15 @@ public class ColaboradoresView extends javax.swing.JFrame {
                                     .addComponent(SelecionarCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BotãoCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                        .addComponent(BotãoAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BotãoExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BotãoLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(BotãoFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -211,11 +227,11 @@ public class ColaboradoresView extends javax.swing.JFrame {
                     .addComponent(SelecionarFuncao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(BotãoCadastrar)
+                    .addComponent(BotãoAlterar)
+                    .addComponent(BotãoExcluir)
+                    .addComponent(BotãoLimpar)
+                    .addComponent(BotãoFechar))
                 .addContainerGap())
         );
 
@@ -249,10 +265,10 @@ public class ColaboradoresView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton6.setText("Pesquisar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        BotãoPesquisar.setText("Pesquisar");
+        BotãoPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                BotãoPesquisarActionPerformed(evt);
             }
         });
 
@@ -270,7 +286,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(tfpesquisar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton6)))
+                                .addComponent(BotãoPesquisar)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -280,7 +296,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton6)
+                    .addComponent(BotãoPesquisar)
                     .addComponent(tfpesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -313,34 +329,39 @@ public class ColaboradoresView extends javax.swing.JFrame {
         }     
     }//GEN-LAST:event_TabelaColaboradoresMouseClicked
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void BotãoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoPesquisarActionPerformed
     pesquisaDados(); 
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_BotãoPesquisarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BotãoCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoCadastrarActionPerformed
     
         Colaboradores c = new Colaboradores();
         ColaboradoresDao DAO = new ColaboradoresDao();
-
+       
+        Cidades cid = (Cidades) SelecionarCidade.getSelectedItem();
+        Funcoes fun = (Funcoes) SelecionarFuncao.getSelectedItem();
         
-        Cidades cidades = (Cidades) SelecionarCidade.getSelectedItem();
-        Funcoes funcao = (Funcoes) SelecionarFuncao.getSelectedItem();
-        
+        c.setCidade(cid);
         c.setNome(CampoNome.getText());
         c.setEndereco(CampoEndereco.getText());
+        c.setFuncao(fun);
         
-        c.setCidade(cidades);
-        
-        
-       
         DAO.cadastrar(c);
         carregaDados();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BotãoCadastrarActionPerformed
 
     private void CampoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoNomeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_CampoNomeActionPerformed
+
+    private void BotãoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoLimparActionPerformed
+        LimparCampos();
+    }//GEN-LAST:event_BotãoLimparActionPerformed
+
+    private void BotãoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoFecharActionPerformed
+        ColaboradoresView.this.dispose();
+    }//GEN-LAST:event_BotãoFecharActionPerformed
 
     /**
      * @param args the command line arguments
@@ -378,18 +399,18 @@ public class ColaboradoresView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotãoAlterar;
+    private javax.swing.JButton BotãoCadastrar;
+    private javax.swing.JButton BotãoExcluir;
+    private javax.swing.JButton BotãoFechar;
+    private javax.swing.JButton BotãoLimpar;
+    private javax.swing.JButton BotãoPesquisar;
     private javax.swing.JTextField CampoEndereco;
     private javax.swing.JTextField CampoId;
     private javax.swing.JTextField CampoNome;
     private javax.swing.JComboBox<Object> SelecionarCidade;
     private javax.swing.JComboBox<Object> SelecionarFuncao;
     private javax.swing.JTable TabelaColaboradores;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
