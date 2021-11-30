@@ -128,8 +128,6 @@ public final class DoadoresView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
         jLabel1.setText("ID Doador:");
 
         jLabel4.setText("Nome:");
@@ -273,7 +271,7 @@ public final class DoadoresView extends javax.swing.JFrame {
                         .addComponent(jbExcluir)
                         .addGap(18, 18, 18)
                         .addComponent(jbFechar)
-                        .addGap(0, 52, Short.MAX_VALUE))
+                        .addGap(0, 56, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
