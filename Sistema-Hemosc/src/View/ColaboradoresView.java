@@ -150,6 +150,11 @@ public class ColaboradoresView extends javax.swing.JFrame {
         BotãoAlterar.setText("Alterar");
 
         BotãoExcluir.setText("Excluir");
+        BotãoExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BotãoExcluirActionPerformed(evt);
+            }
+        });
 
         BotãoLimpar.setText("Limpar");
         BotãoLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -362,6 +367,19 @@ public class ColaboradoresView extends javax.swing.JFrame {
     private void BotãoFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoFecharActionPerformed
         ColaboradoresView.this.dispose();
     }//GEN-LAST:event_BotãoFecharActionPerformed
+
+    private void BotãoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoExcluirActionPerformed
+       Colaboradores c = new Colaboradores();
+        ColaboradoresDao DAO = new ColaboradoresDao();
+
+        c.setId_colaborador(Integer.parseInt(CampoId.getText()));
+        
+
+        DAO.excluir(c);
+        carregaDados();
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_BotãoExcluirActionPerformed
 
     /**
      * @param args the command line arguments
