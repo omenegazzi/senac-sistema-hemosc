@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -63,7 +63,11 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="tfPesquisar" min="-2" max="-2" attributes="0"/>
+=======
+                          <Component id="BotãoPesquisar" min="-2" max="-2" attributes="0"/>
+>>>>>>> origin/develop
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -90,7 +94,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jTextField3" min="-2" pref="381" max="-2" attributes="0"/>
+                                  <Component id="jPesquisa" min="-2" pref="381" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -154,8 +158,13 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
+<<<<<<< HEAD
                       <Component id="tfPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField3" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+=======
+                      <Component id="BotãoPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jPesquisa" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+>>>>>>> origin/develop
                   </Group>
                   <EmptySpace pref="9" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="147" max="-2" attributes="0"/>
@@ -356,17 +365,29 @@
             </Component>
           </SubComponents>
         </Container>
+<<<<<<< HEAD
         <Component class="javax.swing.JButton" name="tfPesquisar">
+=======
+        <Component class="javax.swing.JButton" name="Bot&#xe3;oPesquisar">
+>>>>>>> origin/develop
           <Properties>
             <Property name="text" type="java.lang.String" value="Pesquisar"/>
           </Properties>
+<<<<<<< HEAD
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfPesquisarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField3">
+=======
+>>>>>>> origin/develop
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Bot&#xe3;oPesquisarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jPesquisa">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPesquisaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

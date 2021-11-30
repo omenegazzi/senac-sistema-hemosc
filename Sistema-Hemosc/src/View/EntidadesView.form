@@ -80,7 +80,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <Component id="jScrollPane1" alignment="0" pref="530" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="tfpesquisacampo" min="-2" pref="436" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -153,6 +153,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfcodigo">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -180,7 +183,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="tfcadastrar">
@@ -195,11 +198,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Excluir"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfexcluirActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="tfalterar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Alterar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfalterarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="tflimpar">
           <Properties>
@@ -266,6 +275,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tTabelaMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

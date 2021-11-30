@@ -104,18 +104,21 @@ public class CidadesDao {
         return Cidades;
     }
 
-    public void excluir(Cidades c) throws SQLException {
+    public void excluir(Cidades c) {
+        
         Connection conn = ConexaoBanco.conectaBanco();
 
         PreparedStatement stmt = null;
 
+        ResultSet rs = null;
+        
         try {
             stmt = conn.prepareStatement("DELETE FROM cidades WHERE id_cidade = ?");
             stmt.setInt(1, c.getId_cidade());
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Usuário excluido com Sucesso!");
+            JOptionPane.showMessageDialog(null, "Cidade excluida com Sucesso!");
 
         } catch (SQLException ex) {
             Logger.getLogger(CidadesDao.class.getName()).log(Level.SEVERE, null, ex);

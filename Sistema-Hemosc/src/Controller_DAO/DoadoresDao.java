@@ -9,8 +9,8 @@ import Database.ConexaoBanco;
 import Model.Cidades;
 import Model.Doadores;
 import Model.TipoSanguineo;
-import Model.Usuarios;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,7 +38,7 @@ public class DoadoresDao {
             stmt.setInt(2, d.getId_tipo_sanguineo().getId_TipoSanguineo());
             stmt.setString(3, d.getNome());
             stmt.setString(4, d.getEndereco());
-            stmt.setDate(5, d.getData_nascimento());
+            stmt.setTimestamp(5, new java.sql.Timestamp(d.getData_nascimento().getTime()));
             stmt.setInt(6, d.getTelefone());
             stmt.setString(7, d.getEmail());
             stmt.setString(8, d.getCpf());
@@ -64,11 +64,15 @@ public class DoadoresDao {
         List<Doadores> doadores = new ArrayList<>();
 
         try {
-            stmt = conn.prepareStatement("SELECT * FROM doadores");
+            stmt = conn.prepareStatement("select cidades.descricao as cidade,id_doador,nome,endereco,data_nascimento,telefone,email,cpf,tipos_sanguineos.descricao as tipos_sanguineo from doadores\n"
+                    + "              inner join cidades on (cidades.id_cidade = doadores.id_cidade ) \n"
+                    + "              inner join tipos_sanguineos on (tipos_sanguineos.id_tipo_sanguineo= doadores.id_tipo_sanguineo);");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
                 Doadores d = new Doadores();
+                d.setId_doador(rs.getInt("id_doador"));
+
                 d.setNome(rs.getString("nome"));
                 d.setEndereco(rs.getString("endereco"));
                 d.setData_nascimento(rs.getDate("data_nascimento"));
@@ -77,11 +81,11 @@ public class DoadoresDao {
                 d.setCpf(rs.getString("cpf"));
 
                 Cidades cid = new Cidades();
-                cid.setId_cidade(rs.getInt("id_cidade"));
+                cid.setDescricao(rs.getString("cidade"));
                 d.setId_cidade(cid);
 
                 TipoSanguineo Ts = new TipoSanguineo();
-                Ts.setId_TipoSanguineo(rs.getInt("id_tipo_sanguineo"));
+                Ts.setDescricao(rs.getString("tipos_sanguineo"));
                 d.setId_tipo_sanguineo(Ts);
 
                 doadores.add(d);
@@ -99,16 +103,8 @@ public class DoadoresDao {
         ResultSet rs = null;
 
         try {
-            stmt = conn.prepareStatement("DELETE FROM doadores WHERE id_doador = ?; id_cidade = ?,id_tipo_sanguineo = ?,nome = ?,endereco = ?,data_nascimento = ?,telefone = ?,email = ?,cpf =?");
+            stmt = conn.prepareStatement("DELETE FROM doadores WHERE id_doador = ?;");
             stmt.setInt(1, d.getId_doador());
-            stmt.setInt(2, d.getId_cidade().getId_cidade());
-            stmt.setInt(3, d.getId_tipo_sanguineo().getId_TipoSanguineo());
-            stmt.setString(4, d.getNome());
-            stmt.setString(4, d.getEndereco());
-            stmt.setDate(6, d.getData_nascimento());
-            stmt.setInt(7, d.getTelefone());
-            stmt.setString(8, d.getEmail());
-            stmt.setString(9, d.getCpf());
 
             stmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Editora excluída com sucesso!");
@@ -126,16 +122,18 @@ public class DoadoresDao {
 
         try {
 
-            stmt = conn.prepareStatement("UPDATE livros set doadores = ?,  id_cidade = ?, id_tipo_sanguineo = ?, nome = ?, endereco = ?,data_nascimento, telefone = ?, email = ?, cpf = ? ,  where id_doador = ? ");
+            stmt = conn.prepareStatement("UPDATE doadores set id_cidade = ?, id_tipo_sanguineo = ?, nome = ?, endereco = ?, data_nascimento = ?, telefone = ? ,email= ?,cpf=? where id_doador = ? ");
+
             stmt.setInt(1, e.getId_cidade().getId_cidade());
             stmt.setInt(2, e.getId_tipo_sanguineo().getId_TipoSanguineo());
 
             stmt.setString(3, e.getNome());
             stmt.setString(4, e.getEndereco());
-            stmt.setDate(5, e.getData_nascimento());
+            stmt.setDate(5, new java.sql.Date(e.getData_nascimento().getTime()));
             stmt.setInt(6, e.getTelefone());
             stmt.setString(7, e.getEmail());
             stmt.setString(8, e.getCpf());
+            stmt.setInt(9, e.getId_doador());
 
             stmt.executeUpdate();
 
@@ -144,4 +142,50 @@ public class DoadoresDao {
         } catch (SQLException ex) {
         }
     }
+
+    public List<Doadores> pesquisar(String texto) {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Doadores> Doadores = new ArrayList<>();
+
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM doadores where nome like ?");
+            stmt.setString(1, "%" + texto + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Doadores d = new Doadores();
+                d.setId_doador(rs.getInt("Id_doador"));
+
+                Cidades c = new Cidades();
+                c.setId_cidade(rs.getInt("Id_Cidade"));
+
+                d.setId_cidade(c);
+
+                TipoSanguineo ts = new TipoSanguineo();
+                ts.setId_TipoSanguineo(rs.getInt("Id_tipo_sanguineo"));
+
+                d.setId_tipo_sanguineo(ts);
+
+                d.setNome(rs.getString("Nome"));
+                d.setEndereco(rs.getString("Endereco"));
+                d.setData_nascimento(rs.getDate("Data_Nascimento"));
+                d.setTelefone(rs.getInt("Telefone"));
+                d.setEmail(rs.getString("Email"));
+                d.setCpf(rs.getString("Cpf"));
+
+                Doadores.add(d);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DoadoresDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Doadores;
+    }
+
 }

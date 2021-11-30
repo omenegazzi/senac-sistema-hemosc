@@ -5,6 +5,10 @@
  */
 package View;
 
+import Controller_DAO.AgendamentosDao;
+import Model.Agendamentos;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diegomenegazzi
@@ -16,7 +20,23 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
+        carregaDados();
+    }
+
+    public void carregaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();
+        AgendamentosDao dao = new AgendamentosDao();
+        tabela.setNumRows(0);
+
+        for (Agendamentos a : dao.listarDia()) {
+            tabela.addRow(new Object[]{
+                a.getId_agendamento(),
+                a.getData(),
+                a.getHora(),
+                a.getDoador()
+            });
+        }
     }
 
     /**
@@ -30,13 +50,20 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableAgendamentos = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuDeFunções = new javax.swing.JMenu();
         jMenuColaboradores = new javax.swing.JMenuItem();
         Doadores = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        MenuFunções = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        Jmenu = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
@@ -44,7 +71,7 @@ public class Principal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Agendamentos do dia"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -52,10 +79,18 @@ public class Principal extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Código", "Data", "Hora", "Doador"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableAgendamentos);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -74,15 +109,12 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Cadastros");
-
-        jMenuItem1.setText("Usuários");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuDeFunções.setText("Cadastros");
+        jMenuDeFunções.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuDeFunçõesActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
 
         jMenuColaboradores.setText("Colaboradores");
         jMenuColaboradores.addActionListener(new java.awt.event.ActionListener() {
@@ -90,7 +122,7 @@ public class Principal extends javax.swing.JFrame {
                 jMenuColaboradoresActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuColaboradores);
+        jMenuDeFunções.add(jMenuColaboradores);
 
         Doadores.setText("Doadores");
         Doadores.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +130,7 @@ public class Principal extends javax.swing.JFrame {
                 DoadoresActionPerformed(evt);
             }
         });
-        jMenu1.add(Doadores);
+        jMenuDeFunções.add(Doadores);
 
         jMenuItem2.setText("Tipo Sanguíneo");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -106,9 +138,66 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenuDeFunções.add(jMenuItem2);
 
-        jMenuBar1.add(jMenu1);
+        MenuFunções.setText("Funções");
+        MenuFunções.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuFunçõesActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(MenuFunções);
+
+        jMenuItem1.setText("Usuários");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem1);
+
+        jMenuItem3.setText("Cidades");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem3);
+
+        jMenuItem4.setText("Agendamentos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem4);
+
+        Jmenu.setText("Entidades");
+        Jmenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JmenuActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(Jmenu);
+        jMenuDeFunções.add(jSeparator1);
+
+        jMenuItem9.setText("Doações");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem9);
+
+        jMenuItem10.setText("Saída de Sangue");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenuDeFunções.add(jMenuItem10);
+
+        jMenuBar1.add(jMenuDeFunções);
 
         jMenu3.setText("Relatórios");
         jMenuBar1.add(jMenu3);
@@ -155,9 +244,43 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_DoadoresActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       //TipoSanguineoView t = new TipoSanguineoView();
-       //t.setVisible(true);
+        TipoSanguineoView t = new TipoSanguineoView();
+        t.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuDeFunçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDeFunçõesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuDeFunçõesActionPerformed
+
+    private void MenuFunçõesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuFunçõesActionPerformed
+        FuncoesView f = new FuncoesView();
+        f.setVisible(true);
+    }//GEN-LAST:event_MenuFunçõesActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        CidadesView f = new CidadesView();
+        f.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        SaidaSangueView s = new SaidaSangueView();
+        s.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        AgendamentoView a = new AgendamentoView();
+        a.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void JmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JmenuActionPerformed
+        EntidadesView e = new EntidadesView();
+        e.setVisible(true);
+    }//GEN-LAST:event_JmenuActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        DoacoesView d = new DoacoesView();
+        d.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -196,15 +319,22 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem Doadores;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem Jmenu;
+    private javax.swing.JMenuItem MenuFunções;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuColaboradores;
+    private javax.swing.JMenu jMenuDeFunções;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JTable jTableAgendamentos;
     // End of variables declaration//GEN-END:variables
 }

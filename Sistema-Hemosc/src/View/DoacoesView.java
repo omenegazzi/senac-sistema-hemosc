@@ -5,6 +5,10 @@
  */
 package View;
 
+import Controller_DAO.DoacoesDao;
+import Model.Doacoes;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author gabriel.scotinski
@@ -16,6 +20,22 @@ public class DoacoesView extends javax.swing.JFrame {
      */
     public DoacoesView() {
         initComponents();
+    }
+    public void pesquisaDados(){
+        
+        DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();      
+        DoacoesDao dao = new DoacoesDao();
+        tabela.setNumRows(0);
+                
+        for (Doacoes d : dao.pesquisar(jPesquisa.getText())){
+            tabela.addRow(new Object[]{
+                d.getId_doacao(),
+                d.getData(),
+                d.getId_doador().getNome(),
+                d.getId_tipo_sanguineo().getDescricao(),
+                d.getId_colaborador().getNome(),
+            });
+        }        
     }
 
     /**
@@ -46,10 +66,10 @@ public class DoacoesView extends javax.swing.JFrame {
         bFechar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tUsuarios = new javax.swing.JTable();
-        tfPesquisar = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        BotãoPesquisar = new javax.swing.JButton();
+        jPesquisa = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -149,16 +169,16 @@ public class DoacoesView extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tUsuarios);
 
-        tfPesquisar.setText("Pesquisar");
-        tfPesquisar.addActionListener(new java.awt.event.ActionListener() {
+        BotãoPesquisar.setText("Pesquisar");
+        BotãoPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfPesquisarActionPerformed(evt);
+                BotãoPesquisarActionPerformed(evt);
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jPesquisaActionPerformed(evt);
             }
         });
 
@@ -175,7 +195,7 @@ public class DoacoesView extends javax.swing.JFrame {
                         .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(tfPesquisar))
+                        .addComponent(BotãoPesquisar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -198,7 +218,7 @@ public class DoacoesView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(bCadastrar)
@@ -247,8 +267,8 @@ public class DoacoesView extends javax.swing.JFrame {
                             .addComponent(bFechar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tfPesquisar)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BotãoPesquisar)
+                    .addComponent(jPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -306,13 +326,17 @@ public class DoacoesView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_tUsuariosMouseClicked
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPesquisaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jPesquisaActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void BotãoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoPesquisarActionPerformed
+        pesquisaDados();
+    }//GEN-LAST:event_BotãoPesquisarActionPerformed
 
     private void tfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisarActionPerformed
         // TODO add your handling code here:
@@ -354,6 +378,7 @@ public class DoacoesView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotãoPesquisar;
     private javax.swing.JButton bAlterar;
     private javax.swing.JButton bCadastrar;
     private javax.swing.JButton bExcluir;
@@ -369,10 +394,10 @@ public class DoacoesView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jPesquisa;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tUsuarios;
     private javax.swing.JButton tfPesquisar;
     // End of variables declaration//GEN-END:variables
