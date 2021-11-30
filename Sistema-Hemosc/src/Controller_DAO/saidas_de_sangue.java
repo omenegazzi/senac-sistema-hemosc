@@ -19,22 +19,22 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author lethicia.favretto
  */
 public class saidas_de_sangue {
-    public List <SaidadeSangue> Listar() {
+
+    public List<SaidadeSangue> Listar() {
         Connection conn = ConexaoBanco.conectaBanco();
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
         List<SaidadeSangue> SaidadeSangue = new ArrayList<>();
         try {
-            stmt = conn.prepareStatement("select saida_sangue.id_saida_sangue,id_entidade,id_tipo_sanguineo,data quantidade from saida_sangue\n"
-                    + "inner join entidades on (entidades.id_entidade = saida_sangue.id_entidade)\n"
-                    + "inner join tipos_sanguineos on (tipos_sanguineos.id_tipo_sanguineo = saida_sangue.id_tipo_sanguineo);");
+            stmt = conn.prepareStatement("select saida_sangue.id_saida_sangue,entidades.id_entidade as identidade, tipos_sanguineos.id_tipo_sanguineo,data quantidade from saida_sangue\n"
+                    + "                     inner join entidades on (entidades.id_entidade = saida_sangue.id_entidade)\n"
+                    + "                    inner join tipos_sanguineos on (tipos_sanguineos.id_tipo_sanguineo = saida_sangue.id_tipo_sanguineo);");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -42,20 +42,18 @@ public class saidas_de_sangue {
                 s.setId_saida_sangue(rs.getInt("Id_saida_sangue"));
                 s.setData(rs.getDate("data"));
                 s.setQuantidade(rs.getInt("quantidade"));
-           
+
                 Entidades e = new Entidades();
-                  Cidades c = new Cidades();
+                Cidades c = new Cidades();
+                e.setId_entidade(rs.getInt("identidade"));
                 e.setNome(rs.getString("nome"));
                 e.setEndereco(rs.getString("endereço"));
-              
-                
+
                 TipoSanguineo t = new TipoSanguineo();
-                t.setDescricao(rs.getString("descrição"));
+                t.setDescricao(rs.getString("descricao"));
                 t.setFator_rh(rs.getString("fator_rh"));
                 t.setEstoque(rs.getInt("estoque"));
                 t.setEstoque_minimo(rs.getInt("estoque_minimo"));
-                
-                
 
                 SaidadeSangue.add(s);
             }
@@ -63,51 +61,48 @@ public class saidas_de_sangue {
             Logger.getLogger(saidas_de_sangue.class.getName()).log(Level.SEVERE, null, ex);
         }
         return SaidadeSangue;
-        }
-    
-    public List<SaidadeSangue> pesquisar(String texto){
-        
-            Connection conn = ConexaoBanco.conectaBanco();
 
-            PreparedStatement stmt = null;
-            ResultSet rs = null;
-
-            List<SaidadeSangue> SaidadeSangue = new ArrayList<>();
-
-            try{
-                stmt = conn.prepareStatement("SELECT * FROM saida_sangue where quantidade like ?");
-                stmt.setString(1, "%"+ texto+"%");
-                rs = stmt.executeQuery();
-
-
-                while(rs.next()) {
-
-                    SaidadeSangue ss = new SaidadeSangue();
-                    ss.setId_saida_sangue(rs.getInt("Id_saida_sangue"));
-
-                    Entidades e = new Entidades();
-                    e.setId_entidade(rs.getInt("Id_Entidade"));
-
-                    ss.setId_entidade(e);
-
-                    TipoSanguineo ts = new TipoSanguineo();
-                    ts.setId_TipoSanguineo(rs.getInt("Id_Tipo_Sanguineo"));
-
-                    ss.setId_tipo_sanguineo(ts);
-
-                    ss.setData(rs.getDate("Data"));
-                    ss.setQuantidade(rs.getInt("Quantidade"));
-                   
-                    SaidadeSangue.add(ss);
-                }
-
-            } catch (SQLException ex){
-                Logger.getLogger(saidas_de_sangue.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return SaidadeSangue;
     }
 
-        
-   
-}
+    public List<SaidadeSangue> pesquisar(String texto) {
 
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<SaidadeSangue> SaidadeSangue = new ArrayList<>();
+
+        try {
+            stmt = conn.prepareStatement("SELECT * FROM saida_sangue where quantidade like ?");
+            stmt.setString(1, "%" + texto + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                SaidadeSangue ss = new SaidadeSangue();
+                ss.setId_saida_sangue(rs.getInt("Id_saida_sangue"));
+
+                Entidades e = new Entidades();
+                e.setId_entidade(rs.getInt("Id_Entidade"));
+
+                ss.setId_entidade(e);
+
+                TipoSanguineo ts = new TipoSanguineo();
+                ts.setId_TipoSanguineo(rs.getInt("Id_Tipo_Sanguineo"));
+
+                ss.setId_tipo_sanguineo(ts);
+
+                ss.setData(rs.getDate("Data"));
+                ss.setQuantidade(rs.getInt("Quantidade"));
+
+                SaidadeSangue.add(ss);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(saidas_de_sangue.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return SaidadeSangue;
+    }
+
+}
