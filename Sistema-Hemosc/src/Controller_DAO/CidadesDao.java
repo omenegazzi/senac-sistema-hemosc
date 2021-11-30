@@ -118,7 +118,7 @@ public class CidadesDao {
 
             stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Usuário excluido com Sucesso!");
+            JOptionPane.showMessageDialog(null, "Cidade excluida com Sucesso!");
 
         } catch (SQLException ex) {
             Logger.getLogger(CidadesDao.class.getName()).log(Level.SEVERE, null, ex);

@@ -23,21 +23,21 @@ public class CidadesView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         carregaDados();
     }
-    
-    public void carregaDados(){
+
+    public void carregaDados() {
         DefaultTableModel tabela = (DefaultTableModel) tCidades.getModel();
         CidadesDao dao = new CidadesDao();
         tabela.setNumRows(0);
-       
-        for (Cidades a : dao.listar()){
+
+        for (Cidades a : dao.listar()) {
             tabela.addRow(new Object[]{
-               a.getId_cidade(),
-               a.getDescricao(),
-               a.getCodigo_ibge(),
-               a.getUf()
-            }); 
+                a.getId_cidade(),
+                a.getDescricao(),
+                a.getCodigo_ibge(),
+                a.getUf()
+            });
         }
-    } 
+    }
 
     public void pesquisaDados() {
 
@@ -49,13 +49,21 @@ public class CidadesView extends javax.swing.JFrame {
 
         for (Cidades cd : dao.pesquisar(tfPesquisar.getText())) {
             tabela.addRow(new Object[]{
-               cd.getId_cidade(),
-               cd.getDescricao(),
-               cd.getCodigo_ibge(),
-               cd.getUf()
+                cd.getId_cidade(),
+                cd.getDescricao(),
+                cd.getCodigo_ibge(),
+                cd.getUf()
             });
         }
 
+    }
+
+    public void LimparCampos() {
+        tfCodigo.setText("");
+        tfibge.setText("");
+        tfdescriçao.setText("");
+        tfuf.setText("");
+        tfPesquisar.setText("");
     }
 
     /**
@@ -121,6 +129,11 @@ public class CidadesView extends javax.swing.JFrame {
         });
 
         jButton4.setText("Limpar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Fechar");
 
@@ -286,14 +299,16 @@ public class CidadesView extends javax.swing.JFrame {
     }//GEN-LAST:event_bPesquisarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Cidades c = new Cidades();
+        Cidades C = new Cidades();
         CidadesDao Dao = new CidadesDao();
 
-        c.setId_cidade(Integer.parseInt(tfCodigo.getText()));
+        C.setId_cidade(Integer.parseInt(tfCodigo.getText()));
+        C.setCodigo_ibge(Integer.parseInt(tfibge.getText()));
+        C.setDescricao(tfdescriçao.getText());
+        C.setUf(tfuf.getText());
 
-        Dao.excluir(c);
+        Dao.excluir(C);
         carregaDados();
-        //LimparCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tfcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcadastrarActionPerformed
@@ -303,7 +318,7 @@ public class CidadesView extends javax.swing.JFrame {
         c.setCodigo_ibge(Integer.parseInt(tfibge.getText()));
         c.setDescricao(tfdescriçao.getText());
         c.setUf(tfuf.getText());
-        
+
         Dao.cadastrar(c);
         carregaDados();
     }//GEN-LAST:event_tfcadastrarActionPerformed
@@ -314,6 +329,11 @@ public class CidadesView extends javax.swing.JFrame {
         tfdescriçao.setText(tCidades.getValueAt(tCidades.getSelectedRow(), 1).toString());
         tfuf.setText(tCidades.getValueAt(tCidades.getSelectedRow(), 3).toString());
     }//GEN-LAST:event_tCidadesMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        LimparCampos();
+        carregaDados();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
