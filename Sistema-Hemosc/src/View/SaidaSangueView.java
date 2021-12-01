@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,7 +20,9 @@ public class SaidaSangueView extends javax.swing.JFrame {
      * Creates new form SaidaSangueView
      */
     public SaidaSangueView() {
-        initComponents();
+        
+        initComponents();  
+        carregaDados();
     }
     
     public void pesquisaDados() {
@@ -39,7 +42,24 @@ public class SaidaSangueView extends javax.swing.JFrame {
                 ss.getQuantidade(),
             });
         }
-      
+    } public void carregaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) tSaida_Sangue.getModel();
+        tabela.setNumRows(0);
+        saidas_de_sangue dao = new saidas_de_sangue();
+        for (SaidadeSangue s : dao.Listar()) {
+            tabela.addRow(new Object[]{
+                
+                s.getId_saida_sangue(),
+                s.getId_entidade().getNome(),
+                s.getId_tipo_sanguineo().getDescricao(),
+                s.getData(),
+                s.getQuantidade(),
+                
+                
+              
+            });
+        }
     }
 
     /**
@@ -52,15 +72,15 @@ public class SaidaSangueView extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tfCodigo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tfData = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbTiposdesangue = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbEntidade = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tfQuantidade = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -76,15 +96,21 @@ public class SaidaSangueView extends javax.swing.JFrame {
 
         jLabel1.setText("Código De Saída :");
 
+        tfCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfCodigoActionPerformed(evt);
+            }
+        });
+
         jLabel2.setText("Data :");
 
         jLabel3.setText("Tipos De Sangue :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTiposdesangue.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setText("Entidade :");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbEntidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Quatidade :");
 
@@ -109,6 +135,11 @@ public class SaidaSangueView extends javax.swing.JFrame {
                 "Código", "Entidade", "Tipo Sanguineo", "Data", "Quantidade"
             }
         ));
+        tSaida_Sangue.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tSaida_SangueMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tSaida_Sangue);
 
         bPesquisar.setText("Pesquisar");
@@ -167,26 +198,26 @@ public class SaidaSangueView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbTiposdesangue, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cbEntidade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(122, 122, 122)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -196,21 +227,21 @@ public class SaidaSangueView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTiposdesangue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbEntidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -230,6 +261,36 @@ public class SaidaSangueView extends javax.swing.JFrame {
         
         pesquisaDados();
     }//GEN-LAST:event_bPesquisarActionPerformed
+
+    private void tSaida_SangueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tSaida_SangueMouseClicked
+        // TODO add your handling code here:
+    
+         String comboTiposdesangue = tSaida_Sangue.getValueAt(tSaida_Sangue.getSelectedRow(), 2).toString();
+        for (int i = 0; i < cbTiposdesangue.getItemCount(); i++) {
+            if (cbTiposdesangue.getItemAt(i).toString().equalsIgnoreCase(comboTiposdesangue)) {
+                cbTiposdesangue.setSelectedIndex(i);
+            }
+        }
+         String comboEntidades = tSaida_Sangue.getValueAt(tSaida_Sangue.getSelectedRow(), 1).toString();
+        for (int i = 0; i < cbEntidade.getItemCount(); i++) {
+            if (cbEntidade.getItemAt(i).toString().equalsIgnoreCase(comboEntidades)) {
+                cbEntidade.setSelectedIndex(i);
+            }
+        }
+
+        tfCodigo.setText(tSaida_Sangue.getValueAt(tSaida_Sangue.getSelectedRow(), 0).toString());
+        tfData.setText(tSaida_Sangue.getValueAt(tSaida_Sangue.getSelectedRow(), 3).toString());
+        tfQuantidade.setText(tSaida_Sangue.getValueAt(tSaida_Sangue.getSelectedRow(), 4).toString());
+       
+        
+        
+        
+        
+    }//GEN-LAST:event_tSaida_SangueMouseClicked
+
+    private void tfCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfCodigoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,13 +329,13 @@ public class SaidaSangueView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bPesquisar;
+    private javax.swing.JComboBox<String> cbEntidade;
+    private javax.swing.JComboBox<String> cbTiposdesangue;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -282,10 +343,10 @@ public class SaidaSangueView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tSaida_Sangue;
+    private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfData;
     private javax.swing.JTextField tfPesquisar;
+    private javax.swing.JTextField tfQuantidade;
     // End of variables declaration//GEN-END:variables
 }

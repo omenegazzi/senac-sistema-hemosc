@@ -32,7 +32,7 @@ public class saidas_de_sangue {
 
         List<SaidadeSangue> SaidadeSangue = new ArrayList<>();
         try {
-            stmt = conn.prepareStatement("select saida_sangue.id_saida_sangue,entidades.id_entidade as identidade, tipos_sanguineos.id_tipo_sanguineo,data quantidade from saida_sangue\n"
+            stmt = conn.prepareStatement("select saida_sangue.id_saida_sangue,entidades.id_entidade as identidade,entidades.nome as entidade_nome , tipos_sanguineos.id_tipo_sanguineo, tipos_sanguineos.descricao as ts_descricao,data,quantidade from saida_sangue\n"
                     + "                     inner join entidades on (entidades.id_entidade = saida_sangue.id_entidade)\n"
                     + "                    inner join tipos_sanguineos on (tipos_sanguineos.id_tipo_sanguineo = saida_sangue.id_tipo_sanguineo);");
             rs = stmt.executeQuery();
@@ -44,16 +44,13 @@ public class saidas_de_sangue {
                 s.setQuantidade(rs.getInt("quantidade"));
 
                 Entidades e = new Entidades();
-                Cidades c = new Cidades();
                 e.setId_entidade(rs.getInt("identidade"));
-                e.setNome(rs.getString("nome"));
-                e.setEndereco(rs.getString("endereço"));
+                e.setNome(rs.getString("entidade_nome"));
+                s.setId_entidade(e);
 
                 TipoSanguineo t = new TipoSanguineo();
-                t.setDescricao(rs.getString("descricao"));
-                t.setFator_rh(rs.getString("fator_rh"));
-                t.setEstoque(rs.getInt("estoque"));
-                t.setEstoque_minimo(rs.getInt("estoque_minimo"));
+                t.setDescricao(rs.getString("ts_descricao"));
+                s.setId_tipo_sanguineo(t);
 
                 SaidadeSangue.add(s);
             }
