@@ -413,6 +413,7 @@ public final class DoadoresView extends javax.swing.JFrame {
         d.setId_doador(Integer.parseInt(tfDoador.getText()));
 
         DAO3.excluir(d);
+        carregaDados();
         // TODO add your handling code here:
     }//GEN-LAST:event_jbExcluirActionPerformed
 
