@@ -27,6 +27,7 @@ public class AgendamentoView extends javax.swing.JFrame {
      */
     public AgendamentoView() {
         initComponents();
+        carregaDados();
     }
     
      public void carregaDados(){

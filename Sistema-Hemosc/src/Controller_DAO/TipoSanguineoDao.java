@@ -23,9 +23,12 @@ import java.util.logging.Logger;
 public class TipoSanguineoDao {
 
     public List<TipoSanguineo> listar() {
+        
         Connection conn = ConexaoBanco.conectaBanco();
+        
         PreparedStatement stmt = null;
         ResultSet rs = null;
+        
         List<TipoSanguineo> TipoSanguineo = new ArrayList<>();
 
         try {
@@ -46,7 +49,6 @@ public class TipoSanguineoDao {
 
         } catch (SQLException ex) {
             Logger.getLogger(TipoSanguineoDao.class.getName()).log(Level.SEVERE, null, ex);
-
         }
         return TipoSanguineo;
     }

@@ -21,6 +21,7 @@ public class TipoSanguineoView extends javax.swing.JFrame {
      */
     public TipoSanguineoView() {
         initComponents();
+        carregaDados();
     }
     
      public void carregaDados(){
