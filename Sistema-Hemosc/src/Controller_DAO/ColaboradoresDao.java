@@ -130,12 +130,8 @@ public class ColaboradoresDao {
         ResultSet rs = null;
 
         try {
-            stmt = conn.prepareStatement("DELETE FROM colaboradores where id_colaborador= ?,id_cidade = ?, nome = ?,endereco = ?,funcao = ?");
+            stmt = conn.prepareStatement("DELETE FROM colaboradores where id_colaborador = ?");
             stmt.setInt(1, c.getId_colaborador());
-            stmt.setInt(2, c.getCidade().getId_cidade());
-            stmt.setString(3, c.getNome());
-            stmt.setString(4, c.getEndereco());
-            stmt.setString(5, c.getFuncao().getFuncao());
 
             stmt.executeUpdate();
 

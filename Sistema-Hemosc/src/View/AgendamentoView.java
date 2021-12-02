@@ -6,8 +6,10 @@
 package View;
 
 import Controller_DAO.AgendamentosDao;
+import Controller_DAO.DoadoresDao;
 import Model.Agendamentos;
 import Model.Doadores;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.ParseException;
@@ -28,20 +30,27 @@ public class AgendamentoView extends javax.swing.JFrame {
     public AgendamentoView() {
         initComponents();
         carregaDados();
-    }
-    
-     public void carregaDados(){
+        
+        DoadoresDao Dao = new DoadoresDao();
 
-        DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();      
+        for (Doadores d : Dao.listar()) {
+            SelecionarDoador.addItem(d);
+            
+        }
+    }
+
+    public void carregaDados() {
+
+        DefaultTableModel tabela = (DefaultTableModel) jTableAgendamentos.getModel();
         AgendamentosDao dao = new AgendamentosDao();
         tabela.setNumRows(0);
 
-        for (Agendamentos A : dao.listar()){
+        for (Agendamentos A : dao.listar()) {
             tabela.addRow(new Object[]{
                 A.getId_agendamento(),
                 A.getData(),
                 A.getHora(),
-                A.getDoador() 
+                A.getDoador()
             });
         }
     }
@@ -113,6 +122,11 @@ public class AgendamentoView extends javax.swing.JFrame {
         jLabel4.setText("Doador:");
 
         jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Alterar");
 
@@ -255,27 +269,53 @@ public class AgendamentoView extends javax.swing.JFrame {
         try {
             Agendamentos agend = new Agendamentos();
             AgendamentosDao DAO = new AgendamentosDao();
-            
+
             agend.setId_agendamento(Integer.parseInt(CampoId.getText()));
-            
+
             SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = (Date)dataString.parse(CampoData.getText());
+            Date date = (Date) dataString.parse(CampoData.getText());
             agend.setData((java.sql.Date) date);
-            
+
             SimpleDateFormat dString = new SimpleDateFormat("hh.mm.ss");
             Time time = (Time) dString.parse(CampoHora.getText());
             agend.setHora(time);
-            
-            Doadores doador = (Doadores) SelecionarDoador.getSelectedItem();  
+
+            Doadores doador = (Doadores) SelecionarDoador.getSelectedItem();
             agend.setDoador(doador);
-            
+
             DAO.excluir(agend);
             carregaDados();
-           
+
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BotãoExcluirActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            Agendamentos a = new Agendamentos();
+            AgendamentosDao DAO = new AgendamentosDao();
+
+            a.setId_agendamento(Integer.parseInt(CampoId.getText()));
+
+            SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = (Date) dataString.parse(CampoData.getText());
+            a.setData(date);
+
+            SimpleDateFormat dString = new SimpleDateFormat("hh.mm.ss");
+            Time time = (Time) dString.parse(CampoHora.getText());
+            a.setHora(time);
+
+            Doadores doador = (Doadores) SelecionarDoador.getSelectedItem();
+            a.setDoador(doador);
+
+            DAO.cadastrar(a);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(AgendamentoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
