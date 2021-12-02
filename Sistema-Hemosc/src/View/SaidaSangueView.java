@@ -20,6 +20,7 @@ public class SaidaSangueView extends javax.swing.JFrame {
      */
     public SaidaSangueView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     public void pesquisaDados() {

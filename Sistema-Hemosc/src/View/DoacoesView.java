@@ -20,6 +20,7 @@ public class DoacoesView extends javax.swing.JFrame {
      */
     public DoacoesView() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     public void pesquisaDados(){
         

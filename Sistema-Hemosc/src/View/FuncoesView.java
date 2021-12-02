@@ -20,6 +20,7 @@ public class FuncoesView extends javax.swing.JFrame {
      */
     public FuncoesView() {
         initComponents();
+        this.setLocationRelativeTo(null);
         carregaDados();
     }
 public void carregaDados(){
