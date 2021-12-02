@@ -29,12 +29,12 @@ public class Principal extends javax.swing.JFrame {
         AgendamentosDao dao = new AgendamentosDao();
         tabela.setNumRows(0);
 
-        for (Agendamentos a : dao.listarDia()) {
+        for (Agendamentos A : dao.listar()) {
             tabela.addRow(new Object[]{
-                a.getId_agendamento(),
-                a.getData(),
-                a.getHora(),
-                a.getDoador()
+                A.getId_agendamento(),
+                A.getData(),
+                A.getHora(),
+                A.getDoador()
             });
         }
     }
