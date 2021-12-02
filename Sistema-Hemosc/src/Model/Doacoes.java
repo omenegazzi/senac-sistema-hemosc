@@ -58,6 +58,5 @@ public class Doacoes {
     public void setId_colaborador(Colaboradores id_colaborador) {
         this.id_colaborador = id_colaborador;
     }
-    
-    
+
 }

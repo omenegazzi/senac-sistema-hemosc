@@ -107,7 +107,7 @@ public class DoadoresDao {
             stmt.setInt(1, d.getId_doador());
 
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Editora excluída com sucesso!");
+            JOptionPane.showMessageDialog(null, "Doador excluído com sucesso!");
 
         } catch (SQLException ex) {
 
