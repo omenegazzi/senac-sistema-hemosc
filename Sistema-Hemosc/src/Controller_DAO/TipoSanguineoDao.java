@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -83,5 +84,29 @@ public class TipoSanguineoDao {
 
         }
         return TipoSanguineo;
+    }
+
+    public void Alterar(TipoSanguineo a) {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmd = null;
+
+        ResultSet rs = null;
+
+        try {
+            stmd = conn.prepareStatement("UPDATE tipos_sanguineos SET descricao = ?, fator_rh = ?, estoque = ?, estoque_minimo = ? WHERE id_tipo_sanguineo = ? ");
+            stmd.setString(1, a.getDescricao());
+            stmd.setString(2, a.getFator_rh());
+            stmd.setInt(3, a.getEstoque());
+            stmd.setInt(4, a.getEstoque_minimo());
+            stmd.setInt(5, a.getId_TipoSanguineo());
+            stmd.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Tipo Sanguíneo alterado com sucesso!");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoSanguineoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
