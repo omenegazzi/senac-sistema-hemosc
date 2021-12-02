@@ -357,6 +357,10 @@ public class DoacoesView extends javax.swing.JFrame {
         pesquisaDados();
     }//GEN-LAST:event_BotãoPesquisarActionPerformed
 
+    private void tfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPesquisarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -414,5 +418,6 @@ public class DoacoesView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tUsuarios;
+    private javax.swing.JButton tfPesquisar;
     // End of variables declaration//GEN-END:variables
 }
