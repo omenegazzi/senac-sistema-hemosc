@@ -21,6 +21,7 @@ public class DoacoesView extends javax.swing.JFrame {
     public DoacoesView() {
         initComponents();
         carregarDados();
+        this.setLocationRelativeTo(null);
     }
 
     public void pesquisaDados() {

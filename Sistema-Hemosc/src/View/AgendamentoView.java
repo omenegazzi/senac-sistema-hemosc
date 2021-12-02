@@ -30,6 +30,7 @@ public class AgendamentoView extends javax.swing.JFrame {
     public AgendamentoView() {
         initComponents();
         carregaDados();
+        this.setLocationRelativeTo(null);
         
         DoadoresDao Dao = new DoadoresDao();
 

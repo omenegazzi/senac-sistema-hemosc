@@ -24,6 +24,7 @@ public class ColaboradoresView extends javax.swing.JFrame {
      */
     public ColaboradoresView() {
         initComponents();
+        this.setLocationRelativeTo(null);
         carregaDados();
         
        CidadesDao Dao = new CidadesDao();

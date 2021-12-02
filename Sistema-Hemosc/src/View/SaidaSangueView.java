@@ -19,10 +19,10 @@ public class SaidaSangueView extends javax.swing.JFrame {
     /**
      * Creates new form SaidaSangueView
      */
-    public SaidaSangueView() {
-        
-        initComponents();  
+    public SaidaSangueView() {        
+        initComponents();          
         carregaDados();
+        this.setLocationRelativeTo(null);
     }
     
     public void pesquisaDados() {

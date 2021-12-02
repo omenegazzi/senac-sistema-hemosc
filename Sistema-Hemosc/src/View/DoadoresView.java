@@ -29,6 +29,7 @@ public final class DoadoresView extends javax.swing.JFrame {
      */
     public DoadoresView() {
         initComponents();
+        this.setLocationRelativeTo(null);
         carregaDados();
 
         CidadesDao dao = new CidadesDao();

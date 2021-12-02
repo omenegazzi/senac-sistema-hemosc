@@ -25,6 +25,7 @@ public final class EntidadesView extends javax.swing.JFrame {
      */
     public EntidadesView() {
         initComponents();
+        this.setLocationRelativeTo(null);
         carregaDados();
 
         CidadesDao dao = new CidadesDao();
@@ -104,7 +105,7 @@ public final class EntidadesView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tTabela = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Entidades"));
 
