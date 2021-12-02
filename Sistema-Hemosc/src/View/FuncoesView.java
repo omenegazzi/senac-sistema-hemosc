@@ -330,6 +330,7 @@ public void carregaDados(){
 
         DAO.cadastrar(F);
         carregaDados(); 
+        LimparCampos();
     }//GEN-LAST:event_BotaoCadastrarActionPerformed
 
     private void BotaoAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoAlterarActionPerformed
@@ -342,7 +343,8 @@ public void carregaDados(){
         F.setSalario(Double.parseDouble(CampoSalario.getText()));
 
         DAO.alterar(F);
-        carregaDados(); 
+        carregaDados();
+        LimparCampos();
     }//GEN-LAST:event_BotaoAlterarActionPerformed
 
     private void BotaoExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoExcluirActionPerformed
@@ -356,6 +358,7 @@ public void carregaDados(){
 
         DAO.excluir(F);
         carregaDados(); 
+        LimparCampos();
     }//GEN-LAST:event_BotaoExcluirActionPerformed
 
     private void BotaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotaoLimparActionPerformed

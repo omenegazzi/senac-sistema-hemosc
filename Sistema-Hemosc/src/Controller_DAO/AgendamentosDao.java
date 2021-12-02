@@ -116,7 +116,7 @@ public class AgendamentosDao {
         }
     }
     
-     public List<Agendamentos> listarDia() {
+     public List<Agendamentos> listarDia(String Texto) {
 
         Connection conn = ConexaoBanco.conectaBanco();
 
