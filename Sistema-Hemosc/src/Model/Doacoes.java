@@ -5,7 +5,7 @@
  */
 package Model;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  *
@@ -58,6 +58,4 @@ public class Doacoes {
     public void setId_colaborador(Colaboradores id_colaborador) {
         this.id_colaborador = id_colaborador;
     }
-    
-    
 }

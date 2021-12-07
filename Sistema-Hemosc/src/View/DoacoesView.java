@@ -5,8 +5,19 @@
  */
 package View;
 
+import Controller_DAO.ColaboradoresDao;
 import Controller_DAO.DoacoesDao;
+import Controller_DAO.DoadoresDao;
+import Controller_DAO.TipoSanguineoDao;
+import Model.Colaboradores;
 import Model.Doacoes;
+import Model.Doadores;
+import Model.TipoSanguineo;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -20,7 +31,41 @@ public class DoacoesView extends javax.swing.JFrame {
      */
     public DoacoesView() {
         initComponents();
+        carregaDados();
+    
+        DoadoresDao Dao = new DoadoresDao();    
+        for (Doadores d : Dao.listar()) {
+            SelecionarDoador.addItem(d);
+        }
+        
+        TipoSanguineoDao dao = new TipoSanguineoDao();        
+        for (TipoSanguineo t : dao.listar()){
+            SelecionarTipoSanguineo.addItem(t);
+        }
+        
+        ColaboradoresDao DAO = new ColaboradoresDao();
+        for (Colaboradores c : DAO.listar()){
+            SelecionarColaborador.addItem(c);
+        }
     }
+    
+    public void carregaDados(){
+                  
+        DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();      
+        DoacoesDao dao = new DoacoesDao();
+        tabela.setNumRows(0);
+                
+        for (Doacoes DAO : dao.listar()){
+            tabela.addRow(new Object[]{
+                DAO.getId_doacao(),
+                DAO.getData(),
+                DAO.getId_doador().getNome(),
+                DAO.getId_tipo_sanguineo().getDescricao(),
+                DAO.getId_colaborador().getNome(),
+            });
+        }      
+    }
+    
     public void pesquisaDados(){
         
         DefaultTableModel tabela = (DefaultTableModel) tUsuarios.getModel();      
@@ -37,7 +82,12 @@ public class DoacoesView extends javax.swing.JFrame {
             });
         }        
     }
-
+    
+    public void LimparCampos() {
+        CampoId.setText("");
+        CampoData.setText("");
+        jPesquisa.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,16 +99,16 @@ public class DoacoesView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        CampoId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        CampoData = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        SelecionarDoador = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        SelecionarTipoSanguineo = new javax.swing.JComboBox<>();
+        SelecionarColaborador = new javax.swing.JComboBox<>();
         bCadastrar = new javax.swing.JButton();
         bAlterar = new javax.swing.JButton();
         bExcluir = new javax.swing.JButton();
@@ -76,28 +126,28 @@ public class DoacoesView extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Código:");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        CampoId.setEditable(false);
+        CampoId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                CampoIdActionPerformed(evt);
             }
         });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Data:");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        CampoData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                CampoDataActionPerformed(evt);
             }
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Doador:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        SelecionarDoador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                SelecionarDoadorActionPerformed(evt);
             }
         });
 
@@ -106,10 +156,6 @@ public class DoacoesView extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Colaborador:");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         bCadastrar.setText("Cadastrar");
         bCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -151,11 +197,11 @@ public class DoacoesView extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Código", "Doador", "Tipo Sanguíneo", "Colaborador"
+                "Código", "Data", "Doador", "Tipo Sanguíneo", "Colaborador"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, true, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -192,27 +238,27 @@ public class DoacoesView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(SelecionarDoador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(BotãoPesquisar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(SelecionarTipoSanguineo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CampoId, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2))
+                        .addComponent(CampoData))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(SelecionarColaborador, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -238,21 +284,21 @@ public class DoacoesView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CampoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CampoData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelecionarDoador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelecionarTipoSanguineo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SelecionarColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(29, 29, 29)
@@ -266,10 +312,12 @@ public class DoacoesView extends javax.swing.JFrame {
                             .addComponent(bLimpar)
                             .addComponent(bFechar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BotãoPesquisar)
-                    .addComponent(jPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jPesquisa)))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -294,35 +342,113 @@ public class DoacoesView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void CampoIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_CampoIdActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void CampoDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CampoDataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_CampoDataActionPerformed
 
     private void bCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCadastrarActionPerformed
-       
+        
+        try {
+            Doacoes doa = new Doacoes();
+            DoacoesDao DAO = new DoacoesDao();
+                        
+            SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dataString.parse(CampoData.getText());
+            doa.setData(date);
+            
+            Doadores doador = (Doadores) SelecionarDoador.getSelectedItem();
+            TipoSanguineo tipo = (TipoSanguineo) SelecionarTipoSanguineo.getSelectedItem();
+            Colaboradores colab = (Colaboradores) SelecionarColaborador.getSelectedItem();
+            
+            doa.setId_doador(doador);
+            doa.setId_tipo_sanguineo(tipo);
+            doa.setId_colaborador(colab);
+            
+            DAO.cadastrar(doa);
+            carregaDados();
+            LimparCampos();
+        } catch (ParseException ex) {
+            Logger.getLogger(DoacoesView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
     }//GEN-LAST:event_bCadastrarActionPerformed
 
     private void bAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAlterarActionPerformed
-        
+        try {
+            Doacoes d = new Doacoes();
+            DoacoesDao DAO = new DoacoesDao();
+            
+            d.setId_doacao(Integer.parseInt(CampoId.getText()));
+            
+            SimpleDateFormat dataString = new SimpleDateFormat("yyyy-MM-dd");
+            Date dat = dataString.parse(CampoData.getText());
+            d.setData(dat);
+            
+            Doadores doador = (Doadores) SelecionarDoador.getSelectedItem();
+            TipoSanguineo tipo = (TipoSanguineo) SelecionarTipoSanguineo.getSelectedItem();
+            Colaboradores colab = (Colaboradores) SelecionarColaborador.getSelectedItem();
+            
+            d.setId_doador(doador);
+            d.setId_tipo_sanguineo(tipo);
+            d.setId_colaborador(colab);
+            
+            DAO.alterar(d);
+            carregaDados();
+            LimparCampos();
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(DoacoesView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_bAlterarActionPerformed
 
     private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
-       
+        Doacoes doa = new Doacoes();
+        DoacoesDao DAO = new DoacoesDao();
+        
+        doa.setId_doacao(Integer.parseInt(CampoId.getText()));
+        
+        DAO.excluir(doa);
+        carregaDados();
+        LimparCampos();
     }//GEN-LAST:event_bExcluirActionPerformed
 
     private void bLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLimparActionPerformed
-      
+        LimparCampos();
+        carregaDados();
     }//GEN-LAST:event_bLimparActionPerformed
 
     private void bFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFecharActionPerformed
-        
+        DoacoesView.this.dispose();
     }//GEN-LAST:event_bFecharActionPerformed
 
     private void tUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tUsuariosMouseClicked
+        CampoId.setText(tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 0).toString());
+        CampoData.setText(tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 1).toString());
+        
+        String Doador = tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 2).toString();
+        for(int i = 0; i < SelecionarDoador.getItemCount();i++){
+            if(SelecionarDoador.getItemAt(i).toString().equalsIgnoreCase(Doador)){
+                SelecionarDoador.setSelectedIndex(i);
+            }
+        }
+        
+        String Tipo = tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 3).toString();
+        for(int i = 0; i < SelecionarTipoSanguineo.getItemCount();i++){
+            if(SelecionarTipoSanguineo.getItemAt(i).toString().equalsIgnoreCase(Tipo)){
+                SelecionarTipoSanguineo.setSelectedIndex(i);
+            }
+        }
+        
+        String Colab = tUsuarios.getValueAt(tUsuarios.getSelectedRow(), 4).toString();
+        for(int i = 0; i < SelecionarColaborador.getItemCount();i++){
+            if(SelecionarColaborador.getItemAt(i).toString().equalsIgnoreCase(Colab)){
+                SelecionarColaborador.setSelectedIndex(i);
+            }
+        }
         
     }//GEN-LAST:event_tUsuariosMouseClicked
 
@@ -330,9 +456,9 @@ public class DoacoesView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jPesquisaActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void SelecionarDoadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SelecionarDoadorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_SelecionarDoadorActionPerformed
 
     private void BotãoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotãoPesquisarActionPerformed
         pesquisaDados();
@@ -375,14 +501,16 @@ public class DoacoesView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotãoPesquisar;
+    private javax.swing.JTextField CampoData;
+    private javax.swing.JTextField CampoId;
+    private javax.swing.JComboBox<Object> SelecionarColaborador;
+    private javax.swing.JComboBox<Object> SelecionarDoador;
+    private javax.swing.JComboBox<Object> SelecionarTipoSanguineo;
     private javax.swing.JButton bAlterar;
     private javax.swing.JButton bCadastrar;
     private javax.swing.JButton bExcluir;
     private javax.swing.JButton bFechar;
     private javax.swing.JButton bLimpar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -392,8 +520,6 @@ public class DoacoesView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jPesquisa;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tUsuarios;
     // End of variables declaration//GEN-END:variables
 }
