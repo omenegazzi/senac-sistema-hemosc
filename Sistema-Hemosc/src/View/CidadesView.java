@@ -83,7 +83,7 @@ public class CidadesView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         tfuf = new javax.swing.JTextField();
         tfcadastrar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        bExcluir = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -121,10 +121,10 @@ public class CidadesView extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Excluir");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        bExcluir.setText("Excluir");
+        bExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                bExcluirActionPerformed(evt);
             }
         });
 
@@ -175,7 +175,7 @@ public class CidadesView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -201,7 +201,7 @@ public class CidadesView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfcadastrar)
-                    .addComponent(jButton3)
+                    .addComponent(bExcluir)
                     .addComponent(jButton4)
                     .addComponent(jButton5)
                     .addComponent(jButton2))
@@ -298,7 +298,7 @@ public class CidadesView extends javax.swing.JFrame {
         pesquisaDados();
     }//GEN-LAST:event_bPesquisarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void bExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluirActionPerformed
         Cidades C = new Cidades();
         CidadesDao Dao = new CidadesDao();
 
@@ -310,7 +310,8 @@ public class CidadesView extends javax.swing.JFrame {
         Dao.excluir(C);
         carregaDados();
         LimparCampos();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        
+    }//GEN-LAST:event_bExcluirActionPerformed
 
     private void tfcadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfcadastrarActionPerformed
         Cidades c = new Cidades();
@@ -371,9 +372,9 @@ public class CidadesView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bExcluir;
     private javax.swing.JButton bPesquisar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
