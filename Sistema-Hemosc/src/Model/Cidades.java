@@ -47,6 +47,10 @@ public class Cidades {
     public void setUf(String uf) {
         this.uf = uf;
     }
+
+    public String getNome() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     }

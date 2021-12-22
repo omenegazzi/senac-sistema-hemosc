@@ -122,5 +122,25 @@ public class CidadesDao {
         }
 
     }
+     public void alterar(Cidades c) {
+
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conn.prepareStatement("UPDATE cidades set nome = ? where id_cidades = ?");
+            stmt.setString(1, c.getNome());
+            stmt.setInt(2, c.getId_cidade());
+
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Cidade alterada com Sucesso!");
+            
+            } catch (SQLException ex) {
+        }
+
+    }
 
 }

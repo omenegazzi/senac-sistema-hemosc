@@ -116,8 +116,26 @@ public class ColaboradoresDao {
         }
         return Colaboradores;
     }
+    public void alterar(Colaboradores c) {
 
+        Connection conn = ConexaoBanco.conectaBanco();
+
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conn.prepareStatement("UPDATE colaborador set nome = ? where id_colaboradores = ?");
+            stmt.setString(1, c.getNome());
+            stmt.setInt (2, c.getId_colaborador());
+
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Colaborador alterado com sucesso!");
+
+        } catch (SQLException ex) {
+
+        }
+
+    }
+ 
 }
-    
-    
-
